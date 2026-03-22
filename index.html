@@ -27,7 +27,7 @@
             flex-direction: column;
             align-items: center;
             gap: clamp(10px, 2vh, 20px);
-            margin-bottom: clamp(15px, 4vh, 35px);
+            margin-bottom: clamp(15px, 3vh, 30px);
             width: 100%;
         }
 
@@ -63,41 +63,47 @@
         input:checked + .slider { background-color: var(--accent); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* Responsive Deck Area */
+        /* Responsive Deck Area with Floating Arrows */
         .deck-area {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 95vw;
-            max-width: 900px; /* Allows the layout to expand gracefully on desktop */
+            width: 100%;
+            position: relative; /* Crucial to allow arrows to float over the edges */
+            max-width: 600px;
         }
 
-        /* Scalable Arrows */
+        /* Scalable, Floating Arrows */
         .arrow-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(255,255,255,0.15); /* Frosted glass look */
+            border: 1px solid rgba(255,255,255,0.3);
             color: white;
             border-radius: 50%;
-            width: clamp(40px, 8vw, 60px);
-            height: clamp(40px, 8vw, 60px);
+            width: clamp(46px, 11vw, 64px);
+            height: clamp(46px, 11vw, 64px);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            backdrop-filter: blur(5px);
-            flex-shrink: 0;
+            backdrop-filter: blur(8px);
             transition: all 0.2s;
         }
-        .arrow-btn:active { transform: scale(0.85); background: rgba(255,255,255,0.2); }
-        .arrow-btn svg { width: 50%; height: 50%; }
+        /* Push arrows to the extreme edges of the screen */
+        .arrow-left { left: 2vw; }
+        .arrow-right { right: 2vw; }
+
+        .arrow-btn:active { transform: translateY(-50%) scale(0.85); background: rgba(255,255,255,0.3); }
+        .arrow-btn svg { width: 55%; height: 55%; }
 
         /* Smart Scaling Card Stack */
         .card-stack {
-            flex: 1;
-            width: 100%;
-            max-width: clamp(260px, 45vh, 450px); /* Smart constraint based on screen height/width */
-            aspect-ratio: 3 / 4; /* Automatically calculates the perfect physical card height */
-            margin: 0 clamp(10px, 4vw, 30px);
+            width: clamp(280px, 82vw, 460px); /* Card expands up to 82% of screen width */
+            max-height: 72vh; /* Prevents the card from pushing controls off the bottom */
+            aspect-ratio: 3 / 4.2; /* Locks the physical shape */
             position: relative;
             perspective: 1200px;
         }
@@ -140,10 +146,10 @@
         .front-face { background-color: var(--paper-front); color: var(--primary); }
         .back-face { background-color: var(--paper-back); color: var(--primary); transform: rotateY(180deg); }
         
-        /* Dynamically Scaling Images */
+        /* Larger Images */
         .card-img {
-            max-height: 45%; /* Now takes up almost half the card's height regardless of screen size */
-            max-width: 90%;
+            max-height: 48%; 
+            max-width: 85%;
             margin-bottom: 5%;
             border-radius: 8px;
             display: none; 
@@ -151,16 +157,16 @@
             object-fit: contain;
         }
 
-        /* Fluid Typography */
-        .eng-text { direction: ltr; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
-        .arb-text { direction: rtl; font-size: clamp(3.5rem, 10vw, 6.5rem); font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
+        /* Fluid Typography scaling for large screens */
+        .eng-text { direction: ltr; font-size: clamp(2.2rem, 7vw, 3.5rem); font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
+        .arb-text { direction: rtl; font-size: clamp(5.4rem, 15vw, 8rem); font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
 
         .speaker-icon {
             position: absolute;
-            bottom: clamp(10px, 4%, 25px);
-            right: clamp(10px, 4%, 25px);
-            width: clamp(38px, 10%, 55px);
-            height: clamp(38px, 10%, 55px);
+            bottom: clamp(15px, 4%, 25px);
+            right: clamp(15px, 4%, 25px);
+            width: clamp(44px, 12%, 60px);
+            height: clamp(44px, 12%, 60px);
             background: var(--accent);
             color: white;
             border-radius: 50%;
@@ -175,7 +181,7 @@
         .speaker-icon:active { transform: scale(0.9); background: #1d4ed8; }
         .speaker-icon svg { width: 50%; height: 50%; }
 
-        /* Responsive Controls */
+        /* Responsive Controls Area */
         .controls { 
             margin-top: clamp(20px, 4vh, 40px); 
             display: grid; 
@@ -191,7 +197,7 @@
             border-radius: 12px; background: rgba(255,255,255,0.9); 
             color: var(--primary); font-weight: 800; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
-            font-size: clamp(0.9rem, 2vw, 1.1rem); 
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
             cursor: pointer; transition: all 0.1s;
         }
         button.action-btn:active { transform: scale(0.94) translateY(2px); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
@@ -217,7 +223,7 @@
     </div>
 
     <div class="deck-area">
-        <div class="arrow-btn" onclick="move(-1)">
+        <div class="arrow-btn arrow-left" onclick="move(-1)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </div>
 
@@ -242,7 +248,7 @@
             </div>
         </div>
 
-        <div class="arrow-btn" onclick="move(1)">
+        <div class="arrow-btn arrow-right" onclick="move(1)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </div>
     </div>
@@ -255,7 +261,6 @@
     </div>
 
     <script>
-        // The complete 374-card vocabulary deck
         let deck = [
             {e:"House",a:"بيت"}, {e:"Car",a:"سيارة"}, {e:"Boy",a:"ولد"}, {e:"Girl",a:"بنت"}, 
             {e:"Officer",a:"ضابط"}, {e:"American Embassy",a:"السفارة الامريكية"}, {e:"City",a:"مدينة"}, 
