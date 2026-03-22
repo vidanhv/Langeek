@@ -26,19 +26,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: clamp(10px, 2vh, 20px);
+            margin-bottom: clamp(15px, 4vh, 35px);
             width: 100%;
         }
 
-        .counter { font-weight: bold; color: #cbd5e1; font-size: 1.1rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        .counter { font-weight: bold; color: #cbd5e1; font-size: clamp(1rem, 2vw, 1.2rem); text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         
         .switch-container {
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
             background: rgba(255,255,255,0.1);
             padding: 8px 16px;
             border-radius: 20px;
@@ -63,22 +63,23 @@
         input:checked + .slider { background-color: var(--accent); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* The Deck Area Layout */
+        /* Responsive Deck Area */
         .deck-area {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            max-width: 500px;
+            width: 95vw;
+            max-width: 900px; /* Allows the layout to expand gracefully on desktop */
         }
 
+        /* Scalable Arrows */
         .arrow-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             color: white;
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            width: clamp(40px, 8vw, 60px);
+            height: clamp(40px, 8vw, 60px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -88,14 +89,15 @@
             transition: all 0.2s;
         }
         .arrow-btn:active { transform: scale(0.85); background: rgba(255,255,255,0.2); }
-        .arrow-btn svg { width: 24px; height: 24px; }
+        .arrow-btn svg { width: 50%; height: 50%; }
 
-        /* Stacking and Animation Wrapper */
+        /* Smart Scaling Card Stack */
         .card-stack {
             flex: 1;
-            max-width: 340px;
-            height: 460px; /* Taller, rectangular cards */
-            margin: 0 15px;
+            width: 100%;
+            max-width: clamp(260px, 45vh, 450px); /* Smart constraint based on screen height/width */
+            aspect-ratio: 3 / 4; /* Automatically calculates the perfect physical card height */
+            margin: 0 clamp(10px, 4vw, 30px);
             position: relative;
             perspective: 1200px;
         }
@@ -104,13 +106,12 @@
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #f1f5f9;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-            border-radius: 20px; border: 1px solid #cbd5e1; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 5%; border: 1px solid #cbd5e1; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         .card-stack::before { transform: rotate(3deg) translate(4px, 4px); z-index: 0; }
         .card-stack::after { transform: rotate(-2deg) translate(-4px, 8px); z-index: -1; }
 
-        /* Animation class to move card off screen */
         .animate-wrapper {
             width: 100%; height: 100%; 
             position: relative; z-index: 2;
@@ -123,7 +124,7 @@
             width: 100%; height: 100%; position: relative; 
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             transform-style: preserve-3d; cursor: pointer; 
-            border-radius: 20px; box-shadow: -5px 10px 20px rgba(0,0,0,0.4);
+            border-radius: 5%; box-shadow: -5px 10px 20px rgba(0,0,0,0.4);
         }
         .card.is-flipped { transform: rotateY(180deg); }
         
@@ -131,34 +132,35 @@
             position: absolute; width: 100%; height: 100%; 
             backface-visibility: hidden; display: flex; 
             flex-direction: column; align-items: center; justify-content: center; 
-            padding: 20px; box-sizing: border-box; 
-            border-radius: 20px; text-align: center; border: 1px solid #cbd5e1;
+            padding: 5%; box-sizing: border-box; 
+            border-radius: 5%; text-align: center; border: 1px solid #cbd5e1;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
         }
         
         .front-face { background-color: var(--paper-front); color: var(--primary); }
         .back-face { background-color: var(--paper-back); color: var(--primary); transform: rotateY(180deg); }
         
-        /* Larger images */
+        /* Dynamically Scaling Images */
         .card-img {
-            max-height: 200px;
+            max-height: 45%; /* Now takes up almost half the card's height regardless of screen size */
             max-width: 90%;
-            margin-bottom: 25px;
+            margin-bottom: 5%;
             border-radius: 8px;
             display: none; 
             mix-blend-mode: multiply; 
+            object-fit: contain;
         }
 
-        .eng-text { direction: ltr; font-size: 2.2rem; font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
-        .arb-text { direction: rtl; font-size: 5.4rem; font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
+        /* Fluid Typography */
+        .eng-text { direction: ltr; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
+        .arb-text { direction: rtl; font-size: clamp(3.5rem, 10vw, 6.5rem); font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
 
-        /* Discrete Speaker Icon inside card */
         .speaker-icon {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 46px;
-            height: 46px;
+            bottom: clamp(10px, 4%, 25px);
+            right: clamp(10px, 4%, 25px);
+            width: clamp(38px, 10%, 55px);
+            height: clamp(38px, 10%, 55px);
             background: var(--accent);
             color: white;
             border-radius: 50%;
@@ -171,30 +173,32 @@
             transition: transform 0.1s, background 0.1s;
         }
         .speaker-icon:active { transform: scale(0.9); background: #1d4ed8; }
-        .speaker-icon svg { width: 22px; height: 22px; }
+        .speaker-icon svg { width: 50%; height: 50%; }
 
-        /* Action Buttons */
+        /* Responsive Controls */
         .controls { 
-            margin-top: 30px; 
+            margin-top: clamp(20px, 4vh, 40px); 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 15px; 
             width: 85%; 
-            max-width: 340px; 
+            max-width: 450px; 
         }
         
         button.action-btn { 
-            padding: 14px; border: 1px solid rgba(255,255,255,0.1); 
+            padding: clamp(12px, 3vh, 18px); 
+            border: 1px solid rgba(255,255,255,0.1); 
             border-radius: 12px; background: rgba(255,255,255,0.9); 
             color: var(--primary); font-weight: 800; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2); font-size: 0.95rem; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
+            font-size: clamp(0.9rem, 2vw, 1.1rem); 
             cursor: pointer; transition: all 0.1s;
         }
         button.action-btn:active { transform: scale(0.94) translateY(2px); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         .btn-danger { color: #b91c1c !important; }
         .btn-primary { color: var(--accent) !important; }
         
-        .instruction { margin-top: 20px; color: #94a3b8; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase;}
+        .instruction { margin-top: clamp(15px, 3vh, 25px); color: #94a3b8; font-size: clamp(0.75rem, 1.5vw, 0.95rem); letter-spacing: 0.5px; text-transform: uppercase;}
     </style>
 </head>
 <body>
@@ -426,7 +430,7 @@
         ];
 
         let cur = 0;
-        let isAnimating = false; // Prevents spam-clicking during the swipe animation
+        let isAnimating = false;
 
         const card = document.getElementById('card');
         const animator = document.getElementById('animator');
@@ -475,7 +479,6 @@
             imgElement.src = "images/" + baseName + extensions[0];
         }
 
-        // Instantly updates the content behind the scenes
         function setCardContent() {
             if (deck.length === 0) {
                 frontText.innerText = "Deck Finished!";
@@ -530,51 +533,43 @@
             setTimeout(setCardContent, 150);
         }
 
-        // The new swipe animation logic
         function move(dir) {
             if (deck.length === 0 || isAnimating) return;
             isAnimating = true;
 
-            // 1. Swipe the card out
             if (dir === 1) {
                 animator.classList.add('swipe-left');
             } else {
                 animator.classList.add('swipe-right');
             }
 
-            // 2. Wait for it to leave the screen, then update text and slide it back in
             setTimeout(() => {
                 cur = (cur + dir + deck.length) % deck.length;
                 
-                setCardContent(); // Update text instantly while invisible
-                card.classList.remove('is-flipped'); // Reset the flip
+                setCardContent(); 
+                card.classList.remove('is-flipped'); 
 
-                // Instantly move the invisible card to the opposite side of the screen
                 animator.style.transition = 'none';
                 animator.classList.remove('swipe-left', 'swipe-right');
                 
                 if (dir === 1) {
-                    animator.classList.add('swipe-right'); // Prepare to slide in from right
+                    animator.classList.add('swipe-right'); 
                 } else {
-                    animator.classList.add('swipe-left'); // Prepare to slide in from left
+                    animator.classList.add('swipe-left'); 
                 }
 
-                // Force the browser to register the new position
                 void animator.offsetWidth;
 
-                // Turn the animation transition back on and slide it to center
                 animator.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s';
                 animator.classList.remove('swipe-left', 'swipe-right');
 
-                // Unlock the animation state once it finishes arriving
                 setTimeout(() => { isAnimating = false; }, 400);
 
-            }, 300); // 300ms matches the swipe-out CSS transition speed
+            }, 300); 
         }
 
         function shuffle() {
             if (deck.length === 0 || isAnimating) return;
-            // Fisher-Yates Shuffle
             for (let i = deck.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -588,7 +583,6 @@
             deck.splice(cur, 1); 
             if (cur >= deck.length) cur = 0; 
             
-            // Do a quick swipe down to signify removal
             animator.style.transform = 'translateY(150%) rotate(10deg)';
             animator.style.opacity = '0';
             
@@ -606,9 +600,8 @@
             }, 300);
         }
 
-        // Triggered by clicking the speaker icon
         function playArabicAudio(event) {
-            event.stopPropagation(); // VERY IMPORTANT: Stops the card from flipping when you click the speaker
+            event.stopPropagation(); 
             
             if (deck.length === 0) return;
             
@@ -627,7 +620,6 @@
             if(!isAnimating) card.classList.toggle('is-flipped');
         });
 
-        // Touch swipe tracking
         let startX = 0;
         container.addEventListener('touchstart', e => startX = e.changedTouches[0].screenX);
         container.addEventListener('touchend', e => {
@@ -636,7 +628,6 @@
             else if (endX - startX > 50) move(-1); 
         });
 
-        // Initialize the first card
         setCardContent();
     </script>
 </body>
