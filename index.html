@@ -63,23 +63,21 @@
         input:checked + .slider { background-color: var(--accent); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* Responsive Deck Area with Floating Arrows */
         .deck-area {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            position: relative; /* Crucial to allow arrows to float over the edges */
+            position: relative; 
             max-width: 600px;
         }
 
-        /* Scalable, Floating Arrows */
         .arrow-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             z-index: 10;
-            background: rgba(255,255,255,0.15); /* Frosted glass look */
+            background: rgba(255,255,255,0.15); 
             border: 1px solid rgba(255,255,255,0.3);
             color: white;
             border-radius: 50%;
@@ -92,18 +90,16 @@
             backdrop-filter: blur(8px);
             transition: all 0.2s;
         }
-        /* Push arrows to the extreme edges of the screen */
         .arrow-left { left: 2vw; }
         .arrow-right { right: 2vw; }
 
         .arrow-btn:active { transform: translateY(-50%) scale(0.85); background: rgba(255,255,255,0.3); }
         .arrow-btn svg { width: 55%; height: 55%; }
 
-        /* Smart Scaling Card Stack */
         .card-stack {
-            width: clamp(280px, 82vw, 460px); /* Card expands up to 82% of screen width */
-            max-height: 72vh; /* Prevents the card from pushing controls off the bottom */
-            aspect-ratio: 3 / 4.2; /* Locks the physical shape */
+            width: clamp(280px, 82vw, 460px); 
+            max-height: 72vh; 
+            aspect-ratio: 3 / 4.2; 
             position: relative;
             perspective: 1200px;
         }
@@ -136,7 +132,9 @@
         
         .face { 
             position: absolute; width: 100%; height: 100%; 
-            backface-visibility: hidden; display: flex; 
+            backface-visibility: hidden; 
+            -webkit-backface-visibility: hidden; 
+            display: flex; 
             flex-direction: column; align-items: center; justify-content: center; 
             padding: 5%; box-sizing: border-box; 
             border-radius: 5%; text-align: center; border: 1px solid #cbd5e1;
@@ -146,7 +144,13 @@
         .front-face { background-color: var(--paper-front); color: var(--primary); }
         .back-face { background-color: var(--paper-back); color: var(--primary); transform: rotateY(180deg); }
         
-        /* Larger Images */
+        /* THE ULTIMATE GHOST FIX: Hides the face entirely halfway through the 0.6s flip */
+        .card.is-flipped .front-face { visibility: hidden; transition: visibility 0s 0.2s; }
+        .card:not(.is-flipped) .front-face { visibility: visible; transition: visibility 0s 0.2s; }
+        
+        .card:not(.is-flipped) .back-face { visibility: hidden; transition: visibility 0s 0.2s; }
+        .card.is-flipped .back-face { visibility: visible; transition: visibility 0s 0.2s; }
+        
         .card-img {
             max-height: 48%; 
             max-width: 85%;
@@ -157,7 +161,6 @@
             object-fit: contain;
         }
 
-        /* Fluid Typography scaling for large screens */
         .eng-text { direction: ltr; font-size: clamp(2.2rem, 7vw, 3.5rem); font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
         .arb-text { direction: rtl; font-size: clamp(5.4rem, 15vw, 8rem); font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
 
@@ -175,13 +178,11 @@
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             cursor: pointer;
-            z-index: 10;
             transition: transform 0.1s, background 0.1s;
         }
         .speaker-icon:active { transform: scale(0.9); background: #1d4ed8; }
         .speaker-icon svg { width: 50%; height: 50%; }
 
-        /* Responsive Controls Area */
         .controls { 
             margin-top: clamp(20px, 4vh, 40px); 
             display: grid; 
