@@ -11,6 +11,8 @@
             --desk-bg: #1e293b; 
             --paper-front: #fffdfa; 
             --paper-back: #e0f2fe; 
+            --btn-green: #22c55e;
+            --btn-red: #ef4444;
         }
         
         body { 
@@ -26,42 +28,76 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(10px, 2vh, 20px);
+            gap: clamp(10px, 2vh, 15px);
             margin-bottom: clamp(15px, 3vh, 30px);
             width: 100%;
         }
 
         .counter { font-weight: bold; color: #cbd5e1; font-size: clamp(1rem, 2vw, 1.2rem); text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         
-        .switch-container {
+        .top-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: bold;
-            font-size: clamp(0.85rem, 2vw, 1.1rem);
-            background: rgba(255,255,255,0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 15px;
         }
 
-        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #94a3b8; transition: .4s; border-radius: 32px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        .sleek-switch {
+            width: clamp(180px, 40vw, 220px);
+            height: clamp(34px, 5vh, 40px);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
-        .slider:before {
-            position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
-            background-color: white; transition: .4s cubic-bezier(0.4, 0.2, 0.2, 1);
-            border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+        .switch-label {
+            flex: 1;
+            text-align: center;
+            line-height: clamp(32px, 5vh, 38px);
+            color: white;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            font-weight: 800;
+            z-index: 2;
+            user-select: none;
         }
-        
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(22px); }
+
+        .switch-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 20px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        /* Upgraded Top Shuffle Button (Pill Shape) */
+        .top-action-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 20px;
+            padding: 0 16px;
+            height: clamp(34px, 5vh, 40px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: transform 0.2s, background 0.2s;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            font-weight: 800;
+        }
+        .top-action-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.25); }
 
         .deck-area {
             display: flex;
@@ -98,7 +134,7 @@
 
         .card-stack {
             width: clamp(280px, 82vw, 460px); 
-            max-height: 72vh; 
+            max-height: 70vh; 
             aspect-ratio: 3 / 4.2; 
             position: relative;
             perspective: 1200px;
@@ -144,10 +180,8 @@
         .front-face { background-color: var(--paper-front); color: var(--primary); }
         .back-face { background-color: var(--paper-back); color: var(--primary); transform: rotateY(180deg); }
         
-        /* THE ULTIMATE GHOST FIX: Hides the face entirely halfway through the 0.6s flip */
         .card.is-flipped .front-face { visibility: hidden; transition: visibility 0s 0.2s; }
         .card:not(.is-flipped) .front-face { visibility: visible; transition: visibility 0s 0.2s; }
-        
         .card:not(.is-flipped) .back-face { visibility: hidden; transition: visibility 0s 0.2s; }
         .card.is-flipped .back-face { visibility: visible; transition: visibility 0s 0.2s; }
         
@@ -178,34 +212,41 @@
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             cursor: pointer;
+            z-index: 10;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translateZ(1px); 
             transition: transform 0.1s, background 0.1s;
         }
-        .speaker-icon:active { transform: scale(0.9); background: #1d4ed8; }
+        .speaker-icon:active { transform: translateZ(1px) scale(0.9); background: #1d4ed8; }
         .speaker-icon svg { width: 50%; height: 50%; }
 
         .controls { 
-            margin-top: clamp(20px, 4vh, 40px); 
+            margin-top: clamp(20px, 3vh, 35px); 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
+            gap: 12px; 
             width: 85%; 
             max-width: 450px; 
         }
         
         button.action-btn { 
-            padding: clamp(12px, 3vh, 18px); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 12px; background: rgba(255,255,255,0.9); 
-            color: var(--primary); font-weight: 800; 
+            padding: clamp(10px, 2.5vh, 16px); 
+            border: none; 
+            border-radius: 12px; 
+            background: rgba(255,255,255,0.9); 
+            font-weight: 800; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.2); 
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
-            cursor: pointer; transition: all 0.1s;
+            font-size: clamp(0.9rem, 2.5vw, 1.05rem); 
+            cursor: pointer; 
+            transition: all 0.1s;
         }
         button.action-btn:active { transform: scale(0.94) translateY(2px); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-        .btn-danger { color: #b91c1c !important; }
-        .btn-primary { color: var(--accent) !important; }
         
-        .instruction { margin-top: clamp(15px, 3vh, 25px); color: #94a3b8; font-size: clamp(0.75rem, 1.5vw, 0.95rem); letter-spacing: 0.5px; text-transform: uppercase;}
+        .btn-not-yet { background: var(--btn-red) !important; color: white !important; }
+        .btn-mastered { background: var(--btn-green) !important; color: white !important; }
+        
+        .instruction { margin-top: clamp(10px, 2vh, 20px); color: #94a3b8; font-size: clamp(0.75rem, 1.5vw, 0.85rem); letter-spacing: 0.5px; text-transform: uppercase;}
     </style>
 </head>
 <body>
@@ -213,13 +254,14 @@
     <div class="top-bar">
         <div class="counter" id="counter">Loading...</div>
         
-        <div class="switch-container">
-            <span id="lblEng" style="color: white;">Eng ➔ Arb</span>
-            <label class="switch">
-                <input type="checkbox" id="langToggle" onchange="flipAndLoad()">
-                <span class="slider"></span>
-            </label>
-            <span id="lblArb" style="color: #64748b;">Arb ➔ Eng</span>
+        <div class="top-controls">
+            <div class="sleek-switch" onclick="toggleLang()">
+                <div class="switch-slider" id="switchSlider"></div>
+                <span class="switch-label">Eng ➔ Arb</span>
+                <span class="switch-label">Arb ➔ Eng</span>
+            </div>
+            
+            <button class="top-action-btn" onclick="shuffle()" title="Shuffle Deck">🔀 Shuffle</button>
         </div>
     </div>
 
@@ -257,8 +299,8 @@
     <div class="instruction">Tap card to flip • Swipe to skip</div>
 
     <div class="controls">
-        <button class="action-btn btn-primary" onclick="shuffle()">🔀 Shuffle</button>
-        <button class="action-btn btn-danger" onclick="removeCard()">✓ Mastered</button>
+        <button class="action-btn btn-not-yet" onclick="needsWork()">✖ Not Yet</button>
+        <button class="action-btn btn-mastered" onclick="removeCard()">✓ Mastered</button>
     </div>
 
     <script>
@@ -437,6 +479,7 @@
 
         let cur = 0;
         let isAnimating = false;
+        let isArbFirst = false;
 
         const card = document.getElementById('card');
         const animator = document.getElementById('animator');
@@ -448,9 +491,14 @@
         const backSpeaker = document.getElementById('backSpeaker');
         const counter = document.getElementById('counter');
         const container = document.getElementById('cardContainer');
-        const langToggle = document.getElementById('langToggle');
-        const lblEng = document.getElementById('lblEng');
-        const lblArb = document.getElementById('lblArb');
+        const switchSlider = document.getElementById('switchSlider');
+
+        function toggleLang() {
+            if(isAnimating) return;
+            isArbFirst = !isArbFirst;
+            switchSlider.style.transform = isArbFirst ? 'translateX(100%)' : 'translateX(0)';
+            flipAndLoad();
+        }
 
         function getBaseName(englishWord) {
             let filename = englishWord.toLowerCase().replace(/[^a-z0-9]/g, '-');
@@ -463,16 +511,12 @@
                 imgElement.src = "";
                 return;
             }
-
             const extensions = ['.jpg', '.png', '.jpeg', '.gif'];
             let currentExtIndex = 0;
-
             imgElement.style.display = "none";
-            
             imgElement.onload = function() {
                 if (showImage) imgElement.style.display = "block";
             };
-
             imgElement.onerror = function() {
                 currentExtIndex++;
                 if (currentExtIndex < extensions.length) {
@@ -481,14 +525,13 @@
                     imgElement.style.display = "none"; 
                 }
             };
-
             imgElement.src = "images/" + baseName + extensions[0];
         }
 
         function setCardContent() {
             if (deck.length === 0) {
                 frontText.innerText = "Deck Finished!";
-                backText.innerText = "Deck Finished!";
+                backText.innerText = "All mastered!";
                 counter.innerText = "0 Cards Left";
                 frontImg.style.display = "none";
                 backImg.style.display = "none";
@@ -497,7 +540,6 @@
                 return;
             }
 
-            const isArbFirst = langToggle.checked;
             const currentCard = deck[cur];
             const baseName = getBaseName(currentCard.e);
             
@@ -510,9 +552,6 @@
                 backText.innerText = currentCard.a;
                 backText.className = "arb-text";
 
-                lblEng.style.color = "white";
-                lblArb.style.color = "#64748b";
-
                 frontSpeaker.style.display = "none";
                 backSpeaker.style.display = "flex";
             } else { // Arabic First
@@ -523,9 +562,6 @@
                 frontText.className = "arb-text";
                 backText.innerText = currentCard.e;
                 backText.className = "eng-text";
-
-                lblEng.style.color = "#64748b";
-                lblArb.style.color = "white";
 
                 frontSpeaker.style.display = "flex";
                 backSpeaker.style.display = "none";
@@ -551,26 +587,20 @@
 
             setTimeout(() => {
                 cur = (cur + dir + deck.length) % deck.length;
-                
                 setCardContent(); 
                 card.classList.remove('is-flipped'); 
 
                 animator.style.transition = 'none';
                 animator.classList.remove('swipe-left', 'swipe-right');
                 
-                if (dir === 1) {
-                    animator.classList.add('swipe-right'); 
-                } else {
-                    animator.classList.add('swipe-left'); 
-                }
+                if (dir === 1) animator.classList.add('swipe-right'); 
+                else animator.classList.add('swipe-left'); 
 
                 void animator.offsetWidth;
-
                 animator.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s';
                 animator.classList.remove('swipe-left', 'swipe-right');
 
                 setTimeout(() => { isAnimating = false; }, 400);
-
             }, 300); 
         }
 
@@ -582,6 +612,23 @@
             }
             cur = 0;
             flipAndLoad();
+        }
+
+        function needsWork() {
+            if (deck.length === 0 || isAnimating) return;
+            const currentCard = deck[cur];
+            const remainingCards = deck.length - cur - 1;
+            
+            for(let i = 0; i < 2; i++) {
+                let insertPos;
+                if (remainingCards > 2) {
+                    insertPos = cur + 1 + Math.floor(Math.random() * remainingCards);
+                } else {
+                    insertPos = Math.floor(Math.random() * deck.length);
+                }
+                deck.splice(insertPos, 0, {...currentCard});
+            }
+            move(1);
         }
 
         function removeCard() {
@@ -608,9 +655,7 @@
 
         function playArabicAudio(event) {
             event.stopPropagation(); 
-            
             if (deck.length === 0) return;
-            
             if ('speechSynthesis' in window) {
                 let arabicWord = deck[cur].a;
                 let utterance = new SpeechSynthesisUtterance(arabicWord);
