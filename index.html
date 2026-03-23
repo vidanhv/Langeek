@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Arabic Mastery App</title>
+    <title>Language Mastery App</title>
     <style>
         :root { 
             --primary: #0f172a; 
@@ -25,16 +25,10 @@
             color: white;
         }
         
-        /* Menu System */
         .screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            padding-top: 5vh;
-            box-sizing: border-box;
-            animation: fadeIn 0.4s ease-out;
+            display: none; flex-direction: column; align-items: center;
+            width: 100%; height: 100%; padding-top: 5vh;
+            box-sizing: border-box; animation: fadeIn 0.4s ease-out;
         }
         .active-screen { display: flex; }
 
@@ -43,63 +37,29 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .menu-title {
-            font-size: clamp(2rem, 6vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .menu-subtitle {
-            color: #94a3b8;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
+        .menu-title { font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; margin-bottom: 10px; text-align: center; }
+        .menu-subtitle { color: #94a3b8; font-size: 1.1rem; margin-bottom: 40px; }
 
         .menu-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            border-radius: 15px;
-            padding: 20px 30px;
-            margin-bottom: 20px;
-            width: 85%;
-            max-width: 350px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            transition: all 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: white; border-radius: 15px; padding: 20px 30px; margin-bottom: 20px;
+            width: 85%; max-width: 350px; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; backdrop-filter: blur(5px); transition: all 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
         }
         .menu-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
         .menu-btn:active { transform: scale(0.96); }
         
         .nav-back {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            position: absolute; top: 20px; left: 20px; background: transparent;
+            border: none; color: #94a3b8; font-size: 1rem; font-weight: bold;
+            cursor: pointer; display: flex; align-items: center; gap: 5px; z-index: 100;
         }
         .nav-back:active { color: white; }
 
-        /* Deck UI */
         .top-bar {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: clamp(10px, 2vh, 20px);
-            margin-bottom: clamp(15px, 3vh, 30px);
-            width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            gap: clamp(10px, 2vh, 20px); margin-bottom: clamp(15px, 3vh, 30px); width: 100%;
         }
 
         .counter { font-weight: bold; color: #cbd5e1; font-size: clamp(1rem, 2vw, 1.2rem); text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
@@ -107,39 +67,29 @@
         .top-controls { display: flex; align-items: center; gap: 15px; }
 
         .sleek-switch {
-            width: clamp(180px, 40vw, 220px);
-            height: clamp(34px, 5vh, 40px);
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            position: relative;
-            display: flex;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            width: clamp(200px, 45vw, 240px); height: clamp(34px, 5vh, 40px);
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px; position: relative; display: flex; cursor: pointer;
+            backdrop-filter: blur(5px); overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .switch-label {
             flex: 1; text-align: center; line-height: clamp(32px, 5vh, 38px);
-            color: white; font-size: clamp(0.75rem, 2vw, 0.9rem);
-            font-weight: 800; z-index: 2; user-select: none;
+            color: white; font-size: clamp(0.75rem, 2vw, 0.9rem); font-weight: 800; z-index: 2; user-select: none;
         }
 
         .switch-slider {
             position: absolute; top: 0; left: 0; width: 50%; height: 100%;
-            background: var(--accent); border-radius: 20px;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: var(--accent); border-radius: 20px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 1; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
         .top-action-btn {
             background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            color: white; border-radius: 20px; padding: 0 16px;
-            height: clamp(34px, 5vh, 40px); display: flex; align-items: center;
-            justify-content: center; gap: 6px; cursor: pointer; backdrop-filter: blur(5px);
-            transition: transform 0.2s, background 0.2s; font-size: clamp(0.75rem, 2vw, 0.9rem);
-            font-weight: 800;
+            color: white; border-radius: 20px; padding: 0 16px; height: clamp(34px, 5vh, 40px); 
+            display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; 
+            backdrop-filter: blur(5px); transition: transform 0.2s, background 0.2s; 
+            font-size: clamp(0.75rem, 2vw, 0.9rem); font-weight: 800;
         }
         .top-action-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.25); }
 
@@ -149,12 +99,11 @@
         }
 
         .arrow-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            z-index: 10; background: rgba(255,255,255,0.15); 
-            border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 50%;
-            width: clamp(46px, 11vw, 64px); height: clamp(46px, 11vw, 64px);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s;
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; 
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); 
+            color: white; border-radius: 50%; width: clamp(46px, 11vw, 64px); height: clamp(46px, 11vw, 64px);
+            display: flex; align-items: center; justify-content: center; cursor: pointer; 
+            backdrop-filter: blur(8px); transition: all 0.2s;
         }
         .arrow-left { left: 2vw; }
         .arrow-right { right: 2vw; }
@@ -211,8 +160,9 @@
             display: none; mix-blend-mode: multiply; object-fit: contain;
         }
 
-        .eng-text { direction: ltr; font-size: clamp(1.8rem, 6vw, 3rem); font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
-        .arb-text { direction: rtl; font-size: clamp(4.2rem, 12vw, 7.5rem); font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
+        .eng-text { direction: ltr; font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #1e293b; }
+        .srb-text { direction: ltr; font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #0f172a; }
+        .arb-text { direction: rtl; font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
 
         .speaker-icon {
             position: absolute; bottom: clamp(15px, 4%, 25px); right: clamp(15px, 4%, 25px);
@@ -248,44 +198,29 @@
     <div id="screen-lang" class="screen active-screen">
         <div class="menu-title">Language Hub</div>
         <div class="menu-subtitle">Choose a language to study</div>
-        
-        <button class="menu-btn" onclick="navTo('screen-mode')">
-            🇱🇧 Levantine Arabic <span>▶</span>
-        </button>
-        <button class="menu-btn" style="opacity: 0.5; cursor: default;">
-            🇪🇸 Spanish (Coming Soon)
-        </button>
-        <button class="menu-btn" style="opacity: 0.5; cursor: default;">
-            🇫🇷 French (Coming Soon)
-        </button>
-        <button class="menu-btn" style="opacity: 0.5; cursor: default;">
-            🇷🇸 Serbian (Coming Soon)
-        </button>
+        <button class="menu-btn" onclick="navToMode('arb')">🇱🇧 Levantine Arabic <span>▶</span></button>
+        <button class="menu-btn" onclick="navToMode('srb')">🇷🇸 Serbian <span>▶</span></button>
+        <button class="menu-btn" style="opacity: 0.5; cursor: default;">🇪🇸 Spanish (Coming Soon)</button>
+        <button class="menu-btn" style="opacity: 0.5; cursor: default;">🇫🇷 French (Coming Soon)</button>
     </div>
 
     <div id="screen-mode" class="screen">
         <button class="nav-back" onclick="navTo('screen-lang')">◀ Back</button>
         <div class="menu-title">Select Mode</div>
-        <div class="menu-subtitle">🇱🇧 Levantine Arabic</div>
-        
-        <button class="menu-btn" onclick="startDeck('vocab')">
-            📚 Vocabulary Builder <span>▶</span>
-        </button>
-        <button class="menu-btn" onclick="startDeck('conj')">
-            🔄 Conjugation Driller <span>▶</span>
-        </button>
+        <div class="menu-subtitle" id="modeSubtitle">Language</div>
+        <button class="menu-btn" onclick="startDeck('vocab')">📚 Vocabulary Builder <span>▶</span></button>
+        <button class="menu-btn" id="btnConjMode" onclick="startDeck('conj')">🔄 Conjugation Driller <span>▶</span></button>
     </div>
 
     <div id="screen-deck" class="screen">
         <button class="nav-back" onclick="navTo('screen-mode')">◀ Menu</button>
-        
         <div class="top-bar" style="margin-top: 30px;">
             <div class="counter" id="counter">Loading...</div>
             <div class="top-controls">
                 <div class="sleek-switch" onclick="toggleLang()">
                     <div class="switch-slider" id="switchSlider"></div>
-                    <span class="switch-label">Eng ➔ Arb</span>
-                    <span class="switch-label">Arb ➔ Eng</span>
+                    <span class="switch-label" id="lblEng">Eng ➔ Target</span>
+                    <span class="switch-label" id="lblTarget">Target ➔ Eng</span>
                 </div>
                 <button class="top-action-btn" onclick="shuffle()" title="Shuffle Deck">🔀 Shuffle</button>
             </div>
@@ -302,14 +237,14 @@
                         <div class="face front-face">
                             <img id="frontImg" class="card-img" src="" alt="">
                             <p id="frontText">Front</p>
-                            <div id="frontSpeaker" class="speaker-icon" onclick="playArabicAudio(event)">
+                            <div id="frontSpeaker" class="speaker-icon" onclick="playAudio(event)">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
                             </div>
                         </div>
                         <div class="face back-face">
                             <img id="backImg" class="card-img" src="" alt="">
                             <p id="backText">Back</p>
-                            <div id="backSpeaker" class="speaker-icon" onclick="playArabicAudio(event)">
+                            <div id="backSpeaker" class="speaker-icon" onclick="playAudio(event)">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
                             </div>
                         </div>
@@ -321,9 +256,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </div>
         </div>
-
         <div class="instruction">Tap card to flip • Swipe to skip</div>
-
         <div class="controls">
             <button class="action-btn btn-not-yet" onclick="needsWork()">✖ Not Yet</button>
             <button class="action-btn btn-mastered" onclick="removeCard()">✓ Mastered</button>
@@ -331,318 +264,575 @@
     </div>
 
     <script>
-        // ------------------ DATA ------------------ //
+        // ------------------ DATA ARRAYS ------------------ //
         
-        // DECK 1: Vocabulary Builder
-        const vocabData = [
-            {e:"House",a:"بيت"}, {e:"Car",a:"سيارة"}, {e:"Boy",a:"ولد"}, {e:"Girl",a:"بنت"}, 
-            {e:"Officer",a:"ضابط"}, {e:"American Embassy",a:"السفارة الامريكية"}, {e:"City",a:"مدينة"}, 
-            {e:"Translator",a:"مترجم"}, {e:"Trip",a:"رحلة"}, {e:"I",a:"انا"}, {e:"He",a:"هو"}, 
-            {e:"You (m)",a:"انت"}, {e:"We",a:"نحن"}, {e:"You (all)",a:"انتو"}, {e:"You (f)",a:"انت"}, 
-            {e:"Who?",a:"مين؟"}, {e:"Where?",a:"وين؟"}, {e:"She",a:"هي"}, {e:"Must",a:"لازم"}, 
-            {e:"Early",a:"بكير"}, {e:"Why?",a:"ليش؟"}, {e:"Because",a:"عشان"}, {e:"How?",a:"كيف؟"}, 
-            {e:"With",a:"مع"}, {e:"A lot",a:"كثير"}, {e:"Tired (pl)",a:"تعبانين"}, {e:"They",a:"هم"}, 
-            {e:"Yesterday",a:"مبارح"}, {e:"What?",a:"شو؟"}, {e:"What's up?",a:"شو عاملين؟"}, 
-            {e:"Tomorrow",a:"بكرة"}, {e:"Holiday",a:"عطلة"}, {e:"Also",a:"كمان"}, {e:"Beautiful",a:"حلو"}, 
-            {e:"Weather",a:"الطقس"}, {e:"Great!",a:"تمام!"}, {e:"Consul",a:"القنصل"}, {e:"Employee (f)",a:"موظفة"}, 
-            {e:"Year",a:"سنة"}, {e:"Section",a:"القسم"}, {e:"To arrive",a:"وَصَلَ"}, {e:"Week",a:"اسبوع"}, 
-            {e:"But",a:"بس"}, {e:"Before / Ago",a:"قبل"}, {e:"Month",a:"شهر"}, {e:"To speak",a:"حَكَى"}, 
-            {e:"Your children",a:"اولادك"}, {e:"To walk",a:"مَشَى"}, {e:"Well",a:"منيح"}, {e:"Arabic",a:"عربي"}, 
-            {e:"To have fun",a:"اِنْبَسَطَ"}, {e:"FSI",a:"المعهد الدبلوماسي"}, {e:"Affiliated to",a:"تابع ل"}, 
-            {e:"Day",a:"يوم"}, {e:"To travel",a:"سَافَرَ"}, {e:"Security",a:"امن"}, {e:"Hello (response)",a:"اهلين"}, 
-            {e:"Big",a:"كبير"}, {e:"Married (m)",a:"متزوج"}, {e:"How are you?",a:"كيف الحال؟"}, 
-            {e:"Far away from",a:"بعيد عن"}, {e:"Hello",a:"مرحبا"}, {e:"Thank God",a:"الحدلله"}, 
-            {e:"Which?",a:"أي؟"}, {e:"No",a:"ما"}, {e:"By God (vala)",a:"والله"}, {e:"Company",a:"شركة"}, 
-            {e:"Airport",a:"المطار"}, {e:"To be",a:"كَانَ"}, {e:"Rain",a:"مطر"}, {e:"To see",a:"شَافَ"}, 
-            {e:"Computer",a:"كمبيوتر"}, {e:"Wine",a:"نَبيذ"}, {e:"Pig",a:"خِنزير"}, {e:"Police",a:"شرطة"}, 
-            {e:"Traffic accident",a:"حادث سيارة"}, {e:"Pirate / Hacker",a:"قرصان"}, {e:"Soldier",a:"عسكري"}, 
-            {e:"Weapon",a:"سلاح"}, {e:"Thief",a:"حرامي"}, {e:"Rocket",a:"صاروخ"}, {e:"Official",a:"رَسمي"}, 
-            {e:"Documents",a:"أوراق"}, {e:"Forged",a:"مُزَوَرة"}, {e:"Bomb",a:"قنبلة"}, {e:"Passport",a:"جَواز"}, 
-            {e:"Income",a:"دخل"}, {e:"Fraud",a:"احتيال"}, {e:"United Nations",a:"الأمم المتحدة"}, 
-            {e:"Fees",a:"رسوم"}, {e:"Confirmation",a:"تأكيد"}, {e:"Contract",a:"عقد"}, {e:"Agreement",a:"اتفاق"}, 
-            {e:"Account",a:"حساب"}, {e:"Proof",a:"دليل"}, {e:"Investigation",a:"تحقيق"}, {e:"Letter",a:"رسالة"}, 
-            {e:"Conversation",a:"حديث"}, {e:"Envelope",a:"ظرف"}, {e:"Citizenship",a:"جنسية"}, 
-            {e:"Elections",a:"انتخابات"}, {e:"Exam",a:"امتحان"}, {e:"Explosion",a:"انفجار"}, {e:"Military",a:"جيش"}, 
-            {e:"Scholarship",a:"منحة"}, {e:"Danger",a:"خطر"}, {e:"Armed persons",a:"مسلحين"}, 
-            {e:"Official",a:"مسؤول"}, {e:"Criminal",a:"إجرامي / مجرم"}, {e:"Crime",a:"جريمة"}, 
-            {e:"Candidate",a:"مرشح"}, {e:"Interesting",a:"ممتع"}, {e:"House of Representatives",a:"مجلس النواب"}, 
-            {e:"Member",a:"عضو"}, {e:"Judge",a:"قاضي"}, {e:"Window",a:"شباك"}, {e:"Executive Branch",a:"السلطة التنفيذيّة"}, 
-            {e:"Future",a:"مستقبل"}, {e:"Negotiations",a:"مفاوضات"}, {e:"Judicial Branch",a:"السلطة القضائيّة"}, 
-            {e:"Difference",a:"فرق"}, {e:"Legislative Branch",a:"السلطة التشريعيّة"}, {e:"Value",a:"قيمة"}, 
-            {e:"Discussion",a:"مناقشة"}, {e:"Capitalist",a:"رأسمالي"}, {e:"Sometimes",a:"أحياناً"}, 
-            {e:"Usually",a:"عادةً"}, {e:"Never",a:"أبداً"}, {e:"Rarely",a:"نادراً"}, {e:"Often",a:"غالباً"}, 
-            {e:"Always",a:"دايماً"}, {e:"Hall",a:"قاعة"}, {e:"Independence",a:"استقلال"}, {e:"Bell",a:"جرس"}, 
-            {e:"Middle",a:"وسط"}, {e:"Start",a:"بداية"}, {e:"The end",a:"آخر"}, {e:"Expression",a:"تعبير"}, 
-            {e:"Mediator",a:"وسيط"}, {e:"Star",a:"نجمة"}, {e:"Political Party",a:"حزب"}, {e:"Assembly",a:"تجمع"}, 
-            {e:"Demonstrations",a:"مظاهرات"}, {e:"Increase",a:"زيادة"}, {e:"Decrease",a:"نقصان"}, 
-            {e:"Behind",a:"ورا"}, {e:"Camp",a:"مخيّم"}, {e:"In front",a:"قدام"}, {e:"Attack",a:"هجوم"}, 
-            {e:"Prison",a:"سجن"}, {e:"Detention",a:"حبس"}, {e:"To expect",a:"تَوَقَّعَ"}, {e:"Red Cross",a:"الصَليب الأحْمَر"}, 
-            {e:"To combat",a:"كافَحَ"}, {e:"Deal",a:"صَفْقَة"}, {e:"To communicate",a:"تَوَاصَلَ"}, {e:"Branch",a:"فَرْع"}, 
-            {e:"To request / To demand",a:"طَالَب"}, {e:"Price",a:"سِعِر"}, {e:"To declare",a:"أَعْلَن"}, 
-            {e:"Dialogue",a:"حِوَار"}, {e:"Hostage",a:"رَهِينَة"}, {e:"Influence",a:"نُفُوذ"}, {e:"Guilty",a:"مُذْنِب"}, 
-            {e:"Repatriation",a:"إعادة إلى الوطن"}, {e:"Exit",a:"مخرج"}, {e:"Fingerprints",a:"بصمات"}, 
-            {e:"Misunderstanding",a:"سوء تَفاهُم"}, {e:"Spy",a:"جاسوس"}, {e:"Inside",a:"داخل"}, {e:"Detainee",a:"مُعتَقَل"}, 
-            {e:"Suspect",a:"مُشْتَبَه"}, {e:"Terminology",a:"مُصْطَلَحات"}, {e:"Victims of disaster",a:"منكوب"}, 
-            {e:"Benefit",a:"فائدة"}, {e:"Soap",a:"صابون"}, {e:"Palace",a:"قَصْر"}, {e:"Scissors",a:"مِقَصّ"}, 
-            {e:"Warehouse",a:"مَخْزَن"}, {e:"Injustice",a:"ظُلْم"}, {e:"Soup",a:"شوربة"}, {e:"Pen",a:"قَلَم"}, 
-            {e:"Airplane",a:"طيّارة"}, {e:"Answer",a:"جَوَاب"}, {e:"Boat",a:"قَارِب"}, {e:"Evacuation",a:"إخلاء"}, 
-            {e:"Emergency",a:"طوارئ"}, {e:"Skiing",a:"تَزَلُّج"}, {e:"Disaster",a:"كَارِثَة"}, {e:"Revolution",a:"ثَوْرَة"}, 
-            {e:"Picture",a:"صورة"}, {e:"Library",a:"مَكْتَبَة"}, {e:"Museum",a:"مَتْحَف"}, {e:"Office",a:"مَكْتَب"}, 
-            {e:"School",a:"مَدْرَسَة"}, {e:"Hospital",a:"مُسْتَشْفَى"}, {e:"Shop",a:"مَحَلّ"}, {e:"University",a:"جَامِعَة"}, 
-            {e:"Institute",a:"مَعْهَد"}, {e:"Mosque",a:"مَسْجِد"}, {e:"Stress",a:"ضَغْط"}, {e:"Happy",a:"مبسوط"}, 
-            {e:"Disgusted",a:"قَرِفان"}, {e:"Psychological problems",a:"مَشَاكِل نَفْسِيَّة"}, {e:"Sad",a:"زعلان"}, 
-            {e:"Angry",a:"معصّب"}, {e:"Feelings / Emotions",a:"عواطِف"}, {e:"Scared",a:"خايف"}, 
-            {e:"Surprised",a:"متفاجئ"}, {e:"To bring",a:"جَابَ"}, {e:"Results",a:"نَتائج"}, {e:"To cook",a:"طَبَخَ"}, 
-            {e:"Delicious",a:"زاكي"}, {e:"Conference",a:"مؤتَمَر"}, {e:"Expensive",a:"غالي"}, {e:"To love / To like",a:"حَبّ"}, 
-            {e:"And",a:"و"}, {e:"Or",a:"او"}, {e:"When",a:"لما"}, {e:"If",a:"اذا"}, {e:"Therefore",a:"عشان هيك"}, 
-            {e:"According to",a:"حسب"}, {e:"During",a:"خلال"}, {e:"So",a:"فَ"}, {e:"For example",a:"مَثَلاً"}, 
-            {e:"Depends on",a:"بيعتمد على"}, {e:"Approximately",a:"تقريباً"}, {e:"It differs",a:"بيختلف"}, 
-            {e:"Like",a:"زي"}, {e:"Is considered",a:"يُعتبر"}, {e:"Until",a:"حتى"}, {e:"Mountain",a:"جَبَل"}, 
-            {e:"In my opinion",a:"برأيي"}, {e:"Long time ago",a:"من زمان"}, {e:"Olives",a:"زَيْتُون"}, 
-            {e:"Yoghurt",a:"لَبَن"}, {e:"Eggs",a:"بَيْض"}, {e:"Milk",a:"حَلِيب"}, {e:"Chicken",a:"جَاج"}, 
-            {e:"Oil",a:"زَيْت"}, {e:"Cheese",a:"جُبْن"}, {e:"Bread",a:"خُبْز"}, {e:"Fish",a:"سَمَك"}, 
-            {e:"Investment",a:"اِسْتِثْمَار"}, {e:"Export",a:"تَصْدِير"}, {e:"Import",a:"اِسْتِيرَاد"}, 
-            {e:"Development",a:"تَطْوِير"}, {e:"Field",a:"مَجَال"}, {e:"Program",a:"بَرْنَامَج"}, 
-            {e:"Theatre",a:"مَسْرَح"}, {e:"Agency",a:"وَكَالَة"}, {e:"Brain",a:"دِمَاغ"}, {e:"Season",a:"فَصْل"}, 
-            {e:"Summer",a:"صَيْف"}, {e:"Winter",a:"شِتَاء"}, {e:"Spring",a:"رَبِيع"}, {e:"Autumn",a:"خَرِيف"}, 
-            {e:"Snow",a:"تَلْج"}, {e:"Beach",a:"شَاطِئ"}, {e:"Coast",a:"سَاحِل"}, {e:"Sea",a:"بَحْر"}, 
-            {e:"Specialization",a:"اِخْتِصَاص"}, {e:"Reform",a:"إِصْلَاح"}, {e:"Exchange",a:"تَبَادُل"}, 
-            {e:"Engineer",a:"مُهَنْدِس"}, {e:"Electricity",a:"كَهْرَبَاء"}, {e:"Lawyer",a:"مُحَامِي"}, 
-            {e:"Expenses",a:"مَصْرُوف"}, {e:"Journalist",a:"صَحَفِي"}, {e:"Appointment",a:"مَوْعِد"}, 
-            {e:"To prevent",a:"مَنَعَ"}, {e:"Prevention",a:"مَنْع"}, {e:"Obstacle",a:"مَانِع"}, 
-            {e:"Prohibited",a:"مَمْنُوع"}, {e:"Faculty",a:"كُلِّيَّة"}, {e:"To explain",a:"شَرَحَ"}, 
-            {e:"Explanation",a:"شَرْح"}, {e:"Commentator",a:"شَارِح"}, {e:"Explained",a:"مَشْرُوح"}, 
-            {e:"Diploma",a:"شَهَادَة"}, {e:"To offer",a:"عَرَضَ"}, {e:"Presentation",a:"عَرْض"}, 
-            {e:"Presenter",a:"عَارِض"}, {e:"Offered",a:"مَعْرُوض"}, {e:"Showroom",a:"مَعْرِض"}, 
-            {e:"Permanent residence",a:"إِقَامَة دَائِمَة"}, {e:"Target / Goal",a:"هَدَف"}, {e:"Shelter",a:"مَلْجَأ"}, 
-            {e:"Witness",a:"شَاهِد"}, {e:"Resources",a:"مَوَارِد"}, {e:"Fair",a:"عَادِل"}, {e:"Great",a:"عَظِيم"}, 
-            {e:"Response",a:"رَدّ"}, {e:"Violence",a:"عُنْف"}, {e:"Addiction",a:"إِدْمَان"}, {e:"During",a:"خِلَالَ"}, 
-            {e:"Advisor",a:"مُسْتَشَار"}, {e:"Complicated",a:"مُعَقَّد"}, {e:"Currently",a:"حَالِيّاً"}, 
-            {e:"Project",a:"مَشْرُوع"}, {e:"Street",a:"شَارِع"}, {e:"Traffic light",a:"إشارة"}, {e:"Class",a:"صَفّ"}, 
-            {e:"Road",a:"طَرِيق"}, {e:"To lose",a:"خَسِرَ"}, {e:"Loss",a:"خَسَارَة"}, {e:"Looser",a:"خَاسِر"}, 
-            {e:"Lost",a:"مَخْسُور"}, {e:"Team",a:"فَرِيق"}, {e:"To choose",a:"اِخْتَارَ"}, {e:"Choice",a:"اِخْتِيَار"}, 
-            {e:"Chooser",a:"مُخْتَار"}, {e:"Chosen",a:"مُخْتَار"}, {e:"Diving",a:"غَوْص"}, {e:"To advise",a:"نَصَحَ"}, 
-            {e:"Advice",a:"نُصْح"}, {e:"Counselor",a:"نَاصِح"}, {e:"Hobby",a:"هِوَايَة"}, 
-            {e:"To protect",a:"حَمَى"}, {e:"Protection",a:"حِمَايَة"}, {e:"Protector",a:"حَامِي"}, 
-            {e:"Protected",a:"مَحْمِيّ"}, {e:"Reserve",a:"مَحْمِيَّة"}, {e:"Vegetable",a:"خُضْرَة"}, 
-            {e:"To remember",a:"تَذَكَّرَ"}, {e:"Remembering",a:"تَذَكُّر"}, {e:"Remembered",a:"مُتَذَكَّر"}, 
-            {e:"Tree",a:"شَجَرة"}, {e:"To respect",a:"اِحْتَرَمَ"}, {e:"Respect",a:"اِحْتِرَام"}, 
-            {e:"One who respects",a:"مُحْتَرِم"}, {e:"Respected",a:"مُحْتَرَم"}, {e:"Tour",a:"جَوْلَة"}, 
-            {e:"To cover (finances)",a:"غَطَّى"}, {e:"Funding",a:"تَغْطِيَة"}, {e:"Funder",a:"مُغَطِّي"}, 
-            {e:"Covered",a:"مُغَطَّى"}, {e:"Victim",a:"ضَحِيَّة"}, {e:"To pay",a:"دَفَعَ"}, {e:"Payment",a:"دَفْع"}, 
-            {e:"Paid",a:"مَدْفُوع"}, {e:"Crisis",a:"أَزْمَة"}, {e:"To expect",a:"تَوَقَّعَ"}, {e:"Expectation",a:"تَوَقُّع"}, 
-            {e:"Expected",a:"مُتَوَقَّع"}, {e:"Guard",a:"حَرَسَ"}, {e:"Bringing",a:"جَيْب"}, 
-            {e:"Pocket",a:"جَيْب"}, {e:"Cooperation",a:"تَعَاوُن"}, {e:"To put",a:"حَطَّ"}, 
-            {e:"Putting",a:"حَطّ"}, {e:"Stop",a:"مَحَطَّة"}, {e:"Insurance",a:"تَأْمِين"}, 
-            {e:"To take",a:"أَخَذَ"}, {e:"Acquisition",a:"أَخْذ"}, {e:"Taker",a:"آخِذ"}, {e:"Taken",a:"مَأْخُوذ"}, 
-            {e:"Temporary",a:"مُؤَقَّت"}, {e:"To visit",a:"زَارَ"}, {e:"Visit",a:"زِيَارَة"}, {e:"Visitor",a:"زَائِر"}, 
-            {e:"Visited",a:"مَزُور"}, {e:"Shrine",a:"مَزَار"}, {e:"Influence",a:"تَأْثِير"}, 
-            {e:"To try",a:"جَرَّبَ"}, {e:"Experience",a:"تَجْرِبَة"}, {e:"Tester",a:"مُجَرِّب"}, 
-            {e:"Proven",a:"مُجَرَّب"}, {e:"Ghost",a:"شَبَح"}, {e:"To repair",a:"صَلَّحَ"}, 
-            {e:"Repair",a:"تَصْلِيح"}, {e:"Repairman",a:"مُصَلِّح"}, {e:"Repaired",a:"مُصَلَّح"}, 
-            {e:"Success",a:"نَجَاح"}, {e:"In",a:"بِـ"}, {e:"From",a:"مِنْ"}, 
-            {e:"On",a:"عَلَى"}, {e:"To",a:"لَـ"}, {e:"As",a:"كَمَا"}, 
-            {e:"Similar to",a:"مِثْل"}, {e:"Beside",a:"جَنْب"}, {e:"Under",a:"تَحْتَ"}, 
-            {e:"Above",a:"فَوْقَ"}, {e:"Around",a:"حَوْلَ"}, {e:"Circle",a:"دَائِرَة"}, {e:"Role",a:"دَوْر"}, 
-            {e:"Turn",a:"دَوْر"}, {e:"Moderate",a:"مُعْتَدِل"}, {e:"Level",a:"مُسْتَوَى"}, {e:"Degree",a:"دَرَجَة"}, 
-            {e:"Hot",a:"شُوب"}, {e:"Warm",a:"دَافِئ"}, {e:"Cold",a:"بَارِد"}, {e:"Foreigner",a:"أَجْنَبِي"}, 
-            {e:"Middle East",a:"الشَّرْقُ الْأَوْسَط"}, {e:"Ocean",a:"مُحِيط"}, {e:"Alliance",a:"حِلْف"}, 
-            {e:"Allies",a:"حُلَفَاء"}, {e:"Enemy",a:"عَدُوّ"}, {e:"Friend",a:"صَدِيق"}, {e:"Solution",a:"حَلّ"}, 
-            {e:"Part",a:"جُزْء"}, {e:"Conflict",a:"نِزاَع"}, {e:"Challenges",a:"تَحَدّيات"}, 
-            {e:"Injured",a:"مُصَآب"}, {e:"Valid",a:"صَالِح"}, {e:"Warning",a:"تَحْذِير"}, {e:"Mortuary",a:"مَشْرَحَة"}, 
-            {e:"To piss",a:"فَنْتَر"}, {e:"Directly",a:"مُبآشَر"}, {e:"Wallet",a:"مَحْفَظَة"}, 
-            {e:"Nightlife",a:"حَيَاةٌ لَيْلِيَّة"}, {e:"Confluence",a:"اِلْتِقَاءُ"}, {e:"Social life",a:"حَيَاةٌ اِجْتِمَاعِيَّة"}, 
-            {e:"Night club",a:"نَوَادِي لَيْلِيَّة"}, {e:"Friendship",a:"صَدَاقَة"}, {e:"Priorities",a:"أَوْلَوِيَّات"}, 
-            {e:"Buildings",a:"بِنَايَات"}, {e:"Professional",a:"مُحْتَرِف"}, {e:"Live music",a:"مُوسِيقَى مُبَاشِرَة"}, 
-            {e:"Energy",a:"طَاقَة"}, {e:"Tough",a:"صَلْب"}, {e:"Slow",a:"بَطِيء"}, 
-            {e:"Settlement",a:"مُسْتَعمَرة"}, {e:"Raft",a:"طَوْف"}, {e:"Cheap",a:"رَخِيص"}, {e:"Square",a:"مَيْدَان"}, 
-            {e:"Lake",a:"بُحَيْرَة"}, {e:"River",a:"نَهْر"}, {e:"To provide",a:"وَفَّرَ"}, {e:"Provision",a:"تَوْفِير"}, 
-            {e:"Provider",a:"مُوَفِّر"}, {e:"Provided",a:"مُوَفَّر"}, {e:"Interests",a:"مَصَالِح"}, 
-            {e:"To prepare",a:"جَهَّزَ"}, {e:"Preparation",a:"تَجْهِيز"}, {e:"Preparer",a:"مُجَهِّز"}, 
-            {e:"Prepared",a:"مُجَهَّز"}, {e:"Device",a:"جَهَاز"}, {e:"Position",a:"مَوْقِف"}, 
-            {e:"Validity period",a:"مُدة صَلاحِية"}, {e:"Affairs",a:"شُؤُون"}, {e:"Conditions",a:"شُرُوط"}, 
-            {e:"Charges",a:"تُهَم"}, {e:"Trial",a:"مُحَاكَمَة"}, {e:"Judgment",a:"حُكْم"}, {e:"Conviction",a:"إِدَانَة"}, 
-            {e:"Defendant",a:"مُدَّعًى عَلَيْهِ"}, {e:"Accused",a:"مُتَّهَم"}, {e:"Convict",a:"مُدَان"}, 
-            {e:"Lawsuit",a:"دَعْوَى"}, {e:"Acquittal",a:"تَبْرِئَة"}, {e:"Admission of refugees",a:"قَبُول اللاَّجِئِين"}, 
-            {e:"Hosting of refugees",a:"اِسْتِضَافَة اللاَّجِئِين"}, {e:"Resettles",a:"بِتْوَطِّنْ"}, 
-            {e:"Principles",a:"مَبَادِئ"}, {e:"For the sake of",a:"لِأَجْلِ"}, {e:"Profit",a:"رِبْح"}, 
-            {e:"Former",a:"سَابِقٍ"}, {e:"Coordinator",a:"مُنَسِّقٍ"}, {e:"Altruistic",a:"الْإِيثَارِي"}, 
-            {e:"To reject",a:"رَفَضَ"}, {e:"List",a:"قَائِمَة"}, {e:"To impose",a:"فَرَضَ"}, 
-            {e:"Wellbeing",a:"عَافِيَة"}, {e:"Access",a:"وُصُول"}, {e:"Discrimination",a:"تَمْيِيز"}, 
-            {e:"Fair treatment",a:"مُعَامَلَة عَادِلَة"}, {e:"Frankly",a:"بِصَرَاحَة"}, {e:"Free time",a:"وَقْتُ فَرَاغ"}, 
-            {e:"Famous",a:"مَشْهُور"}, {e:"Law",a:"قَانُون"}, {e:"Constitution",a:"دُسْتُور"}, {e:"Culture",a:"ثَقَافَة"}, 
-            {e:"Sanctions",a:"عُقُوبَات"}, {e:"Immigration",a:"هِجْرَة"}, {e:"Immigrant",a:"مُهَاجِر"}, 
-            {e:"Reciprocity",a:"مُعَامَلَة بِالمِثْل"}, {e:"Enforceable",a:"قَابِلٌ لِلتَّنْفِيذ"}, 
-            {e:"Eligibility",a:"أَهْلِيَّة"}, {e:"Trafficking of children",a:"اِتِّجَارُ الْأَطْفَال"}, 
-            {e:"Child adoption",a:"تَبَنِّي الْأَطْفَال"}, {e:"Direct relative",a:"قَرِيبٌ مُبَاشِر"}, 
-            {e:"Kidnapping",a:"خَطْف"}, {e:"Adoptive parents",a:"وَالِدَين مُتَبَنِّيَيْن"}, 
-            {e:"Adopted child",a:"أَطْفَالٌ مُتَبَنَّوْن"}, {e:"1 / One",a:"١"}, 
-            {e:"2 / Two",a:"٢"}, {e:"3 / Three",a:"٣"}, {e:"4 / Four",a:"٤"}, 
-            {e:"5 / Five",a:"٥"}, {e:"6 / Six",a:"٦"}, {e:"7 / Seven",a:"٧"}, 
-            {e:"8 / Eight",a:"٨"}, {e:"9 / Nine",a:"٩"}, {e:"To follow",a:"تَابَعَ"}, 
-            {e:"Following",a:"مُتَابَعَة"}, {e:"Follower",a:"مُتَابِع"}, {e:"Followed",a:"مُتَابَع"}, 
-            {e:"Approach",a:"نَهْج"}, {e:"To submit",a:"قَدَّمَ"}, {e:"Submission",a:"تَقْدِيم"}, 
-            {e:"Provider",a:"مُقَدِّم"}, {e:"Submitted",a:"مُقَدَّم"}, {e:"Terrorist",a:"إِرْهَابِي"}, 
-            {e:"To rent",a:"اِسْتَأْجَرَ"}, {e:"Renting",a:"اِسْتِئْجَار"}, {e:"Tenant",a:"مُسْتَأْجِر"}, 
-            {e:"Rented",a:"مُسْتَأْجَر"}, {e:"Competition",a:"مُنَافَسَة"}, {e:"To torture",a:"عَذَّبَ"}, 
-            {e:"Torture",a:"تَعْذِيب"}, {e:"Torturer",a:"مُعَذِّب"}, {e:"Tortured",a:"مُعَذَّب"}, 
-            {e:"Transportation",a:"نَقْل"}, {e:"To move",a:"نَقَلَ"}, {e:"Carrier",a:"نَاقِل"}, 
-            {e:"Moved",a:"مَنْقُول"}, {e:"Bus stop",a:"مَوْقِفُ الْبَاص"}, {e:"Stairs",a:"دَرَج"}, 
-            {e:"You are right",a:"مَعَكْ حَقّ"}, {e:"No doubt",a:"مَا فِي شَكّ"}, 
-            {e:"Done by",a:"مِن قِبَلِ"}, {e:"Exploitation",a:"اِسْتِغْلَال"}, 
-            {e:"GDP",a:"النَّاتِجُ المَحَلِّيُّ"}, {e:"Garbage",a:"زِبَالَة"}, {e:"Stability",a:"اِسْتِقْرَار"}, 
-            {e:"Quality",a:"جَوْدَة"}, {e:"Currency",a:"عُمْلَة"}, {e:"Disarmament",a:"نَزْعُ السَّلَاح"}, 
-            {e:"Region",a:"مِنْطَقَة"}, {e:"Continent",a:"قَارَّة"}, {e:"Fruit",a:"فَوَاكِه"}, 
-            {e:"Grains",a:"حُبُوب"}, {e:"Intervention",a:"تَدَخُّل"}, {e:"Product",a:"مُنْتَج"}, 
-            {e:"Aircraft carrier",a:"حَامِلَةُ الطَّائِرَات"}, {e:"Industry",a:"صِنَاعَة"}, {e:"Failure",a:"فَشَل"}, 
-            {e:"Tradition",a:"تَقْلِيد"}, {e:"Sister",a:"أُخْت"}, {e:"Brother",a:"أَخ"}, {e:"Father",a:"أَبُ"}, 
-            {e:"Mother",a:"إِمّ"}, {e:"Identity",a:"هُوِيَّة"}, {e:"Family",a:"عَائِلَة"}, {e:"Normal",a:"عَادِي"}, 
-            {e:"Cap",a:"طَاقِيَّة"}, {e:"Expert",a:"خَبِير"}, {e:"Hurricane",a:"إِعْصَار"}, {e:"Gender",a:"جِنْس"}, 
-            {e:"Little",a:"قَلِيل"}, {e:"Combatant",a:"مُتَحَارِب"}, {e:"Desert",a:"صَحْرَاء"}, 
-            {e:"Rock",a:"صَخْرَة"}, {e:"Wounded",a:"مُتَضَرِّر"}, 
-            {e:"To forgive",a:"سَامَح"}, {e:"Forgiveness",a:"مُسَامَحَة"}, {e:"Forgiving",a:"مُسَامِح"}, 
-            {e:"Forgiven",a:"مُسَامَح"}, {e:"Apartment block",a:"عِمَارَة"}, {e:"To allow",a:"سَمَح"}, 
-            {e:"Permission",a:"سَمَاح"}, {e:"Permitting",a:"سَامِح"}, {e:"Allowed",a:"مَسْمُوح"}, 
-            {e:"Invitation",a:"دَعْوَة"}, {e:"To drink",a:"شَرِبَ"}, {e:"Drinking",a:"شُرْب"}, 
-            {e:"Drinker",a:"شَارِب"}, {e:"Beverage",a:"مَشْرُوب"}, {e:"Gift",a:"هَدِيَّة"}
+        const vocabDataArb = [
+            {e:"House",t:"بيت"}, {e:"Car",t:"سيارة"}, {e:"Boy",t:"ولد"}, {e:"Girl",t:"بنت"}, 
+            {e:"Officer",t:"ضابط"}, {e:"American Embassy",t:"السفارة الامريكية"}, {e:"City",t:"مدينة"}, 
+            {e:"Translator",t:"مترجم"}, {e:"Trip",t:"رحلة"}, {e:"I",t:"انا"}, {e:"He",t:"هو"}, 
+            {e:"You (m)",t:"انت"}, {e:"We",t:"نحن"}, {e:"You (all)",t:"انتو"}, {e:"You (f)",t:"انت"}, 
+            {e:"Who?",t:"مين؟"}, {e:"Where?",t:"وين؟"}, {e:"She",t:"هي"}, {e:"Must",t:"لازم"}, 
+            {e:"Early",t:"بكير"}, {e:"Why?",t:"ليش؟"}, {e:"Because",t:"عشان"}, {e:"How?",t:"كيف؟"}, 
+            {e:"With",t:"مع"}, {e:"A lot",t:"كثير"}, {e:"Tired (pl)",t:"تعبانين"}, {e:"They",t:"هم"}, 
+            {e:"Yesterday",t:"مبارح"}, {e:"What?",t:"شو؟"}, {e:"What's up?",t:"شو عاملين؟"}, 
+            {e:"Tomorrow",t:"بكرة"}, {e:"Holiday",t:"عطلة"}, {e:"Also",t:"كمان"}, {e:"Beautiful",t:"حلو"}, 
+            {e:"Weather",t:"الطقس"}, {e:"Great!",t:"تمام!"}, {e:"Consul",t:"القنصل"}, {e:"Employee (f)",t:"موظفة"}, 
+            {e:"Year",t:"سنة"}, {e:"Section",t:"القسم"}, {e:"To arrive",t:"وَصَلَ"}, {e:"Week",t:"اسبوع"}, 
+            {e:"But",t:"بس"}, {e:"Before / Ago",t:"قبل"}, {e:"Month",t:"شهر"}, {e:"To speak",t:"حَكَى"}, 
+            {e:"Your children",t:"اولادك"}, {e:"To walk",t:"مَشَى"}, {e:"Well",t:"منيح"}, {e:"Arabic",t:"عربي"}, 
+            {e:"To have fun",t:"اِنْبَسَطَ"}, {e:"FSI",t:"المعهد الدبلوماسي"}, {e:"Affiliated to",t:"تابع ل"}, 
+            {e:"Day",t:"يوم"}, {e:"To travel",t:"سَافَرَ"}, {e:"Security",t:"امن"}, {e:"Hello (response)",t:"اهلين"}, 
+            {e:"Big",t:"كبير"}, {e:"Married (m)",t:"متزوج"}, {e:"How are you?",t:"كيف الحال؟"}, 
+            {e:"Far away from",t:"بعيد عن"}, {e:"Hello",t:"مرحبا"}, {e:"Thank God",t:"الحدلله"}, 
+            {e:"Which?",t:"أي؟"}, {e:"No",t:"ما"}, {e:"By God (vala)",t:"والله"}, {e:"Company",t:"شركة"}, 
+            {e:"Airport",t:"المطار"}, {e:"To be",t:"كَانَ"}, {e:"Rain",t:"مطر"}, {e:"To see",t:"شَافَ"}, 
+            {e:"Computer",t:"كمبيوتر"}, {e:"Wine",t:"نَبيذ"}, {e:"Pig",t:"خِنزير"}, {e:"Police",t:"شرطة"}, 
+            {e:"Traffic accident",t:"حادث سيارة"}, {e:"Pirate / Hacker",t:"قرصان"}, {e:"Soldier",t:"عسكري"}, 
+            {e:"Weapon",t:"سلاح"}, {e:"Thief",t:"حرامي"}, {e:"Rocket",t:"صاروخ"}, {e:"Official",t:"رَسمي"}, 
+            {e:"Documents",t:"أوراق"}, {e:"Forged",t:"مُزَوَرة"}, {e:"Bomb",t:"قنبلة"}, {e:"Passport",t:"جَواز"}, 
+            {e:"Income",t:"دخل"}, {e:"Fraud",t:"احتيال"}, {e:"United Nations",t:"الأمم المتحدة"}, 
+            {e:"Fees",t:"رسوم"}, {e:"Confirmation",t:"تأكيد"}, {e:"Contract",t:"عقد"}, {e:"Agreement",t:"اتفاق"}, 
+            {e:"Account",t:"حساب"}, {e:"Proof",t:"دليل"}, {e:"Investigation",t:"تحقيق"}, {e:"Letter",t:"رسالة"}, 
+            {e:"Conversation",t:"حديث"}, {e:"Envelope",t:"ظرف"}, {e:"Citizenship",t:"جنسية"}, 
+            {e:"Elections",t:"انتخابات"}, {e:"Exam",t:"امتحان"}, {e:"Explosion",t:"انفجار"}, {e:"Military",t:"جيش"}, 
+            {e:"Scholarship",t:"منحة"}, {e:"Danger",t:"خطر"}, {e:"Armed persons",t:"مسلحين"}, 
+            {e:"Official",t:"مسؤول"}, {e:"Criminal",t:"إجرامي / مجرم"}, {e:"Crime",t:"جريمة"}, 
+            {e:"Candidate",t:"مرشح"}, {e:"Interesting",t:"ممتع"}, {e:"House of Representatives",t:"مجلس النواب"}, 
+            {e:"Member",t:"عضو"}, {e:"Judge",t:"قاضي"}, {e:"Window",t:"شباك"}, {e:"Executive Branch",t:"السلطة التنفيذيّة"}, 
+            {e:"Future",t:"مستقبل"}, {e:"Negotiations",t:"مفاوضات"}, {e:"Judicial Branch",t:"السلطة القضائيّة"}, 
+            {e:"Difference",t:"فرق"}, {e:"Legislative Branch",t:"السلطة التشريعيّة"}, {e:"Value",t:"قيمة"}, 
+            {e:"Discussion",t:"مناقشة"}, {e:"Capitalist",t:"رأسمالي"}, {e:"Sometimes",t:"أحياناً"}, 
+            {e:"Usually",t:"عادةً"}, {e:"Never",t:"أبداً"}, {e:"Rarely",t:"نادراً"}, {e:"Often",t:"غالباً"}, 
+            {e:"Always",t:"دايماً"}, {e:"Hall",t:"قاعة"}, {e:"Independence",t:"استقلال"}, {e:"Bell",t:"جرس"}, 
+            {e:"Middle",t:"وسط"}, {e:"Start",t:"بداية"}, {e:"The end",t:"آخر"}, {e:"Expression",t:"تعبير"}, 
+            {e:"Mediator",t:"وسيط"}, {e:"Star",t:"نجمة"}, {e:"Political Party",t:"حزب"}, {e:"Assembly",t:"تجمع"}, 
+            {e:"Demonstrations",t:"مظاهرات"}, {e:"Increase",t:"زيادة"}, {e:"Decrease",t:"نقصان"}, 
+            {e:"Behind",t:"ورا"}, {e:"Camp",t:"مخيّم"}, {e:"In front",t:"قدام"}, {e:"Attack",t:"هجوم"}, 
+            {e:"Prison",t:"سجن"}, {e:"Detention",t:"حبس"}, {e:"To expect",t:"تَوَقَّعَ"}, {e:"Red Cross",t:"الصَليب الأحْمَر"}, 
+            {e:"To combat",t:"كافَحَ"}, {e:"Deal",t:"صَفْقَة"}, {e:"To communicate",t:"تَوَاصَلَ"}, {e:"Branch",t:"فَرْع"}, 
+            {e:"To request / To demand",t:"طَالَب"}, {e:"Price",t:"سِعِر"}, {e:"To declare",t:"أَعْلَن"}, 
+            {e:"Dialogue",t:"حِوَار"}, {e:"Hostage",t:"رَهِينَة"}, {e:"Influence",t:"نُفُوذ"}, {e:"Guilty",t:"مُذْنِب"}, 
+            {e:"Repatriation",t:"إعادة إلى الوطن"}, {e:"Exit",t:"مخرج"}, {e:"Fingerprints",t:"بصمات"}, 
+            {e:"Misunderstanding",t:"سوء تَفاهُم"}, {e:"Spy",t:"جاسوس"}, {e:"Inside",t:"داخل"}, {e:"Detainee",t:"مُعتَقَل"}, 
+            {e:"Suspect",t:"مُشْتَبَه"}, {e:"Terminology",t:"مُصْطَلَحات"}, {e:"Victims of disaster",t:"منكوب"}, 
+            {e:"Benefit",t:"فائدة"}, {e:"Soap",t:"صابون"}, {e:"Palace",t:"قَصْر"}, {e:"Scissors",t:"مِقَصّ"}, 
+            {e:"Warehouse",t:"مَخْزَن"}, {e:"Injustice",t:"ظُلْم"}, {e:"Soup",t:"شوربة"}, {e:"Pen",t:"قَلَم"}, 
+            {e:"Airplane",t:"طيّارة"}, {e:"Answer",t:"جَوَاب"}, {e:"Boat",t:"قَارِب"}, {e:"Evacuation",t:"إخلاء"}, 
+            {e:"Emergency",t:"طوارئ"}, {e:"Skiing",t:"تَزَلُّج"}, {e:"Disaster",t:"كَارِثَة"}, {e:"Revolution",t:"ثَوْرَة"}, 
+            {e:"Picture",t:"صورة"}, {e:"Library",t:"مَكْتَبَة"}, {e:"Museum",t:"مَتْحَف"}, {e:"Office",t:"مَكْتَب"}, 
+            {e:"School",t:"مَدْرَسَة"}, {e:"Hospital",t:"مُسْتَشْفَى"}, {e:"Shop",t:"مَحَلّ"}, {e:"University",t:"جَامِعَة"}, 
+            {e:"Institute",t:"مَعْهَد"}, {e:"Mosque",t:"مَسْجِد"}, {e:"Stress",t:"ضَغْط"}, {e:"Happy",t:"مبسوط"}, 
+            {e:"Disgusted",t:"قَرِفان"}, {e:"Psychological problems",t:"مَشَاكِل نَفْسِيَّة"}, {e:"Sad",t:"زعلان"}, 
+            {e:"Angry",t:"معصّب"}, {e:"Feelings / Emotions",t:"عواطِف"}, {e:"Scared",t:"خايف"}, 
+            {e:"Surprised",t:"متفاجئ"}, {e:"To bring",t:"جَابَ"}, {e:"Results",t:"نَتائج"}, {e:"To cook",t:"طَبَخَ"}, 
+            {e:"Delicious",t:"زاكي"}, {e:"Conference",t:"مؤتَمَر"}, {e:"Expensive",t:"غالي"}, {e:"To love / To like",t:"حَبّ"}, 
+            {e:"And",t:"و"}, {e:"Or",t:"او"}, {e:"When",t:"لما"}, {e:"If",t:"اذا"}, {e:"Therefore",t:"عشان هيك"}, 
+            {e:"According to",t:"حسب"}, {e:"During",t:"خلال"}, {e:"So",t:"فَ"}, {e:"For example",t:"مَثَلاً"}, 
+            {e:"Depends on",t:"بيعتمد على"}, {e:"Approximately",t:"تقريباً"}, {e:"It differs",t:"بيختلف"}, 
+            {e:"Like",t:"زي"}, {e:"Is considered",t:"يُعتبر"}, {e:"Until",t:"حتى"}, {e:"Mountain",t:"جَبَل"}, 
+            {e:"In my opinion",t:"برأيي"}, {e:"Long time ago",t:"من زمان"}, {e:"Olives",t:"زَيْتُون"}, 
+            {e:"Yoghurt",t:"لَبَن"}, {e:"Eggs",t:"بَيْض"}, {e:"Milk",t:"حَلِيب"}, {e:"Chicken",t:"جَاج"}, 
+            {e:"Oil",t:"زَيْت"}, {e:"Cheese",t:"جُبْن"}, {e:"Bread",t:"خُبْز"}, {e:"Fish",t:"سَمَك"}, 
+            {e:"Investment",t:"اِسْتِثْمَار"}, {e:"Export",t:"تَصْدِير"}, {e:"Import",t:"اِسْتِيرَاد"}, 
+            {e:"Development",t:"تَطْوِير"}, {e:"Field",t:"مَجَال"}, {e:"Program",t:"بَرْنَامَج"}, 
+            {e:"Theatre",t:"مَسْرَح"}, {e:"Agency",t:"وَكَالَة"}, {e:"Brain",t:"دِمَاغ"}, {e:"Season",t:"فَصْل"}, 
+            {e:"Summer",t:"صَيْف"}, {e:"Winter",t:"شِتَاء"}, {e:"Spring",t:"رَبِيع"}, {e:"Autumn",t:"خَرِيف"}, 
+            {e:"Snow",t:"تَلْج"}, {e:"Beach",t:"شَاطِئ"}, {e:"Coast",t:"سَاحِل"}, {e:"Sea",t:"بَحْر"}, 
+            {e:"Specialization",t:"اِخْتِصَاص"}, {e:"Reform",t:"إِصْلَاح"}, {e:"Exchange",t:"تَبَادُل"}, 
+            {e:"Engineer",t:"مُهَنْدِس"}, {e:"Electricity",t:"كَهْرَبَاء"}, {e:"Lawyer",t:"مُحَامِي"}, 
+            {e:"Expenses",t:"مَصْرُوف"}, {e:"Journalist",t:"صَحَفِي"}, {e:"Appointment",t:"مَوْعِد"}, 
+            {e:"To prevent",t:"مَنَعَ"}, {e:"Prevention / prohibition",t:"مَنْع"}, {e:"Obstacle",t:"مَانِع"}, 
+            {e:"Prevented / Prohibited",t:"مَمْنُوع"}, {e:"Faculty",t:"كُلِّيَّة"}, {e:"To explain",t:"شَرَحَ"}, 
+            {e:"Explanation",t:"شَرْح"}, {e:"Commentator",t:"شَارِح"}, {e:"Explained",t:"مَشْرُوح"}, 
+            {e:"Diploma",t:"شَهَادَة"}, {e:"To offer / present",t:"عَرَضَ"}, {e:"Offer / Presentation / Show",t:"عَرْض"}, 
+            {e:"Presenter / Opponent",t:"عَارِض"}, {e:"Presented / Offered",t:"مَعْرُوض"}, {e:"Showroom",t:"مَعْرِض"}, 
+            {e:"Permanent residence",t:"إِقَامَة دَائِمَة"}, {e:"Target / Goal",t:"هَدَف"}, {e:"Shelter",t:"مَلْجَأ"}, 
+            {e:"Witness",t:"شَاهِد"}, {e:"Resources",t:"مَوَارِد"}, {e:"Fair",t:"عَادِل"}, {e:"Great",t:"عَظِيم"}, 
+            {e:"Response",t:"رَدّ"}, {e:"Violence",t:"عُنْف"}, {e:"Addiction",t:"إِدْمَان"}, {e:"During",t:"خِلَالَ"}, 
+            {e:"Advisor",t:"مُسْتَشَار"}, {e:"Complicated",t:"مُعَقَّد"}, {e:"Currently",t:"حَالِيّاً"}, 
+            {e:"Project",t:"مَشْرُوع"}, {e:"Street",t:"شَارِع"}, {e:"Traffic light",t:"إشارة"}, {e:"Class",t:"صَفّ"}, 
+            {e:"Road / Way",t:"طَرِيق"}, {e:"To lose",t:"خَسِرَ"}, {e:"Loss",t:"خَسَارَة"}, {e:"Looser",t:"خَاسِر"}, 
+            {e:"Lost",t:"مَخْسُور"}, {e:"Team",t:"فَرِيق"}, {e:"To chose",t:"اِخْتَارَ"}, {e:"Choice",t:"اِخْتِيَار"}, 
+            {e:"Chooser",t:"مُخْتَار"}, {e:"Chosen",t:"مُخْتَار"}, {e:"Diving",t:"غَوْص"}, {e:"To advise",t:"نَصَحَ"}, 
+            {e:"Advice",t:"نُصْح"}, {e:"Adviser / Counselor",t:"نَاصِح"}, {e:"Hobby",t:"هِوَايَة"}, 
+            {e:"To protect",t:"حَمَى"}, {e:"Protection",t:"حِمَايَة"}, {e:"Protector",t:"حَامِي"}, 
+            {e:"Protected",t:"مَحْمِيّ"}, {e:"Sanctuary / Reserve",t:"مَحْمِيَّة"}, {e:"Vegetable",t:"خُضْرَة"}, 
+            {e:"To remember",t:"تَذَكَّرَ"}, {e:"Remembering",t:"تَذَكُّر"}, {e:"Remembered",t:"مُتَذَكَّر"}, 
+            {e:"Tree",t:"شَجَرة"}, {e:"To respect",t:"اِحْتَرَمَ"}, {e:"Respect / Esteem",t:"اِحْتِرَام"}, 
+            {e:"One who respects",t:"مُحْتَرِم"}, {e:"Respected",t:"مُحْتَرَم"}, {e:"Tour",t:"جَوْلَة"}, 
+            {e:"To cover (finances)",t:"غَطَّى"}, {e:"Funding",t:"تَغْطِيَة"}, {e:"Funder",t:"مُغَطِّي"}, 
+            {e:"Covered",t:"مُغَطَّى"}, {e:"Victim",t:"ضَحِيَّة"}, {e:"To pay",t:"دَفَعَ"}, {e:"Payment",t:"دَفْع"}, 
+            {e:"Paid",t:"مَدْفُوع"}, {e:"Crisis",t:"أَزْمَة"}, {e:"To expect",t:"تَوَقَّعَ"}, {e:"Expectation",t:"تَوَقُّع"}, 
+            {e:"Expected",t:"مُتَوَقَّع"}, {e:"Guard",t:"حَرَسَ"}, {e:"Bringing",t:"جَيْب"}, 
+            {e:"Pocket (Džep)",t:"جَيْب"}, {e:"Cooperation",t:"تَعَاوُن"}, {e:"To put",t:"حَطَّ"}, 
+            {e:"Putting",t:"حَطّ"}, {e:"Station / Stop",t:"مَحَطَّة"}, {e:"Insurance",t:"تَأْمِين"}, 
+            {e:"To take",t:"أَخَذَ"}, {e:"Acquisition",t:"أَخْذ"}, {e:"Taker",t:"آخِذ"}, {e:"Taken",t:"مَأْخُوذ"}, 
+            {e:"Temporary",t:"مُؤَقَّت"}, {e:"To visit",t:"زَارَ"}, {e:"Visit",t:"زِيَارَة"}, {e:"Visitor",t:"زَائِر"}, 
+            {e:"Visited",t:"مَزُور"}, {e:"Shrine",t:"مَزَار"}, {e:"Influence / Impact / Effect",t:"تَأْثِير"}, 
+            {e:"To try",t:"جَرَّبَ"}, {e:"Experience",t:"تَجْرِبَة"}, {e:"Tester",t:"مُجَرِّب"}, 
+            {e:"Tested / Proven",t:"مُجَرَّب"}, {e:"Ghost",t:"شَبَح"}, {e:"To repair",t:"صَلَّحَ"}, 
+            {e:"Repair",t:"تَصْلِيح"}, {e:"Repairman",t:"مُصَلِّح"}, {e:"Repaired",t:"مُصَلَّح"}, 
+            {e:"Success",t:"نَجَاح"}, {e:"In / At",t:"بِـ"}, {e:"From / Since",t:"مِنْ"}, 
+            {e:"On / Upon / To",t:"عَلَى"}, {e:"To / Towards / For",t:"لَـ"}, {e:"As",t:"كَمَا"}, 
+            {e:"Similar to",t:"مِثْل"}, {e:"Beside / Next to",t:"جَنْب"}, {e:"Under / Below",t:"تَحْتَ"}, 
+            {e:"Above",t:"فَوْقَ"}, {e:"Around",t:"حَوْلَ"}, {e:"Circle",t:"دَائِرَة"}, {e:"Role",t:"دَوْر"}, 
+            {e:"Turn",t:"دَوْر"}, {e:"Moderate",t:"مُعْتَدِل"}, {e:"Level",t:"مُسْتَوَى"}, {e:"Degree",t:"دَرَجَة"}, 
+            {e:"Hot",t:"شُوب"}, {e:"Warm",t:"دَافِئ"}, {e:"Cold",t:"بَارِد"}, {e:"Foreigner",t:"أَجْنَبِي"}, 
+            {e:"Middle East",t:"الشَّرْقُ الْأَوْسَط"}, {e:"Ocean",t:"مُحِيط"}, {e:"Alliance",t:"حِلْف"}, 
+            {e:"Allies",t:"حُلَفَاء"}, {e:"Enemy",t:"عَدُوّ"}, {e:"Friend",t:"صَدِيق"}, {e:"Solution",t:"حَلّ"}, 
+            {e:"Part",t:"جُزْء"}, {e:"Conflict",t:"نِزاَع"}, {e:"Challenges",t:"تَحَدّيات"}, 
+            {e:"Injured",t:"مُصَآب"}, {e:"Valid",t:"صَالِح"}, {e:"Warning",t:"تَحْذِير"}, {e:"Mortuary",t:"مَشْرَحَة"}, 
+            {e:"To piss",t:"فَنْتَر"}, {e:"Directly",t:"مُبآشَر"}, {e:"Wallet",t:"مَحْفَظَة"}, 
+            {e:"Nightlife",t:"حَيَاةٌ لَيْلِيَّة"}, {e:"Confluence",t:"اِلْتِقَاءُ"}, {e:"Social life",t:"حَيَاةٌ اِجْتِمَاعِيَّة"}, 
+            {e:"Night club",t:"نَوَادِي لَيْلِيَّة"}, {e:"Friendship",t:"صَدَاقَة"}, {e:"Priorities",t:"أَوْلَوِيَّات"}, 
+            {e:"Buildings",t:"بِنَايَات"}, {e:"Professional",t:"مُحْتَرِف"}, {e:"Live music",t:"مُوسِيقَى مُبَاشِرَة"}, 
+            {e:"Energy",t:"طَاقَة"}, {e:"Gritty (Tough)",t:"صَلْب"}, {e:"Slow",t:"بَطِيء"}, 
+            {e:"Settlement",t:"مُسْتَعمَرة"}, {e:"Raft",t:"طَوْف"}, {e:"Cheap",t:"رَخِيص"}, {e:"Square",t:"مَيْدَان"}, 
+            {e:"Lake",t:"بُحَيْرَة"}, {e:"River",t:"نَهْر"}, {e:"To provide",t:"وَفَّرَ"}, {e:"Provision",t:"تَوْفِير"}, 
+            {e:"Provider",t:"مُوَفِّر"}, {e:"Provided",t:"مُوَفَّر"}, {e:"Interests",t:"مَصَالِح"}, 
+            {e:"To prepare",t:"جَهَّزَ"}, {e:"Preparation",t:"تَجْهِيز"}, {e:"Preparer",t:"مُجَهِّز"}, 
+            {e:"Prepared",t:"مُجَهَّز"}, {e:"Device",t:"جَهَاز"}, {e:"Position",t:"مَوْقِف"}, 
+            {e:"Validity period",t:"مُدة صَلاحِية"}, {e:"Affairs",t:"شُؤُون"}, {e:"Conditions",t:"شُرُوط"}, 
+            {e:"Charges",t:"تُهَم"}, {e:"Trial",t:"مُحَاكَمَة"}, {e:"Judgment",t:"حُكْم"}, {e:"Conviction",t:"إِدَانَة"}, 
+            {e:"Defendant",t:"مُدَّعًى عَلَيْهِ"}, {e:"Accused",t:"مُتَّهَم"}, {e:"Convict",t:"مُدَان"}, 
+            {e:"Lawsuit",t:"دَعْوَى"}, {e:"Acquittal",t:"تَبْرِئَة"}, {e:"Admission of refugees",t:"قَبُول اللاَّجِئِين"}, 
+            {e:"Hosting of refugees",t:"اِسْتِضَافَة اللاَّجِئِين"}, {e:"Resettles",t:"بِتْوَطِّنْ"}, 
+            {e:"Principles",t:"مَبَادِئ"}, {e:"For the sake of",t:"لِأَجْلِ"}, {e:"Profit",t:"رِبْح"}, 
+            {e:"Former",t:"سَابِقٍ"}, {e:"Coordinator",t:"مُنَسِّقٍ"}, {e:"Altruistic",t:"الْإِيثَارِي"}, 
+            {e:"To reject",t:"رَفَضَ"}, {e:"List",t:"قَائِمَة"}, {e:"To impose",t:"فَرَضَ"}, 
+            {e:"Wellbeing",t:"عَافِيَة"}, {e:"Access",t:"وُصُول"}, {e:"Discrimination",t:"تَمْيِيز"}, 
+            {e:"Fair treatment",t:"مُعَامَلَة عَادِلَة"}, {e:"Frankly",t:"بِصَرَاحَة"}, {e:"Free time",t:"وَقْتُ فَرَاغ"}, 
+            {e:"Famous",t:"مَشْهُور"}, {e:"Law",t:"قَانُون"}, {e:"Constitution",t:"دُسْتُور"}, {e:"Culture",t:"ثَقَافَة"}, 
+            {e:"Sanctions",t:"عُقُوبَات"}, {e:"Immigration",t:"هِجْرَة"}, {e:"Immigrant",t:"مُهَاجِر"}, 
+            {e:"Reciprocity",t:"مُعَامَلَة بِالمِثْل"}, {e:"Enforceable",t:"قَابِلٌ لِلتَّنْفِيذ"}, 
+            {e:"Eligibility",t:"أَهْلِيَّة"}, {e:"Trafficking of children",t:"اِتِّجَارُ الْأَطْفَال"}, 
+            {e:"Child adoption",t:"تَبَنِّي الْأَطْفَال"}, {e:"Direct relative",t:"قَرِيبٌ مُبَاشِر"}, 
+            {e:"Kidnapping",t:"خَطْف"}, {e:"Adoptive parents",t:"وَالِدَين مُتَبَنِّيَيْن"}, 
+            {e:"Adopted child",t:"أَطْفَالٌ مُتَبَنَّوْن"}, {e:"1 / One",t:"١ / وَاحِد"}, 
+            {e:"2 / Two",t:"٢ / اِتْنَيْن"}, {e:"3 / Three",t:"٣ / تَلَاتَة"}, {e:"4 / Four",t:"٤ / أَرْبَعَة"}, 
+            {e:"5 / Five",t:"٥ / خَمْسَة"}, {e:"6 / Six",t:"٦ / سِتَّة"}, {e:"7 / Seven",t:"٧ / سَبْعَة"}, 
+            {e:"8 / Eight",t:"٨ / تْمَانْيَة"}, {e:"9 / Nine",t:"٩ / تِسْعَة"}, {e:"To follow",t:"تَابَعَ"}, 
+            {e:"Following",t:"مُتَابَعَة"}, {e:"Follower",t:"مُتَابِع"}, {e:"Followed",t:"مُتَابَع"}, 
+            {e:"Approach",t:"نَهْج"}, {e:"To submit",t:"قَدَّمَ"}, {e:"Submission",t:"تَقْدِيم"}, 
+            {e:"Provider",t:"مُقَدِّم"}, {e:"Submitted",t:"مُقَدَّم"}, {e:"Terrorist",t:"إِرْهَابِي"}, 
+            {e:"To rent",t:"اِسْتَأْجَرَ"}, {e:"Renting",t:"اِسْتِئْجَار"}, {e:"Tenant",t:"مُسْتَأْجِر"}, 
+            {e:"Rented",t:"مُسْتَأْجَر"}, {e:"Competition",t:"مُنَافَسَة"}, {e:"To torture",t:"عَذَّبَ"}, 
+            {e:"Torture",t:"تَعْذِيب"}, {e:"Torturer",t:"مُعَذِّب"}, {e:"Tortured",t:"مُعَذَّب"}, 
+            {e:"Transportation",t:"نَقْل"}, {e:"To move",t:"نَقَلَ"}, {e:"Carrier",t:"نَاقِل"}, 
+            {e:"Moved",t:"مَنْقُول"}, {e:"Bus stop",t:"مَوْقِفُ الْبَاص"}, {e:"Stairs",t:"دَرَج"}, 
+            {e:"You are right",t:"مَعَكْ حَقّ"}, {e:"No doubt",t:"مَا فِي شَكّ"}, 
+            {e:"Done by",t:"مِن قِبَلِ"}, {e:"Exploitation",t:"اِسْتِغْلَال"}, 
+            {e:"GDP",t:"النَّاتِجُ المَحَلِّيُّ"}, {e:"Garbage",t:"زِبَالَة"}, {e:"Stability",t:"اِسْتِقْرَار"}, 
+            {e:"Quality",t:"جَوْدَة"}, {e:"Currency",t:"عُمْلَة"}, {e:"Disarmament",t:"نَزْعُ السَّلَاح"}, 
+            {e:"Region",t:"مِنْطَقَة"}, {e:"Continent",t:"قَارَّة"}, {e:"Fruit",t:"فَوَاكِه"}, 
+            {e:"Grains",t:"حُبُوب"}, {e:"Intervention",t:"تَدَخُّل"}, {e:"Product",t:"مُنْتَج"}, 
+            {e:"Aircraft carrier",t:"حَامِلَةُ الطَّائِرَات"}, {e:"Industry",t:"صِنَاعَة"}, {e:"Failure",t:"فَشَل"}, 
+            {e:"Tradition",t:"تَقْلِيد"}, {e:"Sister",t:"أُخْت"}, {e:"Brother",t:"أَخ"}, {e:"Father",t:"أَبُ"}, 
+            {e:"Mother",t:"إِمّ"}, {e:"Identity",t:"هُوِيَّة"}, {e:"Family",t:"عَائِلَة"}, {e:"Normal",t:"عَادِي"}, 
+            {e:"Cap",t:"طَاقِيَّة"}, {e:"Expert",t:"خَبِير"}, {e:"Hurricane",t:"إِعْصَار"}, {e:"Gender",t:"جِنْس"}, 
+            {e:"Little",t:"قَلِيل"}, {e:"Combatant",t:"مُتَحَارِب"}, {e:"Desert",t:"صَحْرَاء"}, 
+            {e:"Rock",t:"صَخْرَة"}, {e:"Wounded",t:"مُتَضَرِّر"}, 
+            {e:"To forgive",t:"سَامَح"}, {e:"Forgiveness",t:"مُسَامَحَة"}, {e:"Forgiving",t:"مُسَامِح"}, 
+            {e:"Forgiven",t:"مُسَامَح"}, {e:"Apartment block",t:"عِمَارَة"}, {e:"To allow",t:"سَمَح"}, 
+            {e:"Permission",t:"سَمَاح"}, {e:"Permitting",t:"سَامِح"}, {e:"Allowed",t:"مَسْمُوح"}, 
+            {e:"Invitation",t:"دَعْوَة"}, {e:"To drink",t:"شَرِبَ"}, {e:"Drinking",t:"شُرْب"}, 
+            {e:"Drinker",t:"شَارِب"}, {e:"Beverage",t:"مَشْرُوب"}, {e:"Gift",t:"هَدِيَّة"}
         ];
 
-        // DECK 2: Conjugation Driller (27 verbs x 24 conjugations = 648 cards)
-        const conjData = [
+        const vocabDataSrb = [
+            {e:"House",t:"Kuća"}, {e:"Car",t:"Auto"}, {e:"Boy",t:"Dečak"}, {e:"Girl",t:"Devojčica"}, 
+            {e:"Officer",t:"Oficir"}, {e:"American Embassy",t:"Američka ambasada"}, {e:"City",t:"Grad"}, 
+            {e:"Translator",t:"Prevodilac"}, {e:"Trip",t:"Putovanje"}, {e:"I",t:"Ja"}, {e:"He",t:"On"}, 
+            {e:"You (m)",t:"Ti (m)"}, {e:"We",t:"Mi"}, {e:"You (all)",t:"Vi"}, {e:"You (f)",t:"Ti (f)"}, 
+            {e:"Who?",t:"Ko?"}, {e:"Where?",t:"Gde?"}, {e:"She",t:"Ona"}, {e:"Must",t:"Morati"}, 
+            {e:"Early",t:"Rano"}, {e:"Why?",t:"Zašto?"}, {e:"Because",t:"Zato što"}, {e:"How?",t:"Kako?"}, 
+            {e:"With",t:"Sa"}, {e:"A lot",t:"Mnogo"}, {e:"Tired (pl)",t:"Umorni"}, {e:"They",t:"Oni"}, 
+            {e:"Yesterday",t:"Juče"}, {e:"What?",t:"Šta?"}, {e:"What's up?",t:"Šta ima?"}, 
+            {e:"Tomorrow",t:"Sutra"}, {e:"Holiday",t:"Praznik"}, {e:"Also",t:"Takođe"}, {e:"Beautiful",t:"Lepo"}, 
+            {e:"Weather",t:"Vreme"}, {e:"Great!",t:"Odlično!"}, {e:"Consul",t:"Konzul"}, {e:"Employee (f)",t:"Radnica"}, 
+            {e:"Year",t:"Godina"}, {e:"Section",t:"Odeljenje"}, {e:"To arrive",t:"Stići"}, {e:"Week",t:"Nedelja"}, 
+            {e:"But",t:"Ali"}, {e:"Before / Ago",t:"Pre"}, {e:"Month",t:"Mesec"}, {e:"To speak",t:"Govoriti"}, 
+            {e:"Your children",t:"Tvoja deca"}, {e:"To walk",t:"Hodati"}, {e:"Well",t:"Dobro"}, {e:"Arabic",t:"Arapski"}, 
+            {e:"To have fun",t:"Zabavljati se"}, {e:"FSI",t:"FSI"}, {e:"Affiliated to",t:"Povezano sa"}, 
+            {e:"Day",t:"Dan"}, {e:"To travel",t:"Putovati"}, {e:"Security",t:"Bezbednost"}, {e:"Hello (response)",t:"Zdravo"}, 
+            {e:"Big",t:"Veliko"}, {e:"Married (m)",t:"Oženjen"}, {e:"How are you?",t:"Kako si?"}, 
+            {e:"Far away from",t:"Daleko od"}, {e:"Hello",t:"Zdravo"}, {e:"Thank God",t:"Hvala Bogu"}, 
+            {e:"Which?",t:"Koji?"}, {e:"No",t:"Ne"}, {e:"By God (vala)",t:"Tako mi Boga"}, {e:"Company",t:"Kompanija"}, 
+            {e:"Airport",t:"Aerodrom"}, {e:"To be",t:"Biti"}, {e:"Rain",t:"Kiša"}, {e:"To see",t:"Videti"}, 
+            {e:"Computer",t:"Kompjuter"}, {e:"Wine",t:"Vino"}, {e:"Pig",t:"Svinja"}, {e:"Police",t:"Policija"}, 
+            {e:"Traffic accident",t:"Saobraćajna nesreća"}, {e:"Pirate / Hacker",t:"Pirat / Haker"}, {e:"Soldier",t:"Vojnik"}, 
+            {e:"Weapon",t:"Oružje"}, {e:"Thief",t:"Lopov"}, {e:"Rocket",t:"Raketa"}, {e:"Official",t:"Zvanično"}, 
+            {e:"Documents",t:"Dokumenti"}, {e:"Forged",t:"Falsifikovano"}, {e:"Bomb",t:"Bomba"}, {e:"Passport",t:"Pasoš"}, 
+            {e:"Income",t:"Prihod"}, {e:"Fraud",t:"Prevara"}, {e:"United Nations",t:"Ujedinjene nacije"}, 
+            {e:"Fees",t:"Takse"}, {e:"Confirmation",t:"Potvrda"}, {e:"Contract",t:"Ugovor"}, {e:"Agreement",t:"Sporazum"}, 
+            {e:"Account",t:"Račun"}, {e:"Proof",t:"Dokaz"}, {e:"Investigation",t:"Istraga"}, {e:"Letter",t:"Pismo"}, 
+            {e:"Conversation",t:"Razgovor"}, {e:"Envelope",t:"Koverta"}, {e:"Citizenship",t:"Državljanstvo"}, 
+            {e:"Elections",t:"Izbori"}, {e:"Exam",t:"Ispit"}, {e:"Explosion",t:"Eksplozija"}, {e:"Military",t:"Vojska"}, 
+            {e:"Scholarship",t:"Stipendija"}, {e:"Danger",t:"Opasnost"}, {e:"Armed persons",t:"Naoružana lica"}, 
+            {e:"Official",t:"Zvaničnik"}, {e:"Criminal",t:"Zločinac"}, {e:"Crime",t:"Zločin"}, 
+            {e:"Candidate",t:"Kandidat"}, {e:"Interesting",t:"Zanimljivo"}, {e:"House of Representatives",t:"Predstavnički dom"}, 
+            {e:"Member",t:"Član"}, {e:"Judge",t:"Sudija"}, {e:"Window",t:"Prozor"}, {e:"Executive Branch",t:"Izvršna vlast"}, 
+            {e:"Future",t:"Budućnost"}, {e:"Negotiations",t:"Pregovori"}, {e:"Judicial Branch",t:"Sudska vlast"}, 
+            {e:"Difference",t:"Razlika"}, {e:"Legislative Branch",t:"Zakonodavna vlast"}, {e:"Value",t:"Vrednost"}, 
+            {e:"Discussion",t:"Diskusija"}, {e:"Capitalist",t:"Kapitalista"}, {e:"Sometimes",t:"Ponekad"}, 
+            {e:"Usually",t:"Obično"}, {e:"Never",t:"Nikad"}, {e:"Rarely",t:"Retko"}, {e:"Often",t:"Često"}, 
+            {e:"Always",t:"Uvek"}, {e:"Hall",t:"Hala"}, {e:"Independence",t:"Nezavisnost"}, {e:"Bell",t:"Zvono"}, 
+            {e:"Middle",t:"Sredina"}, {e:"Start",t:"Početak"}, {e:"The end",t:"Kraj"}, {e:"Expression",t:"Izraz"}, 
+            {e:"Mediator",t:"Posrednik"}, {e:"Star",t:"Zvezda"}, {e:"Political Party",t:"Politička stranka"}, {e:"Assembly",t:"Skupština"}, 
+            {e:"Demonstrations",t:"Demonstracije"}, {e:"Increase",t:"Povećanje"}, {e:"Decrease",t:"Smanjenje"}, 
+            {e:"Behind",t:"Iza"}, {e:"Camp",t:"Kamp"}, {e:"In front",t:"Ispred"}, {e:"Attack",t:"Napad"}, 
+            {e:"Prison",t:"Zatvor"}, {e:"Detention",t:"Pritvor"}, {e:"To expect",t:"Očekivati"}, {e:"Red Cross",t:"Crveni krst"}, 
+            {e:"To combat",t:"Boriti se"}, {e:"Deal",t:"Dogovor"}, {e:"To communicate",t:"Komunicirati"}, {e:"Branch",t:"Ogranak"}, 
+            {e:"To request / To demand",t:"Zahtevati"}, {e:"Price",t:"Cena"}, {e:"To declare",t:"Proglasiti"}, 
+            {e:"Dialogue",t:"Dijalog"}, {e:"Hostage",t:"Talac"}, {e:"Influence",t:"Uticaj"}, {e:"Guilty",t:"Kriv"}, 
+            {e:"Repatriation",t:"Repatrijacija"}, {e:"Exit",t:"Izlaz"}, {e:"Fingerprints",t:"Otisci prstiju"}, 
+            {e:"Misunderstanding",t:"Nesporazum"}, {e:"Spy",t:"Špijun"}, {e:"Inside",t:"Unutra"}, {e:"Detainee",t:"Pritvorenik"}, 
+            {e:"Suspect",t:"Osumnjičeni"}, {e:"Terminology",t:"Terminologija"}, {e:"Victims of disaster",t:"Žrtve katastrofe"}, 
+            {e:"Benefit",t:"Korist"}, {e:"Soap",t:"Sapun"}, {e:"Palace",t:"Palata"}, {e:"Scissors",t:"Makaze"}, 
+            {e:"Warehouse",t:"Skladište"}, {e:"Injustice",t:"Nepravda"}, {e:"Soup",t:"Supa"}, {e:"Pen",t:"Olovka"}, 
+            {e:"Airplane",t:"Avion"}, {e:"Answer",t:"Odgovor"}, {e:"Boat",t:"Brod"}, {e:"Evacuation",t:"Evakuacija"}, 
+            {e:"Emergency",t:"Hitan slučaj"}, {e:"Skiing",t:"Skijanje"}, {e:"Disaster",t:"Katastrofa"}, {e:"Revolution",t:"Revolucija"}, 
+            {e:"Picture",t:"Slika"}, {e:"Library",t:"Biblioteka"}, {e:"Museum",t:"Muzej"}, {e:"Office",t:"Kancelarija"}, 
+            {e:"School",t:"Škola"}, {e:"Hospital",t:"Bolnica"}, {e:"Shop",t:"Prodavnica"}, {e:"University",t:"Univerzitet"}, 
+            {e:"Institute",t:"Institut"}, {e:"Mosque",t:"Džamija"}, {e:"Stress",t:"Stres"}, {e:"Happy",t:"Srećan"}, 
+            {e:"Disgusted",t:"Zgrožen"}, {e:"Psychological problems",t:"Psihološki problemi"}, {e:"Sad",t:"Tužan"}, 
+            {e:"Angry",t:"Ljut"}, {e:"Feelings / Emotions",t:"Osećanja / Emocije"}, {e:"Scared",t:"Uplašen"}, 
+            {e:"Surprised",t:"Iznenađen"}, {e:"To bring",t:"Doneti"}, {e:"Results",t:"Rezultati"}, {e:"To cook",t:"Kuvati"}, 
+            {e:"Delicious",t:"Uskusno"}, {e:"Conference",t:"Konferencija"}, {e:"Expensive",t:"Skupo"}, {e:"To love / To like",t:"Voleti / Sviđati se"}, 
+            {e:"And",t:"I"}, {e:"Or",t:"Ili"}, {e:"When",t:"Kada"}, {e:"If",t:"Ako"}, {e:"Therefore",t:"Zato"}, 
+            {e:"According to",t:"Prema"}, {e:"During",t:"Tokom"}, {e:"So",t:"Dakle"}, {e:"For example",t:"Na primer"}, 
+            {e:"Depends on",t:"Zavisi od"}, {e:"Approximately",t:"Približno"}, {e:"It differs",t:"Razlikuje se"}, 
+            {e:"Like",t:"Kao"}, {e:"Is considered",t:"Smatra se"}, {e:"Until",t:"Dok"}, {e:"Mountain",t:"Planina"}, 
+            {e:"In my opinion",t:"Po mom mišljenju"}, {e:"Long time ago",t:"Odavno"}, {e:"Olives",t:"Masline"}, 
+            {e:"Yoghurt",t:"Jogurt"}, {e:"Eggs",t:"Jaja"}, {e:"Milk",t:"Mleko"}, {e:"Chicken",t:"Piletina"}, 
+            {e:"Oil",t:"Ulje"}, {e:"Cheese",t:"Sir"}, {e:"Bread",t:"Hleb"}, {e:"Fish",t:"Riba"}, 
+            {e:"Investment",t:"Investicija"}, {e:"Export",t:"Izvoz"}, {e:"Import",t:"Uvoz"}, 
+            {e:"Development",t:"Razvoj"}, {e:"Field",t:"Polje"}, {e:"Program",t:"Program"}, 
+            {e:"Theatre",t:"Pozorište"}, {e:"Agency",t:"Agencija"}, {e:"Brain",t:"Mozak"}, {e:"Season",t:"Godišnje doba"}, 
+            {e:"Summer",t:"Leto"}, {e:"Winter",t:"Zima"}, {e:"Spring",t:"Proleće"}, {e:"Autumn",t:"Jesen"}, 
+            {e:"Snow",t:"Sneg"}, {e:"Beach",t:"Plaža"}, {e:"Coast",t:"Obala"}, {e:"Sea",t:"More"}, 
+            {e:"Specialization",t:"Specijalizacija"}, {e:"Reform",t:"Reforma"}, {e:"Exchange",t:"Razmena"}, 
+            {e:"Engineer",t:"Inženjer"}, {e:"Electricity",t:"Struja"}, {e:"Lawyer",t:"Advokat"}, 
+            {e:"Expenses",t:"Troškovi"}, {e:"Journalist",t:"Novinar"}, {e:"Appointment",t:"Sastanak"}, 
+            {e:"To prevent",t:"Sprečiti"}, {e:"Prevention / prohibition",t:"Prevencija"}, {e:"Obstacle",t:"Prepreka"}, 
+            {e:"Prevented / Prohibited",t:"Zabranjeno"}, {e:"Faculty",t:"Fakultet"}, {e:"To explain",t:"Objasniti"}, 
+            {e:"Explanation",t:"Objašnjenje"}, {e:"Commentator",t:"Komentator"}, {e:"Explained",t:"Objašnjeno"}, 
+            {e:"Diploma",t:"Diploma"}, {e:"To offer / present",t:"Ponuditi"}, {e:"Offer / Presentation / Show",t:"Prezentacija"}, 
+            {e:"Presenter / Opponent",t:"Prezenter"}, {e:"Presented / Offered",t:"Ponuđeno"}, {e:"Showroom",t:"Izložbeni salon"}, 
+            {e:"Permanent residence",t:"Stalno boravište"}, {e:"Target / Goal",t:"Cilj"}, {e:"Shelter",t:"Sklonište"}, 
+            {e:"Witness",t:"Svedok"}, {e:"Resources",t:"Resursi"}, {e:"Fair",t:"Pošteno"}, {e:"Great",t:"Odlično"}, 
+            {e:"Response",t:"Odgovor"}, {e:"Violence",t:"Nasilje"}, {e:"Addiction",t:"Zavisnost"}, {e:"During",t:"Tokom"}, 
+            {e:"Advisor",t:"Savetnik"}, {e:"Complicated",t:"Komplikovano"}, {e:"Currently",t:"Trenutno"}, 
+            {e:"Project",t:"Projekat"}, {e:"Street",t:"Ulica"}, {e:"Traffic light",t:"Semafor"}, {e:"Class",t:"Čas"}, 
+            {e:"Road / Way",t:"Put"}, {e:"To lose",t:"Izgubiti"}, {e:"Loss",t:"Gubitak"}, {e:"Looser",t:"Gubitnik"}, 
+            {e:"Lost",t:"Izgubljeno"}, {e:"Team",t:"Tim"}, {e:"To chose",t:"Izabrati"}, {e:"Choice",t:"Izbor"}, 
+            {e:"Chooser",t:"Onaj koji bira"}, {e:"Chosen",t:"Izabrano"}, {e:"Diving",t:"Ronjenje"}, {e:"To advise",t:"Savetovati"}, 
+            {e:"Advice",t:"Savet"}, {e:"Adviser / Counselor",t:"Savetnik"}, {e:"Hobby",t:"Hobi"}, 
+            {e:"To protect",t:"Zaštititi"}, {e:"Protection",t:"Zaštita"}, {e:"Protector",t:"Zaštitnik"}, 
+            {e:"Protected",t:"Zaštićeno"}, {e:"Sanctuary / Reserve",t:"Rezervat"}, {e:"Vegetable",t:"Povrće"}, 
+            {e:"To remember",t:"Zapamtiti"}, {e:"Remembering",t:"Sećanje"}, {e:"Remembered",t:"Zapamćeno"}, 
+            {e:"Tree",t:"Drvo"}, {e:"To respect",t:"Poštovati"}, {e:"Respect / Esteem",t:"Poštovanje"}, 
+            {e:"One who respects",t:"Onaj koji poštuje"}, {e:"Respected",t:"Poštovan"}, {e:"Tour",t:"Obilazak"}, 
+            {e:"To cover (finances)",t:"Pokriti (finansije)"}, {e:"Funding",t:"Finansiranje"}, {e:"Funder",t:"Finansijer"}, 
+            {e:"Covered",t:"Pokriveno"}, {e:"Victim",t:"Žrtva"}, {e:"To pay",t:"Platiti"}, {e:"Payment",t:"Plaćanje"}, 
+            {e:"Paid",t:"Plaćeno"}, {e:"Crisis",t:"Kriza"}, {e:"To expect",t:"Očekivati"}, {e:"Expectation",t:"Očekivanje"}, 
+            {e:"Expected",t:"Očekivano"}, {e:"Guard",t:"Stražar"}, {e:"Bringing",t:"Donošenje"}, 
+            {e:"Pocket (Džep)",t:"Džep"}, {e:"Cooperation",t:"Saradnja"}, {e:"To put",t:"Staviti"}, 
+            {e:"Putting",t:"Stavljanje"}, {e:"Station / Stop",t:"Stanica"}, {e:"Insurance",t:"Osiguranje"}, 
+            {e:"To take",t:"Uzeti"}, {e:"Acquisition",t:"Sticanje"}, {e:"Taker",t:"Onaj koji uzima"}, {e:"Taken",t:"Uzeto"}, 
+            {e:"Temporary",t:"Privremeno"}, {e:"To visit",t:"Posetiti"}, {e:"Visit",t:"Poseta"}, {e:"Visitor",t:"Posetilac"}, 
+            {e:"Visited",t:"Posećen"}, {e:"Shrine",t:"Svetilište"}, {e:"Influence / Impact / Effect",t:"Uticaj"}, 
+            {e:"To try",t:"Pokušati"}, {e:"Experience",t:"Iskustvo"}, {e:"Tester",t:"Tester"}, 
+            {e:"Tested / Proven",t:"Dokazano"}, {e:"Ghost",t:"Duh"}, {e:"To repair",t:"Popraviti"}, 
+            {e:"Repair",t:"Popravka"}, {e:"Repairman",t:"Majstor"}, {e:"Repaired",t:"Popravljeno"}, 
+            {e:"Success",t:"Uspeh"}, {e:"In / At",t:"U"}, {e:"From / Since",t:"Od"}, 
+            {e:"On / Upon / To",t:"Na"}, {e:"To / Towards / For",t:"Do"}, {e:"As",t:"Kao"}, 
+            {e:"Similar to",t:"Slično kao"}, {e:"Beside / Next to",t:"Pored"}, {e:"Under / Below",t:"Ispod"}, 
+            {e:"Above",t:"Iznad"}, {e:"Around",t:"Oko"}, {e:"Circle",t:"Krug"}, {e:"Role",t:"Uloga"}, 
+            {e:"Turn",t:"Red"}, {e:"Moderate",t:"Umereno"}, {e:"Level",t:"Nivo"}, {e:"Degree",t:"Stepen"}, 
+            {e:"Hot",t:"Vruće"}, {e:"Warm",t:"Toplo"}, {e:"Cold",t:"Hladno"}, {e:"Foreigner",t:"Stranac"}, 
+            {e:"Middle East",t:"Bliski Istok"}, {e:"Ocean",t:"Okean"}, {e:"Alliance",t:"Savez"}, 
+            {e:"Allies",t:"Saveznici"}, {e:"Enemy",t:"Neprijatelj"}, {e:"Friend",t:"Prijatelj"}, {e:"Solution",t:"Rešenje"}, 
+            {e:"Part",t:"Deo"}, {e:"Conflict",t:"Sukob"}, {e:"Challenges",t:"Izazovi"}, 
+            {e:"Injured",t:"Povređen"}, {e:"Valid",t:"Važeći"}, {e:"Warning",t:"Upozorenje"}, {e:"Mortuary",t:"Mrtvačnica"}, 
+            {e:"To piss",t:"Pišati"}, {e:"Directly",t:"Direktno"}, {e:"Wallet",t:"Novčanik"}, 
+            {e:"Nightlife",t:"Noćni život"}, {e:"Confluence",t:"Ušće"}, {e:"Social life",t:"Društveni život"}, 
+            {e:"Night club",t:"Noćni klub"}, {e:"Friendship",t:"Prijateljstvo"}, {e:"Priorities",t:"Prioriteti"}, 
+            {e:"Buildings",t:"Zgrade"}, {e:"Professional",t:"Profesionalac"}, {e:"Live music",t:"Živa muzika"}, 
+            {e:"Energy",t:"Energija"}, {e:"Gritty (Tough)",t:"Teško"}, {e:"Slow",t:"Sporo"}, 
+            {e:"Settlement",t:"Naselje"}, {e:"Raft",t:"Splav"}, {e:"Cheap",t:"Jeftino"}, {e:"Square",t:"Trg"}, 
+            {e:"Lake",t:"Jezero"}, {e:"River",t:"Reka"}, {e:"To provide",t:"Obezbediti"}, {e:"Provision",t:"Obezbeđivanje"}, 
+            {e:"Provider",t:"Dobavljač"}, {e:"Provided",t:"Obezbeđeno"}, {e:"Interests",t:"Interesi"}, 
+            {e:"To prepare",t:"Pripremiti"}, {e:"Preparation",t:"Priprema"}, {e:"Preparer",t:"Pripremač"}, 
+            {e:"Prepared",t:"Pripremljeno"}, {e:"Device",t:"Uređaj"}, {e:"Position",t:"Pozicija"}, 
+            {e:"Validity period",t:"Rok važenja"}, {e:"Affairs",t:"Poslovi"}, {e:"Conditions",t:"Uslovi"}, 
+            {e:"Charges",t:"Optužbe"}, {e:"Trial",t:"Suđenje"}, {e:"Judgment",t:"Presuda"}, {e:"Conviction",t:"Osuda"}, 
+            {e:"Defendant",t:"Optuženi"}, {e:"Accused",t:"Optužen"}, {e:"Convict",t:"Osuđenik"}, 
+            {e:"Lawsuit",t:"Tužba"}, {e:"Acquittal",t:"Oslobađajuća presuda"}, {e:"Admission of refugees",t:"Prijem izbeglica"}, 
+            {e:"Hosting of refugees",t:"Udomljavanje izbeglica"}, {e:"Resettles",t:"Preseljava"}, 
+            {e:"Principles",t:"Principi"}, {e:"For the sake of",t:"Radi"}, {e:"Profit",t:"Profit"}, 
+            {e:"Former",t:"Bivši"}, {e:"Coordinator",t:"Koordinator"}, {e:"Altruistic",t:"Altruistički"}, 
+            {e:"To reject",t:"Odbiti"}, {e:"List",t:"Lista"}, {e:"To impose",t:"Nametnuti"}, 
+            {e:"Wellbeing",t:"Blagostanje"}, {e:"Access",t:"Pristup"}, {e:"Discrimination",t:"Diskriminacija"}, 
+            {e:"Fair treatment",t:"Pošten tretman"}, {e:"Frankly",t:"Iskreno"}, {e:"Free time",t:"Slobodno vreme"}, 
+            {e:"Famous",t:"Poznat"}, {e:"Law",t:"Zakon"}, {e:"Constitution",t:"Ustav"}, {e:"Culture",t:"Kultura"}, 
+            {e:"Sanctions",t:"Sankcije"}, {e:"Immigration",t:"Imigracija"}, {e:"Immigrant",t:"Imigrant"}, 
+            {e:"Reciprocity",t:"Reciprocitet"}, {e:"Enforceable",t:"Sprovodljivo"}, 
+            {e:"Eligibility",t:"Podobnost"}, {e:"Trafficking of children",t:"Trgovina decom"}, 
+            {e:"Child adoption",t:"Usvajanje deteta"}, {e:"Direct relative",t:"Bliski rođak"}, 
+            {e:"Kidnapping",t:"Kidnapovanje"}, {e:"Adoptive parents",t:"Usvojitelji"}, 
+            {e:"Adopted child",t:"Usvojeno dete"}, {e:"1 / One",t:"1 / Jedan"}, 
+            {e:"2 / Two",t:"2 / Dva"}, {e:"3 / Three",t:"3 / Tri"}, {e:"4 / Four",t:"4 / Četiri"}, 
+            {e:"5 / Five",t:"5 / Pet"}, {e:"6 / Six",t:"6 / Šest"}, {e:"7 / Seven",t:"7 / Sedam"}, 
+            {e:"8 / Eight",t:"8 / Osam"}, {e:"9 / Nine",t:"9 / Devet"}, {e:"To follow",t:"Pratiti"}, 
+            {e:"Following",t:"Praćenje"}, {e:"Follower",t:"Pratilac"}, {e:"Followed",t:"Praćen"}, 
+            {e:"Approach",t:"Pristup"}, {e:"To submit",t:"Podneti"}, {e:"Submission",t:"Podnošenje"}, 
+            {e:"Provider",t:"Pružalac"}, {e:"Submitted",t:"Podneto"}, {e:"Terrorist",t:"Terorista"}, 
+            {e:"To rent",t:"Iznajmiti"}, {e:"Renting",t:"Iznajmljivanje"}, {e:"Tenant",t:"Stanar"}, 
+            {e:"Rented",t:"Iznajmljeno"}, {e:"Competition",t:"Takmičenje"}, {e:"To torture",t:"Mučiti"}, 
+            {e:"Torture",t:"Mučenje"}, {e:"Torturer",t:"Mučitelj"}, {e:"Tortured",t:"Mučen"}, 
+            {e:"Transportation",t:"Prevoz"}, {e:"To move",t:"Pomeriti"}, {e:"Carrier",t:"Prevoznik"}, 
+            {e:"Moved",t:"Pomeren"}, {e:"Bus stop",t:"Autobuska stanica"}, {e:"Stairs",t:"Stepenice"}, 
+            {e:"You are right",t:"U pravu si"}, {e:"No doubt",t:"Nema sumnje"}, 
+            {e:"Done by",t:"Urađeno od"}, {e:"Exploitation",t:"Eksploatacija"}, 
+            {e:"GDP",t:"BDP"}, {e:"Garbage",t:"Smeće"}, {e:"Stability",t:"Stabilnost"}, 
+            {e:"Quality",t:"Kvalitet"}, {e:"Currency",t:"Valuta"}, {e:"Disarmament",t:"Razoružanje"}, 
+            {e:"Region",t:"Region"}, {e:"Continent",t:"Kontinent"}, {e:"Fruit",t:"Voće"}, 
+            {e:"Grains",t:"Žitarice"}, {e:"Intervention",t:"Intervencija"}, {e:"Product",t:"Proizvod"}, 
+            {e:"Aircraft carrier",t:"Nosač aviona"}, {e:"Industry",t:"Industrija"}, {e:"Failure",t:"Neuspeh"}, 
+            {e:"Tradition",t:"Tradicija"}, {e:"Sister",t:"Sestra"}, {e:"Brother",t:"Brat"}, {e:"Father",t:"Otac"}, 
+            {e:"Mother",t:"Majka"}, {e:"Identity",t:"Identitet"}, {e:"Family",t:"Porodica"}, {e:"Normal",t:"Normalno"}, 
+            {e:"Cap",t:"Kapa"}, {e:"Expert",t:"Stručnjak"}, {e:"Hurricane",t:"Uragan"}, {e:"Gender",t:"Pol"}, 
+            {e:"Little",t:"Malo"}, {e:"Combatant",t:"Borac"}, {e:"Desert",t:"Pustinja"}, 
+            {e:"Rock",t:"Stena"}, {e:"Wounded",t:"Ranjen"}, 
+            {e:"To forgive",t:"Oprostiti"}, {e:"Forgiveness",t:"Oproštaj"}, {e:"Forgiving",t:"Opraštanje"}, 
+            {e:"Forgiven",t:"Oprošteno"}, {e:"Apartment block",t:"Stambena zgrada"}, {e:"To allow",t:"Dozvoliti"}, 
+            {e:"Permission",t:"Dozvola"}, {e:"Permitting",t:"Dozvoljavanje"}, {e:"Allowed",t:"Dozvoljeno"}, 
+            {e:"Invitation",t:"Pozivnica"}, {e:"To drink",t:"Piti"}, {e:"Drinking",t:"Pijenje"}, 
+            {e:"Drinker",t:"Pijanac"}, {e:"Beverage",t:"Piće"}, {e:"Gift",t:"Poklon"}
+        ];
+
+        const conjDataArb = [
             // 1. To Explain (شَرَحَ)
-            {e:"I explained (Past)",a:"شَرَحْتُ"}, {e:"You (m) explained (Past)",a:"شَرَحْتَ"}, {e:"You (f) explained (Past)",a:"شَرَحْتِ"}, {e:"He explained (Past)",a:"شَرَحَ"}, {e:"She explained (Past)",a:"شَرَحَتْ"}, {e:"We explained (Past)",a:"شَرَحْنَا"}, {e:"You (all) explained (Past)",a:"شَرَحْتُوا"}, {e:"They explained (Past)",a:"شَرَحُوا"},
-            {e:"I explain (Present)",a:"بِشْرَحُ"}, {e:"You (m) explain (Present)",a:"بِتِشْرَحُ"}, {e:"You (f) explain (Present)",a:"بِتِشْرَحِي"}, {e:"He explains (Present)",a:"بِيِشْرَحُ"}, {e:"She explains (Present)",a:"بِتِشْرَحُ"}, {e:"We explain (Present)",a:"بِنِشْرَحُ"}, {e:"You (all) explain (Present)",a:"بِتِشْرَحُوا"}, {e:"They explain (Present)",a:"بِيِشْرَحُوا"},
-            {e:"I will explain (Future)",a:"رَحْ أَشْرَحُ"}, {e:"You (m) will explain (Future)",a:"رَحْ تِشْرَحُ"}, {e:"You (f) will explain (Future)",a:"رَحْ تِشْرَحِي"}, {e:"He will explain (Future)",a:"رَحْ يِشْرَحُ"}, {e:"She will explain (Future)",a:"رَحْ تِشْرَحُ"}, {e:"We will explain (Future)",a:"رَحْ نِشْرَحُ"}, {e:"You (all) will explain (Future)",a:"رَحْ تِشْرَحُوا"}, {e:"They will explain (Future)",a:"رَحْ يِشْرَحُوا"},
-
+            {e:"I explained (Past)",t:"شَرَحْتُ"}, {e:"You (m) explained (Past)",t:"شَرَحْتَ"}, {e:"You (f) explained (Past)",t:"شَرَحْتِ"}, {e:"He explained (Past)",t:"شَرَحَ"}, {e:"She explained (Past)",t:"شَرَحَتْ"}, {e:"We explained (Past)",t:"شَرَحْنَا"}, {e:"You (all) explained (Past)",t:"شَرَحْتُوا"}, {e:"They explained (Past)",t:"شَرَحُوا"},
+            {e:"I explain (Present)",t:"بِشْرَحُ"}, {e:"You (m) explain (Present)",t:"بِتِشْرَحُ"}, {e:"You (f) explain (Present)",t:"بِتِشْرَحِي"}, {e:"He explains (Present)",t:"بِيِشْرَحُ"}, {e:"She explains (Present)",t:"بِتِشْرَحُ"}, {e:"We explain (Present)",t:"بِنِشْرَحُ"}, {e:"You (all) explain (Present)",t:"بِتِشْرَحُوا"}, {e:"They explain (Present)",t:"بِيِشْرَحُوا"},
+            {e:"I will explain (Future)",t:"رَحْ أَشْرَحُ"}, {e:"You (m) will explain (Future)",t:"رَحْ تِشْرَحُ"}, {e:"You (f) will explain (Future)",t:"رَحْ تِشْرَحِي"}, {e:"He will explain (Future)",t:"رَحْ يِشْرَحُ"}, {e:"She will explain (Future)",t:"رَحْ تِشْرَحُ"}, {e:"We will explain (Future)",t:"رَحْ نِشْرَحُ"}, {e:"You (all) will explain (Future)",t:"رَحْ تِشْرَحُوا"}, {e:"They will explain (Future)",t:"رَحْ يِشْرَحُوا"},
             // 2. To Lose (خَسِرَ)
-            {e:"I lost (Past)",a:"خَسِرْتُ"}, {e:"You (m) lost (Past)",a:"خَسِرْتَ"}, {e:"You (f) lost (Past)",a:"خَسِرْتِ"}, {e:"He lost (Past)",a:"خَسِرَ"}, {e:"She lost (Past)",a:"خَسِرَتْ"}, {e:"We lost (Past)",a:"خَسِرْنَا"}, {e:"You (all) lost (Past)",a:"خَسِرْتُوا"}, {e:"They lost (Past)",a:"خَسِرُوا"},
-            {e:"I lose (Present)",a:"بِخْسَرُ"}, {e:"You (m) lose (Present)",a:"بِتْخْسَرُ"}, {e:"You (f) lose (Present)",a:"بِتْخْسَرِي"}, {e:"He loses (Present)",a:"بِيْخْسَرُ"}, {e:"She loses (Present)",a:"بِتْخْسَرُ"}, {e:"We lose (Present)",a:"بِنْخْسَرُ"}, {e:"You (all) lose (Present)",a:"بِتْخْسَرُوا"}, {e:"They lose (Present)",a:"بِيْخْسَرُوا"},
-            {e:"I will lose (Future)",a:"رَحْ أَخْسَرُ"}, {e:"You (m) will lose (Future)",a:"رَحْ تِخْسَرُ"}, {e:"You (f) will lose (Future)",a:"رَحْ تِخْسَرِي"}, {e:"He will lose (Future)",a:"رَحْ يِخْسَرُ"}, {e:"She will lose (Future)",a:"رَحْ تِخْسَرُ"}, {e:"We will lose (Future)",a:"رَحْ نِخْسَرُ"}, {e:"You (all) will lose (Future)",a:"رَحْ تِخْسَرُوا"}, {e:"They will lose (Future)",a:"رَحْ يِخْسَرُوا"},
-
+            {e:"I lost (Past)",t:"خَسِرْتُ"}, {e:"You (m) lost (Past)",t:"خَسِرْتَ"}, {e:"You (f) lost (Past)",t:"خَسِرْتِ"}, {e:"He lost (Past)",t:"خَسِرَ"}, {e:"She lost (Past)",t:"خَسِرَتْ"}, {e:"We lost (Past)",t:"خَسِرْنَا"}, {e:"You (all) lost (Past)",t:"خَسِرْتُوا"}, {e:"They lost (Past)",t:"خَسِرُوا"},
+            {e:"I lose (Present)",t:"بِخْسَرُ"}, {e:"You (m) lose (Present)",t:"بِتْخْسَرُ"}, {e:"You (f) lose (Present)",t:"بِتْخْسَرِي"}, {e:"He loses (Present)",t:"بِيْخْسَرُ"}, {e:"She loses (Present)",t:"بِتْخْسَرُ"}, {e:"We lose (Present)",t:"بِنْخْسَرُ"}, {e:"You (all) lose (Present)",t:"بِتْخْسَرُوا"}, {e:"They lose (Present)",t:"بِيْخْسَرُوا"},
+            {e:"I will lose (Future)",t:"رَحْ أَخْسَرُ"}, {e:"You (m) will lose (Future)",t:"رَحْ تِخْسَرُ"}, {e:"You (f) will lose (Future)",t:"رَحْ تِخْسَرِي"}, {e:"He will lose (Future)",t:"رَحْ يِخْسَرُ"}, {e:"She will lose (Future)",t:"رَحْ تِخْسَرُ"}, {e:"We will lose (Future)",t:"رَحْ نِخْسَرُ"}, {e:"You (all) will lose (Future)",t:"رَحْ تِخْسَرُوا"}, {e:"They will lose (Future)",t:"رَحْ يِخْسَرُوا"},
             // 3. To Choose (اِخْتَارَ)
-            {e:"I chose (Past)",a:"اِخْتَرْتُ"}, {e:"You (m) chose (Past)",a:"اِخْتَرْتَ"}, {e:"You (f) chose (Past)",a:"اِخْتَرْتِ"}, {e:"He chose (Past)",a:"اِخْتَارَ"}, {e:"She chose (Past)",a:"اِخْتَارَتْ"}, {e:"We chose (Past)",a:"اِخْتَرْنَا"}, {e:"You (all) chose (Past)",a:"اِخْتَرْتُوا"}, {e:"They chose (Past)",a:"اِخْتَارُوا"},
-            {e:"I choose (Present)",a:"بِخْتَارُ"}, {e:"You (m) choose (Present)",a:"بِتِخْتَارُ"}, {e:"You (f) choose (Present)",a:"بِتِخْتَارِي"}, {e:"He chooses (Present)",a:"بِيخْتَارُ"}, {e:"She chooses (Present)",a:"بِتِخْتَارُ"}, {e:"We choose (Present)",a:"بِنِخْتَارُ"}, {e:"You (all) choose (Present)",a:"بِتِخْتَارُوا"}, {e:"They choose (Present)",a:"بِيخْتَارُوا"},
-            {e:"I will choose (Future)",a:"رَحْ أَخْتَارُ"}, {e:"You (m) will choose (Future)",a:"رَحْ تِخْتَارُ"}, {e:"You (f) will choose (Future)",a:"رَحْ تِخْتَارِي"}, {e:"He will choose (Future)",a:"رَحْ يِخْتَارُ"}, {e:"She will choose (Future)",a:"رَحْ تِخْتَارُ"}, {e:"We will choose (Future)",a:"رَحْ نِخْتَارُ"}, {e:"You (all) will choose (Future)",a:"رَحْ تِخْتَارُوا"}, {e:"They will choose (Future)",a:"رَحْ يِخْتَارُوا"},
-
+            {e:"I chose (Past)",t:"اِخْتَرْتُ"}, {e:"You (m) chose (Past)",t:"اِخْتَرْتَ"}, {e:"You (f) chose (Past)",t:"اِخْتَرْتِ"}, {e:"He chose (Past)",t:"اِخْتَارَ"}, {e:"She chose (Past)",t:"اِخْتَارَتْ"}, {e:"We chose (Past)",t:"اِخْتَرْنَا"}, {e:"You (all) chose (Past)",t:"اِخْتَرْتُوا"}, {e:"They chose (Past)",t:"اِخْتَارُوا"},
+            {e:"I choose (Present)",t:"بِخْتَارُ"}, {e:"You (m) choose (Present)",t:"بِتِخْتَارُ"}, {e:"You (f) choose (Present)",t:"بِتِخْتَارِي"}, {e:"He chooses (Present)",t:"بِيخْتَارُ"}, {e:"She chooses (Present)",t:"بِتِخْتَارُ"}, {e:"We choose (Present)",t:"بِنِخْتَارُ"}, {e:"You (all) choose (Present)",t:"بِتِخْتَارُوا"}, {e:"They choose (Present)",t:"بِيخْتَارُوا"},
+            {e:"I will choose (Future)",t:"رَحْ أَخْتَارُ"}, {e:"You (m) will choose (Future)",t:"رَحْ تِخْتَارُ"}, {e:"You (f) will choose (Future)",t:"رَحْ تِخْتَارِي"}, {e:"He will choose (Future)",t:"رَحْ يِخْتَارُ"}, {e:"She will choose (Future)",t:"رَحْ تِخْتَارُ"}, {e:"We will choose (Future)",t:"رَحْ نِخْتَارُ"}, {e:"You (all) will choose (Future)",t:"رَحْ تِخْتَارُوا"}, {e:"They will choose (Future)",t:"رَحْ يِخْتَارُوا"},
             // 4. To Pay (دَفَعَ)
-            {e:"I paid (Past)",a:"دَفَعْتُ"}, {e:"You (m) paid (Past)",a:"دَفَعْتَ"}, {e:"You (f) paid (Past)",a:"دَفَعْتِ"}, {e:"He paid (Past)",a:"دَفَعَ"}, {e:"She paid (Past)",a:"دَفَعَتْ"}, {e:"We paid (Past)",a:"دَفَعْنَا"}, {e:"You (all) paid (Past)",a:"دَفَعْتُوا"}, {e:"They paid (Past)",a:"دَفَعُوا"},
-            {e:"I pay (Present)",a:"بِدْفَعُ"}, {e:"You (m) pay (Present)",a:"بِتْدْفَعُ"}, {e:"You (f) pay (Present)",a:"بِتْدْفَعِي"}, {e:"He pays (Present)",a:"بِيْدْفَعُ"}, {e:"She pays (Present)",a:"بِتْدْفَعُ"}, {e:"We pay (Present)",a:"بِنْدْفَعُ"}, {e:"You (all) pay (Present)",a:"بِتْدْفَعُوا"}, {e:"They pay (Present)",a:"بِيْدْفَعُوا"},
-            {e:"I will pay (Future)",a:"رَحْ أَدْفَعُ"}, {e:"You (m) will pay (Future)",a:"رَحْ تْدْفَعُ"}, {e:"You (f) will pay (Future)",a:"رَحْ تْدْفَعِي"}, {e:"He will pay (Future)",a:"رَحْ يِدْفَعُ"}, {e:"She will pay (Future)",a:"رَحْ تِدْفَعُ"}, {e:"We will pay (Future)",a:"رَحْ نِدْفَعُ"}, {e:"You (all) will pay (Future)",a:"رَحْ تِدْفَعُوا"}, {e:"They will pay (Future)",a:"رَحْ يِدْفَعُوا"},
-
+            {e:"I paid (Past)",t:"دَفَعْتُ"}, {e:"You (m) paid (Past)",t:"دَفَعْتَ"}, {e:"You (f) paid (Past)",t:"دَفَعْتِ"}, {e:"He paid (Past)",t:"دَفَعَ"}, {e:"She paid (Past)",t:"دَفَعَتْ"}, {e:"We paid (Past)",t:"دَفَعْنَا"}, {e:"You (all) paid (Past)",t:"دَفَعْتُوا"}, {e:"They paid (Past)",t:"دَفَعُوا"},
+            {e:"I pay (Present)",t:"بِدْفَعُ"}, {e:"You (m) pay (Present)",t:"بِتْدْفَعُ"}, {e:"You (f) pay (Present)",t:"بِتْدْفَعِي"}, {e:"He pays (Present)",t:"بِيْدْفَعُ"}, {e:"She pays (Present)",t:"بِتْدْفَعُ"}, {e:"We pay (Present)",t:"بِنْدْفَعُ"}, {e:"You (all) pay (Present)",t:"بِتْدْفَعُوا"}, {e:"They pay (Present)",t:"بِيْدْفَعُوا"},
+            {e:"I will pay (Future)",t:"رَحْ أَدْفَعُ"}, {e:"You (m) will pay (Future)",t:"رَحْ تْدْفَعُ"}, {e:"You (f) will pay (Future)",t:"رَحْ تْدْفَعِي"}, {e:"He will pay (Future)",t:"رَحْ يِدْفَعُ"}, {e:"She will pay (Future)",t:"رَحْ تِدْفَعُ"}, {e:"We will pay (Future)",t:"رَحْ نِدْفَعُ"}, {e:"You (all) will pay (Future)",t:"رَحْ تِدْفَعُوا"}, {e:"They will pay (Future)",t:"رَحْ يِدْفَعُوا"},
             // 5. To Expect (تَوَقَّعَ)
-            {e:"I expected (Past)",a:"تَوَقَّعْتُ"}, {e:"You (m) expected (Past)",a:"تَوَقَّعْتَ"}, {e:"You (f) expected (Past)",a:"تَوَقَّعْتِ"}, {e:"He expected (Past)",a:"تَوَقَّعَ"}, {e:"She expected (Past)",a:"تَوَقَّعَتْ"}, {e:"We expected (Past)",a:"تَوَقَّعْنَا"}, {e:"You (all) expected (Past)",a:"تَوَقَّعْتُوا"}, {e:"They expected (Past)",a:"تَوَقَّعُوا"},
-            {e:"I expect (Present)",a:"بِتْوَقَّعُ"}, {e:"You (m) expect (Present)",a:"بِتْتْوَقَّعُ"}, {e:"You (f) expect (Present)",a:"بِتْتْوَقَّعِي"}, {e:"He expects (Present)",a:"بِيْتْوَقَّعُ"}, {e:"She expects (Present)",a:"بِتْتْوَقَّعُ"}, {e:"We expect (Present)",a:"بِنْتْوَقَّعُ"}, {e:"You (all) expect (Present)",a:"بِتْتْوَقَّعُوا"}, {e:"They expect (Present)",a:"بِيْتْوَقَّعُوا"},
-            {e:"I will expect (Future)",a:"رَحْ أَتْوَقَّعُ"}, {e:"You (m) will expect (Future)",a:"رَحْ تِتْوَقَّعُ"}, {e:"You (f) will expect (Future)",a:"رَحْ تِتْوَقَّعِي"}, {e:"He will expect (Future)",a:"رَحْ يِتْوَقَّعُ"}, {e:"She will expect (Future)",a:"رَحْ تِتْوَقَّعُ"}, {e:"We will expect (Future)",a:"رَحْ نِتْوَقَّعُ"}, {e:"You (all) will expect (Future)",a:"رَحْ تِتْوَقَّعُوا"}, {e:"They will expect (Future)",a:"رَحْ يِتْوَقَّعُوا"},
-
+            {e:"I expected (Past)",t:"تَوَقَّعْتُ"}, {e:"You (m) expected (Past)",t:"تَوَقَّعْتَ"}, {e:"You (f) expected (Past)",t:"تَوَقَّعْتِ"}, {e:"He expected (Past)",t:"تَوَقَّعَ"}, {e:"She expected (Past)",t:"تَوَقَّعَتْ"}, {e:"We expected (Past)",t:"تَوَقَّعْنَا"}, {e:"You (all) expected (Past)",t:"تَوَقَّعْتُوا"}, {e:"They expected (Past)",t:"تَوَقَّعُوا"},
+            {e:"I expect (Present)",t:"بِتْوَقَّعُ"}, {e:"You (m) expect (Present)",t:"بِتْتْوَقَّعُ"}, {e:"You (f) expect (Present)",t:"بِتْتْوَقَّعِي"}, {e:"He expects (Present)",t:"بِيْتْوَقَّعُ"}, {e:"She expects (Present)",t:"بِتْتْوَقَّعُ"}, {e:"We expect (Present)",t:"بِنْتْوَقَّعُ"}, {e:"You (all) expect (Present)",t:"بِتْتْوَقَّعُوا"}, {e:"They expect (Present)",t:"بِيْتْوَقَّعُوا"},
+            {e:"I will expect (Future)",t:"رَحْ أَتْوَقَّعُ"}, {e:"You (m) will expect (Future)",t:"رَحْ تِتْوَقَّعُ"}, {e:"You (f) will expect (Future)",t:"رَحْ تِتْوَقَّعِي"}, {e:"He will expect (Future)",t:"رَحْ يِتْوَقَّعُ"}, {e:"She will expect (Future)",t:"رَحْ تِتْوَقَّعُ"}, {e:"We will expect (Future)",t:"رَحْ نِتْوَقَّعُ"}, {e:"You (all) will expect (Future)",t:"رَحْ تِتْوَقَّعُوا"}, {e:"They will expect (Future)",t:"رَحْ يِتْوَقَّعُوا"},
             // 6. To Bring (جَابَ)
-            {e:"I brought (Past)",a:"جِبْتُ"}, {e:"You (m) brought (Past)",a:"جِبْتَ"}, {e:"You (f) brought (Past)",a:"جِبْتِ"}, {e:"He brought (Past)",a:"جَابَ"}, {e:"She brought (Past)",a:"جَابَتْ"}, {e:"We brought (Past)",a:"جِبْنَا"}, {e:"You (all) brought (Past)",a:"جِبْتُوا"}, {e:"They brought (Past)",a:"جَابُوا"},
-            {e:"I bring (Present)",a:"بِجِيبُ"}, {e:"You (m) bring (Present)",a:"بِتْجِيبُ"}, {e:"You (f) bring (Present)",a:"بِتْجِيبِي"}, {e:"He brings (Present)",a:"بِيْجِيبُ"}, {e:"She brings (Present)",a:"بِتْجِيبُ"}, {e:"We bring (Present)",a:"بِنْجِيبُ"}, {e:"You (all) bring (Present)",a:"بِتْجِيبُوا"}, {e:"They bring (Present)",a:"بِيْجِيبُوا"},
-            {e:"I will bring (Future)",a:"رَحْ أَجِيبُ"}, {e:"You (m) will bring (Future)",a:"رَحْ تْجِيبُ"}, {e:"You (f) will bring (Future)",a:"رَحْ تْجِيبِي"}, {e:"He will bring (Future)",a:"رَحْ يْجِيبُ"}, {e:"She will bring (Future)",a:"رَحْ تْجِيبُ"}, {e:"We will bring (Future)",a:"رَحْ نْجِيبُ"}, {e:"You (all) will bring (Future)",a:"رَحْ تْجِيبُوا"}, {e:"They will bring (Future)",a:"رَحْ يْجِيبُوا"},
-
+            {e:"I brought (Past)",t:"جِبْتُ"}, {e:"You (m) brought (Past)",t:"جِبْتَ"}, {e:"You (f) brought (Past)",t:"جِبْتِ"}, {e:"He brought (Past)",t:"جَابَ"}, {e:"She brought (Past)",t:"جَابَتْ"}, {e:"We brought (Past)",t:"جِبْنَا"}, {e:"You (all) brought (Past)",t:"جِبْتُوا"}, {e:"They brought (Past)",t:"جَابُوا"},
+            {e:"I bring (Present)",t:"بِجِيبُ"}, {e:"You (m) bring (Present)",t:"بِتْجِيبُ"}, {e:"You (f) bring (Present)",t:"بِتْجِيبِي"}, {e:"He brings (Present)",t:"بِيْجِيبُ"}, {e:"She brings (Present)",t:"بِتْجِيبُ"}, {e:"We bring (Present)",t:"بِنْجِيبُ"}, {e:"You (all) bring (Present)",t:"بِتْجِيبُوا"}, {e:"They bring (Present)",t:"بِيْجِيبُوا"},
+            {e:"I will bring (Future)",t:"رَحْ أَجِيبُ"}, {e:"You (m) will bring (Future)",t:"رَحْ تْجِيبُ"}, {e:"You (f) will bring (Future)",t:"رَحْ تْجِيبِي"}, {e:"He will bring (Future)",t:"رَحْ يْجِيبُ"}, {e:"She will bring (Future)",t:"رَحْ تْجِيبُ"}, {e:"We will bring (Future)",t:"رَحْ نْجِيبُ"}, {e:"You (all) will bring (Future)",t:"رَحْ تْجِيبُوا"}, {e:"They will bring (Future)",t:"رَحْ يْجِيبُوا"},
             // 7. To Take (أَخَذَ)
-            {e:"I took (Past)",a:"أَخَذْتُ"}, {e:"You (m) took (Past)",a:"أَخَذْتَ"}, {e:"You (f) took (Past)",a:"أَخَذْتِ"}, {e:"He took (Past)",a:"أَخَذَ"}, {e:"She took (Past)",a:"أَخَذَتْ"}, {e:"We took (Past)",a:"أَخَذْنَا"}, {e:"You (all) took (Past)",a:"أَخَذْتُوا"}, {e:"They took (Past)",a:"أَخَذُوا"},
-            {e:"I take (Present)",a:"بَآخُذُ"}, {e:"You (m) take (Present)",a:"بِتَاخُذُ"}, {e:"You (f) take (Present)",a:"بِتَاخْدِي"}, {e:"He takes (Present)",a:"بِيَاخُذُ"}, {e:"She takes (Present)",a:"بِتَاخُذُ"}, {e:"We take (Present)",a:"بِنَاخُذُ"}, {e:"You (all) take (Present)",a:"بِتَاخْدُوا"}, {e:"They take (Present)",a:"بِيَاخْدُوا"},
-            {e:"I will take (Future)",a:"رَحْ آخُذُ"}, {e:"You (m) will take (Future)",a:"رَحْ تَاخُذُ"}, {e:"You (f) will take (Future)",a:"رَحْ تَاخْدِي"}, {e:"He will take (Future)",a:"رَحْ يَاخُذُ"}, {e:"She will take (Future)",a:"رَحْ تَاخُذُ"}, {e:"We will take (Future)",a:"رَحْ نَاخُذُ"}, {e:"You (all) will take (Future)",a:"رَحْ تَاخْدُوا"}, {e:"They will take (Future)",a:"رَحْ يَاخُذُوا"},
-
+            {e:"I took (Past)",t:"أَخَذْتُ"}, {e:"You (m) took (Past)",t:"أَخَذْتَ"}, {e:"You (f) took (Past)",t:"أَخَذْتِ"}, {e:"He took (Past)",t:"أَخَذَ"}, {e:"She took (Past)",t:"أَخَذَتْ"}, {e:"We took (Past)",t:"أَخَذْنَا"}, {e:"You (all) took (Past)",t:"أَخَذْتُوا"}, {e:"They took (Past)",t:"أَخَذُوا"},
+            {e:"I take (Present)",t:"بَآخُذُ"}, {e:"You (m) take (Present)",t:"بِتَاخُذُ"}, {e:"You (f) take (Present)",t:"بِتَاخْدِي"}, {e:"He takes (Present)",t:"بِيَاخُذُ"}, {e:"She takes (Present)",t:"بِتَاخُذُ"}, {e:"We take (Present)",t:"بِنَاخُذُ"}, {e:"You (all) take (Present)",t:"بِتَاخْدُوا"}, {e:"They take (Present)",t:"بِيَاخْدُوا"},
+            {e:"I will take (Future)",t:"رَحْ آخُذُ"}, {e:"You (m) will take (Future)",t:"رَحْ تَاخُذُ"}, {e:"You (f) will take (Future)",t:"رَحْ تَاخْدِي"}, {e:"He will take (Future)",t:"رَحْ يَاخُذُ"}, {e:"She will take (Future)",t:"رَحْ تَاخُذُ"}, {e:"We will take (Future)",t:"رَحْ نَاخُذُ"}, {e:"You (all) will take (Future)",t:"رَحْ تَاخْدُوا"}, {e:"They will take (Future)",t:"رَحْ يَاخُذُوا"},
             // 8. To Visit (زَارَ)
-            {e:"I visited (Past)",a:"زُرْتُ"}, {e:"You (m) visited (Past)",a:"زُرْتَ"}, {e:"You (f) visited (Past)",a:"زُرْتِ"}, {e:"He visited (Past)",a:"زَارَ"}, {e:"She visited (Past)",a:"زَارَتْ"}, {e:"We visited (Past)",a:"زُرْنَا"}, {e:"You (all) visited (Past)",a:"زُرْتُوا"}, {e:"They visited (Past)",a:"زَارُوا"},
-            {e:"I visit (Present)",a:"بِزُورُ"}, {e:"You (m) visit (Present)",a:"بِتْزُورُ"}, {e:"You (f) visit (Present)",a:"بِتْزُورِي"}, {e:"He visits (Present)",a:"بِيْزُورُ"}, {e:"She visits (Present)",a:"بِتْزُورُ"}, {e:"We visit (Present)",a:"بِنْزُورُ"}, {e:"You (all) visit (Present)",a:"بِتْزُورُوا"}, {e:"They visit (Present)",a:"بِيْزُورُوا"},
-            {e:"I will visit (Future)",a:"رَحْ أَزُورُ"}, {e:"You (m) will visit (Future)",a:"رَحْ تْزُورُ"}, {e:"You (f) will visit (Future)",a:"رَحْ تْزُورِي"}, {e:"He will visit (Future)",a:"رَحْ يْزُورُ"}, {e:"She will visit (Future)",a:"رَحْ تْزُورُ"}, {e:"We will visit (Future)",a:"رَحْ نْزُورُ"}, {e:"You (all) will visit (Future)",a:"رَحْ تْزُورُوا"}, {e:"They will visit (Future)",a:"رَحْ يْزُورُوا"},
-
+            {e:"I visited (Past)",t:"زُرْتُ"}, {e:"You (m) visited (Past)",t:"زُرْتَ"}, {e:"You (f) visited (Past)",t:"زُرْتِ"}, {e:"He visited (Past)",t:"زَارَ"}, {e:"She visited (Past)",t:"زَارَتْ"}, {e:"We visited (Past)",t:"زُرْنَا"}, {e:"You (all) visited (Past)",t:"زُرْتُوا"}, {e:"They visited (Past)",t:"زَارُوا"},
+            {e:"I visit (Present)",t:"بِزُورُ"}, {e:"You (m) visit (Present)",t:"بِتْزُورُ"}, {e:"You (f) visit (Present)",t:"بِتْزُورِي"}, {e:"He visits (Present)",t:"بِيْزُورُ"}, {e:"She visits (Present)",t:"بِتْزُورُ"}, {e:"We visit (Present)",t:"بِنْزُورُ"}, {e:"You (all) visit (Present)",t:"بِتْزُورُوا"}, {e:"They visit (Present)",t:"بِيْزُورُوا"},
+            {e:"I will visit (Future)",t:"رَحْ أَزُورُ"}, {e:"You (m) will visit (Future)",t:"رَحْ تْزُورُ"}, {e:"You (f) will visit (Future)",t:"رَحْ تْزُورِي"}, {e:"He will visit (Future)",t:"رَحْ يْزُورُ"}, {e:"She will visit (Future)",t:"رَحْ تْزُورُ"}, {e:"We will visit (Future)",t:"رَحْ نْزُورُ"}, {e:"You (all) will visit (Future)",t:"رَحْ تْزُورُوا"}, {e:"They will visit (Future)",t:"رَحْ يْزُورُوا"},
             // 9. To Try (جَرَّبَ)
-            {e:"I tried (Past)",a:"جَرَّبْتُ"}, {e:"You (m) tried (Past)",a:"جَرَّبْتَ"}, {e:"You (f) tried (Past)",a:"جَرَّبْتِ"}, {e:"He tried (Past)",a:"جَرَّبَ"}, {e:"She tried (Past)",a:"جَرَّبَتْ"}, {e:"We tried (Past)",a:"جَرَّبْنَا"}, {e:"You (all) tried (Past)",a:"جَرَّبْتُوا"}, {e:"They tried (Past)",a:"جَرَّبُوا"},
-            {e:"I try (Present)",a:"بِجَرِّبُ"}, {e:"You (m) try (Present)",a:"بِتْجَرِّبُ"}, {e:"You (f) try (Present)",a:"بِتْجَرِّبِي"}, {e:"He tries (Present)",a:"بِيْجَرِّبُ"}, {e:"She tries (Present)",a:"بِتْجَرِّبُ"}, {e:"We try (Present)",a:"بِنْجَرِّبُ"}, {e:"You (all) try (Present)",a:"بِتْجَرِّبُوا"}, {e:"They try (Present)",a:"بِيْجَرِّبُوا"},
-            {e:"I will try (Future)",a:"رَحْ أَجَرِّبُ"}, {e:"You (m) will try (Future)",a:"رَحْ تْجَرِّبُ"}, {e:"You (f) will try (Future)",a:"رَحْ تْجَرِّبِي"}, {e:"He will try (Future)",a:"رَحْ يْجَرِّبُ"}, {e:"She will try (Future)",a:"رَحْ تْجَرِّبُ"}, {e:"We will try (Future)",a:"رَحْ نْجَرِّبُ"}, {e:"You (all) will try (Future)",a:"رَحْ تْجَرِّبُوا"}, {e:"They will try (Future)",a:"رَحْ يْجَرِّبُوا"},
-
+            {e:"I tried (Past)",t:"جَرَّبْتُ"}, {e:"You (m) tried (Past)",t:"جَرَّبْتَ"}, {e:"You (f) tried (Past)",t:"جَرَّبْتِ"}, {e:"He tried (Past)",t:"جَرَّبَ"}, {e:"She tried (Past)",t:"جَرَّبَتْ"}, {e:"We tried (Past)",t:"جَرَّبْنَا"}, {e:"You (all) tried (Past)",t:"جَرَّبْتُوا"}, {e:"They tried (Past)",t:"جَرَّبُوا"},
+            {e:"I try (Present)",t:"بِجَرِّبُ"}, {e:"You (m) try (Present)",t:"بِتْجَرِّبُ"}, {e:"You (f) try (Present)",t:"بِتْجَرِّبِي"}, {e:"He tries (Present)",t:"بِيْجَرِّبُ"}, {e:"She tries (Present)",t:"بِتْجَرِّبُ"}, {e:"We try (Present)",t:"بِنْجَرِّبُ"}, {e:"You (all) try (Present)",t:"بِتْجَرِّبُوا"}, {e:"They try (Present)",t:"بِيْجَرِّبُوا"},
+            {e:"I will try (Future)",t:"رَحْ أَجَرِّبُ"}, {e:"You (m) will try (Future)",t:"رَحْ تْجَرِّبُ"}, {e:"You (f) will try (Future)",t:"رَحْ تْجَرِّبِي"}, {e:"He will try (Future)",t:"رَحْ يْجَرِّبُ"}, {e:"She will try (Future)",t:"رَحْ تْجَرِّبُ"}, {e:"We will try (Future)",t:"رَحْ نْجَرِّبُ"}, {e:"You (all) will try (Future)",t:"رَحْ تْجَرِّبُوا"}, {e:"They will try (Future)",t:"رَحْ يْجَرِّبُوا"},
             // 10. To Reject (رَفَضَ)
-            {e:"I rejected (Past)",a:"رَفَضْتُ"}, {e:"You (m) rejected (Past)",a:"رَفَضْتَ"}, {e:"You (f) rejected (Past)",a:"رَفَضْتِ"}, {e:"He rejected (Past)",a:"رَفَضَ"}, {e:"She rejected (Past)",a:"رَفَضَتْ"}, {e:"We rejected (Past)",a:"رَفَضْنَا"}, {e:"You (all) rejected (Past)",a:"رَفَضْتُوا"}, {e:"They rejected (Past)",a:"رَفَضُوا"},
-            {e:"I reject (Present)",a:"بِرْفُضُ"}, {e:"You (m) reject (Present)",a:"بِتْرْفُضُ"}, {e:"You (f) reject (Present)",a:"بِتْرْفُضِي"}, {e:"He rejects (Present)",a:"بِيْرْفُضُ"}, {e:"She rejects (Present)",a:"بِتْرْفُضُ"}, {e:"We reject (Present)",a:"بِنْرْفُضُ"}, {e:"You (all) reject (Present)",a:"بِتْرْفُضُوا"}, {e:"They reject (Present)",a:"بِيْرْفُضُوا"},
-            {e:"I will reject (Future)",a:"رَحْ أَرْفُضُ"}, {e:"You (m) will reject (Future)",a:"رَحْ تِرْفُضُ"}, {e:"You (f) will reject (Future)",a:"رَحْ تِرْفُضِي"}, {e:"He will reject (Future)",a:"رَحْ يِرْفُضُ"}, {e:"She will reject (Future)",a:"رَحْ تِرْفُضُ"}, {e:"We will reject (Future)",a:"رَحْ نِرْفُضُ"}, {e:"You (all) will reject (Future)",a:"رَحْ تِرْفُضُوا"}, {e:"They will reject (Future)",a:"رَحْ يِرْفُضُوا"},
-
+            {e:"I rejected (Past)",t:"رَفَضْتُ"}, {e:"You (m) rejected (Past)",t:"رَفَضْتَ"}, {e:"You (f) rejected (Past)",t:"رَفَضْتِ"}, {e:"He rejected (Past)",t:"رَفَضَ"}, {e:"She rejected (Past)",t:"رَفَضَتْ"}, {e:"We rejected (Past)",t:"رَفَضْنَا"}, {e:"You (all) rejected (Past)",t:"رَفَضْتُوا"}, {e:"They rejected (Past)",t:"رَفَضُوا"},
+            {e:"I reject (Present)",t:"بِرْفُضُ"}, {e:"You (m) reject (Present)",t:"بِتْرْفُضُ"}, {e:"You (f) reject (Present)",t:"بِتْرْفُضِي"}, {e:"He rejects (Present)",t:"بِيْرْفُضُ"}, {e:"She rejects (Present)",t:"بِتْرْفُضُ"}, {e:"We reject (Present)",t:"بِنْرْفُضُ"}, {e:"You (all) reject (Present)",t:"بِتْرْفُضُوا"}, {e:"They reject (Present)",t:"بِيْرْفُضُوا"},
+            {e:"I will reject (Future)",t:"رَحْ أَرْفُضُ"}, {e:"You (m) will reject (Future)",t:"رَحْ تِرْفُضُ"}, {e:"You (f) will reject (Future)",t:"رَحْ تِرْفُضِي"}, {e:"He will reject (Future)",t:"رَحْ يِرْفُضُ"}, {e:"She will reject (Future)",t:"رَحْ تِرْفُضُ"}, {e:"We will reject (Future)",t:"رَحْ نِرْفُضُ"}, {e:"You (all) will reject (Future)",t:"رَحْ تِرْفُضُوا"}, {e:"They will reject (Future)",t:"رَحْ يِرْفُضُوا"},
             // 11. To Be (كَان)
-            {e:"I was (Past)",a:"كِنِت"}, {e:"You (m) were (Past)",a:"كِنِت"}, {e:"You (f) were (Past)",a:"كِنْتِي"}, {e:"He was (Past)",a:"كَان"}, {e:"She was (Past)",a:"كَانَت"}, {e:"We were (Past)",a:"كِنَّا"}, {e:"You (all) were (Past)",a:"كِنْتُوا"}, {e:"They were (Past)",a:"كَانُوا"},
-            {e:"I am (Present)",a:"بِكُون"}, {e:"You (m) are (Present)",a:"بِتْكُون"}, {e:"You (f) are (Present)",a:"بِتْكُونِي"}, {e:"He is (Present)",a:"بِيْكُون"}, {e:"She is (Present)",a:"بِتْكُون"}, {e:"We are (Present)",a:"بِنْكُون"}, {e:"You (all) are (Present)",a:"بِتْكُونُوا"}, {e:"They are (Present)",a:"بِيْكُونُوا"},
-            {e:"I will be (Future)",a:"رَح أَكُون"}, {e:"You (m) will be (Future)",a:"رَح تْكُون"}, {e:"You (f) will be (Future)",a:"رَح تْكُونِي"}, {e:"He will be (Future)",a:"رَح يْكُون"}, {e:"She will be (Future)",a:"رَح تْكُون"}, {e:"We will be (Future)",a:"رَح نْكُون"}, {e:"You (all) will be (Future)",a:"رَح تْكُونُوا"}, {e:"They will be (Future)",a:"رَح يْكُونُوا"},
-
+            {e:"I was (Past)",t:"كِنِت"}, {e:"You (m) were (Past)",t:"كِنِت"}, {e:"You (f) were (Past)",t:"كِنْتِي"}, {e:"He was (Past)",t:"كَان"}, {e:"She was (Past)",t:"كَانَت"}, {e:"We were (Past)",t:"كِنَّا"}, {e:"You (all) were (Past)",t:"كِنْتُوا"}, {e:"They were (Past)",t:"كَانُوا"},
+            {e:"I am (Present)",t:"بِكُون"}, {e:"You (m) are (Present)",t:"بِتْكُون"}, {e:"You (f) are (Present)",t:"بِتْكُونِي"}, {e:"He is (Present)",t:"بِيْكُون"}, {e:"She is (Present)",t:"بِتْكُون"}, {e:"We are (Present)",t:"بِنْكُون"}, {e:"You (all) are (Present)",t:"بِتْكُونُوا"}, {e:"They are (Present)",t:"بِيْكُونُوا"},
+            {e:"I will be (Future)",t:"رَح أَكُون"}, {e:"You (m) will be (Future)",t:"رَح تْكُون"}, {e:"You (f) will be (Future)",t:"رَح تْكُونِي"}, {e:"He will be (Future)",t:"رَح يْكُون"}, {e:"She will be (Future)",t:"رَح تْكُون"}, {e:"We will be (Future)",t:"رَح نْكُون"}, {e:"You (all) will be (Future)",t:"رَح تْكُونُوا"}, {e:"They will be (Future)",t:"رَح يْكُونُوا"},
             // 12. To Move (نَقَلَ)
-            {e:"I moved (Past)",a:"نَقَلْتُ"}, {e:"You (m) moved (Past)",a:"نَقَلْتَ"}, {e:"You (f) moved (Past)",a:"نَقَلْتِ"}, {e:"He moved (Past)",a:"نَقَلَ"}, {e:"She moved (Past)",a:"نَقَلَتْ"}, {e:"We moved (Past)",a:"نَقَلْنَا"}, {e:"You (all) moved (Past)",a:"نَقَلْتُوا"}, {e:"They moved (Past)",a:"نَقَلُوا"},
-            {e:"I move (Present)",a:"بِنْقُلُ"}, {e:"You (m) move (Present)",a:"بِتْنْقُلُ"}, {e:"You (f) move (Present)",a:"بِتْنْقُلِي"}, {e:"He moves (Present)",a:"بِيْنْقُلُ"}, {e:"She moves (Present)",a:"بِتْنْقُلُ"}, {e:"We move (Present)",a:"بِنْنْقُلُ"}, {e:"You (all) move (Present)",a:"بِتْنْقُلُوا"}, {e:"They move (Present)",a:"بِيْنْقُلُوا"},
-            {e:"I will move (Future)",a:"رَحْ أَنْقُلُ"}, {e:"You (m) will move (Future)",a:"رَحْ تِنْقُلُ"}, {e:"You (f) will move (Future)",a:"رَحْ تِنْقُلِي"}, {e:"He will move (Future)",a:"رَحْ يِنْقُلُ"}, {e:"She will move (Future)",a:"رَحْ تِنْقُلُ"}, {e:"We will move (Future)",a:"رَحْ نِنْقُلُ"}, {e:"You (all) will move (Future)",a:"رَحْ تِنْقُلُوا"}, {e:"They will move (Future)",a:"رَحْ يِنْقُلُوا"},
-
+            {e:"I moved (Past)",t:"نَقَلْتُ"}, {e:"You (m) moved (Past)",t:"نَقَلْتَ"}, {e:"You (f) moved (Past)",t:"نَقَلْتِ"}, {e:"He moved (Past)",t:"نَقَلَ"}, {e:"She moved (Past)",t:"نَقَلَتْ"}, {e:"We moved (Past)",t:"نَقَلْنَا"}, {e:"You (all) moved (Past)",t:"نَقَلْتُوا"}, {e:"They moved (Past)",t:"نَقَلُوا"},
+            {e:"I move (Present)",t:"بِنْقُلُ"}, {e:"You (m) move (Present)",t:"بِتْنْقُلُ"}, {e:"You (f) move (Present)",t:"بِتْنْقُلِي"}, {e:"He moves (Present)",t:"بِيْنْقُلُ"}, {e:"She moves (Present)",t:"بِتْنْقُلُ"}, {e:"We move (Present)",t:"بِنْنْقُلُ"}, {e:"You (all) move (Present)",t:"بِتْنْقُلُوا"}, {e:"They move (Present)",t:"بِيْنْقُلُوا"},
+            {e:"I will move (Future)",t:"رَحْ أَنْقُلُ"}, {e:"You (m) will move (Future)",t:"رَحْ تِنْقُلُ"}, {e:"You (f) will move (Future)",t:"رَحْ تِنْقُلِي"}, {e:"He will move (Future)",t:"رَحْ يِنْقُلُ"}, {e:"She will move (Future)",t:"رَحْ تِنْقُلُ"}, {e:"We will move (Future)",t:"رَحْ نِنْقُلُ"}, {e:"You (all) will move (Future)",t:"رَحْ تِنْقُلُوا"}, {e:"They will move (Future)",t:"رَحْ يِنْقُلُوا"},
             // 13. To Hear (سِمِع)
-            {e:"I heard (Past)",a:"سْمِعِت"}, {e:"You (m) heard (Past)",a:"سْمِعِت"}, {e:"You (f) heard (Past)",a:"سْمِعْتِي"}, {e:"He heard (Past)",a:"سِمِع"}, {e:"She heard (Past)",a:"سِمْعِت"}, {e:"We heard (Past)",a:"سْمِعْنَا"}, {e:"You (all) heard (Past)",a:"سْمِعْتُوا"}, {e:"They heard (Past)",a:"سِمْعُوا"},
-            {e:"I hear (Present)",a:"بَسْمَع"}, {e:"You (m) hear (Present)",a:"بِتْسْمَع"}, {e:"You (f) hear (Present)",a:"بِتْسْمَعِي"}, {e:"He hears (Present)",a:"بِيْسْمَع"}, {e:"She hears (Present)",a:"بِتْسْمَع"}, {e:"We hear (Present)",a:"بِنْسْمَع"}, {e:"You (all) hear (Present)",a:"بِتْسْمَعُوا"}, {e:"They hear (Present)",a:"بِيْسْمَعُوا"},
-            {e:"I will hear (Future)",a:"رَح أَسْمَع"}, {e:"You (m) will hear (Future)",a:"رَح تِسْمَع"}, {e:"You (f) will hear (Future)",a:"رَح تِسْمَعِي"}, {e:"He will hear (Future)",a:"رَح يِسْمَع"}, {e:"She will hear (Future)",a:"رَح تِسْمَع"}, {e:"We will hear (Future)",a:"رَح نِسْمَع"}, {e:"You (all) will hear (Future)",a:"رَح تِسْمَعُوا"}, {e:"They will hear (Future)",a:"رَح يِسْمَعُوا"},
-
+            {e:"I heard (Past)",t:"سْمِعِت"}, {e:"You (m) heard (Past)",t:"سْمِعِت"}, {e:"You (f) heard (Past)",t:"سْمِعْتِي"}, {e:"He heard (Past)",t:"سِمِع"}, {e:"She heard (Past)",t:"سِمْعِت"}, {e:"We heard (Past)",t:"سْمِعْنَا"}, {e:"You (all) heard (Past)",t:"سْمِعْتُوا"}, {e:"They heard (Past)",t:"سِمْعُوا"},
+            {e:"I hear (Present)",t:"بَسْمَع"}, {e:"You (m) hear (Present)",t:"بِتْسْمَع"}, {e:"You (f) hear (Present)",t:"بِتْسْمَعِي"}, {e:"He hears (Present)",t:"بِيْسْمَع"}, {e:"She hears (Present)",t:"بِتْسْمَع"}, {e:"We hear (Present)",t:"بِنْسْمَع"}, {e:"You (all) hear (Present)",t:"بِتْسْمَعُوا"}, {e:"They hear (Present)",t:"بِيْسْمَعُوا"},
+            {e:"I will hear (Future)",t:"رَح أَسْمَع"}, {e:"You (m) will hear (Future)",t:"رَح تِسْمَع"}, {e:"You (f) will hear (Future)",t:"رَح تِسْمَعِي"}, {e:"He will hear (Future)",t:"رَح يِسْمَع"}, {e:"She will hear (Future)",t:"رَح تِسْمَع"}, {e:"We will hear (Future)",t:"رَح نِسْمَع"}, {e:"You (all) will hear (Future)",t:"رَح تِسْمَعُوا"}, {e:"They will hear (Future)",t:"رَح يِسْمَعُوا"},
             // 14. To See (شَاف)
-            {e:"I saw (Past)",a:"شِفِت"}, {e:"You (m) saw (Past)",a:"شِفِت"}, {e:"You (f) saw (Past)",a:"شِفْتِي"}, {e:"He saw (Past)",a:"شَاف"}, {e:"She saw (Past)",a:"شَافَت"}, {e:"We saw (Past)",a:"شِفْنَا"}, {e:"You (all) saw (Past)",a:"شِفْتُوا"}, {e:"They saw (Past)",a:"شَافُوا"},
-            {e:"I see (Present)",a:"بِشُوف"}, {e:"You (m) see (Present)",a:"بِتْشُوف"}, {e:"You (f) see (Present)",a:"بِتْشُوفِي"}, {e:"He sees (Present)",a:"بِيْشُوف"}, {e:"She sees (Present)",a:"بِتْشُوف"}, {e:"We see (Present)",a:"بِنْشُوف"}, {e:"You (all) see (Present)",a:"بِتْشُوفُوا"}, {e:"They see (Present)",a:"بِيْشُوفُوا"},
-            {e:"I will see (Future)",a:"رَح أَشُوف"}, {e:"You (m) will see (Future)",a:"رَح تْشُوف"}, {e:"You (f) will see (Future)",a:"رَح تْشُوفِي"}, {e:"He will see (Future)",a:"رَح يْشُوف"}, {e:"She will see (Future)",a:"رَح تْشُوف"}, {e:"We will see (Future)",a:"رَح نْشُوف"}, {e:"You (all) will see (Future)",a:"رَح تْشُوفُوا"}, {e:"They will see (Future)",a:"رَح يْشُوفُوا"},
-
+            {e:"I saw (Past)",t:"شِفِت"}, {e:"You (m) saw (Past)",t:"شِفِت"}, {e:"You (f) saw (Past)",t:"شِفْتِي"}, {e:"He saw (Past)",t:"شَاف"}, {e:"She saw (Past)",t:"شَافَت"}, {e:"We saw (Past)",t:"شِفْنَا"}, {e:"You (all) saw (Past)",t:"شِفْتُوا"}, {e:"They saw (Past)",t:"شَافُوا"},
+            {e:"I see (Present)",t:"بِشُوف"}, {e:"You (m) see (Present)",t:"بِتْشُوف"}, {e:"You (f) see (Present)",t:"بِتْشُوفِي"}, {e:"He sees (Present)",t:"بِيْشُوف"}, {e:"She sees (Present)",t:"بِتْشُوف"}, {e:"We see (Present)",t:"بِنْشُوف"}, {e:"You (all) see (Present)",t:"بِتْشُوفُوا"}, {e:"They see (Present)",t:"بِيْشُوفُوا"},
+            {e:"I will see (Future)",t:"رَح أَشُوف"}, {e:"You (m) will see (Future)",t:"رَح تْشُوف"}, {e:"You (f) will see (Future)",t:"رَح تْشُوفِي"}, {e:"He will see (Future)",t:"رَح يْشُوف"}, {e:"She will see (Future)",t:"رَح تْشُوف"}, {e:"We will see (Future)",t:"رَح نْشُوف"}, {e:"You (all) will see (Future)",t:"رَح تْشُوفُوا"}, {e:"They will see (Future)",t:"رَح يْشُوفُوا"},
             // 15. To Give (أَعْطَى)
-            {e:"I gave (Past)",a:"أَعْطَيْت"}, {e:"You (m) gave (Past)",a:"أَعْطَيْت"}, {e:"You (f) gave (Past)",a:"أَعْطَيْتِي"}, {e:"He gave (Past)",a:"أَعْطَى"}, {e:"She gave (Past)",a:"أَعْطَت"}, {e:"We gave (Past)",a:"أَعْطَيْنَا"}, {e:"You (all) gave (Past)",a:"أَعْطَيْتُوا"}, {e:"They gave (Past)",a:"أَعْطُوا"},
-            {e:"I give (Present)",a:"بَعْطِي"}, {e:"You (m) give (Present)",a:"بِتْعْطِي"}, {e:"You (f) give (Present)",a:"بِتْعْطِي"}, {e:"He gives (Present)",a:"بِيْعْطِي"}, {e:"She gives (Present)",a:"بِتْعْطِي"}, {e:"We give (Present)",a:"بِنْعْطِي"}, {e:"You (all) give (Present)",a:"بِتْعْطُوا"}, {e:"They give (Present)",a:"بِيْعْطُوا"},
-            {e:"I will give (Future)",a:"رَح أَعْطِي"}, {e:"You (m) will give (Future)",a:"رَح تِعْطِي"}, {e:"You (f) will give (Future)",a:"رَح تِعْطِي"}, {e:"He will give (Future)",a:"رَح يِعْطِي"}, {e:"She will give (Future)",a:"رَح تِعْطِي"}, {e:"We will give (Future)",a:"رَح نِعْطِي"}, {e:"You (all) will give (Future)",a:"رَح تِعْطُوا"}, {e:"They will give (Future)",a:"رَح يِعْطُوا"},
-
+            {e:"I gave (Past)",t:"أَعْطَيْت"}, {e:"You (m) gave (Past)",t:"أَعْطَيْت"}, {e:"You (f) gave (Past)",t:"أَعْطَيْتِي"}, {e:"He gave (Past)",t:"أَعْطَى"}, {e:"She gave (Past)",t:"أَعْطَت"}, {e:"We gave (Past)",t:"أَعْطَيْنَا"}, {e:"You (all) gave (Past)",t:"أَعْطَيْتُوا"}, {e:"They gave (Past)",t:"أَعْطُوا"},
+            {e:"I give (Present)",t:"بَعْطِي"}, {e:"You (m) give (Present)",t:"بِتْعْطِي"}, {e:"You (f) give (Present)",t:"بِتْعْطِي"}, {e:"He gives (Present)",t:"بِيْعْطِي"}, {e:"She gives (Present)",t:"بِتْعْطِي"}, {e:"We give (Present)",t:"بِنْعْطِي"}, {e:"You (all) give (Present)",t:"بِتْعْطُوا"}, {e:"They give (Present)",t:"بِيْعْطُوا"},
+            {e:"I will give (Future)",t:"رَح أَعْطِي"}, {e:"You (m) will give (Future)",t:"رَح تِعْطِي"}, {e:"You (f) will give (Future)",t:"رَح تِعْطِي"}, {e:"He will give (Future)",t:"رَح يِعْطِي"}, {e:"She will give (Future)",t:"رَح تِعْطِي"}, {e:"We will give (Future)",t:"رَح نِعْطِي"}, {e:"You (all) will give (Future)",t:"رَح تِعْطُوا"}, {e:"They will give (Future)",t:"رَح يِعْطُوا"},
             // 16. To Understand (فِهِم)
-            {e:"I understood (Past)",a:"فْهِمِت"}, {e:"You (m) understood (Past)",a:"فْهِمِت"}, {e:"You (f) understood (Past)",a:"فْهِمْتِي"}, {e:"He understood (Past)",a:"فِهِم"}, {e:"She understood (Past)",a:"فِهْمِت"}, {e:"We understood (Past)",a:"فْهِمْنَا"}, {e:"You (all) understood (Past)",a:"فْهِمْتُوا"}, {e:"They understood (Past)",a:"فِهْمُوا"},
-            {e:"I understand (Present)",a:"بَفْهَم"}, {e:"You (m) understand (Present)",a:"بِتْفْهَم"}, {e:"You (f) understand (Present)",a:"بِتْفْهَمِي"}, {e:"He understands (Present)",a:"بِيْفْهَم"}, {e:"She understands (Present)",a:"بِتْفْهَم"}, {e:"We understand (Present)",a:"بِنْفْهَم"}, {e:"You (all) understand (Present)",a:"بِتْفْهَمُوا"}, {e:"They understand (Present)",a:"بِيْفْهَمُوا"},
-            {e:"I will understand (Future)",a:"رَح أَفْهَم"}, {e:"You (m) will understand (Future)",a:"رَح تِفْهَم"}, {e:"You (f) will understand (Future)",a:"رَح تِفْهَمِي"}, {e:"He will understand (Future)",a:"رَح يِفْهَم"}, {e:"She will understand (Future)",a:"رَح تِفْهَم"}, {e:"We will understand (Future)",a:"رَح نِفْهَم"}, {e:"You (all) will understand (Future)",a:"رَح تِفْهَمُوا"}, {e:"They will understand (Future)",a:"رَح يِفْهَمُوا"},
-
+            {e:"I understood (Past)",t:"فْهِمِت"}, {e:"You (m) understood (Past)",t:"فْهِمِت"}, {e:"You (f) understood (Past)",t:"فْهِمْتِي"}, {e:"He understood (Past)",t:"فِهِم"}, {e:"She understood (Past)",t:"فِهْمِت"}, {e:"We understood (Past)",t:"فْهِمْنَا"}, {e:"You (all) understood (Past)",t:"فْهِمْتُوا"}, {e:"They understood (Past)",t:"فِهْمُوا"},
+            {e:"I understand (Present)",t:"بَفْهَم"}, {e:"You (m) understand (Present)",t:"بِتْفْهَم"}, {e:"You (f) understand (Present)",t:"بِتْفْهَمِي"}, {e:"He understands (Present)",t:"بِيْفْهَم"}, {e:"She understands (Present)",t:"بِتْفْهَم"}, {e:"We understand (Present)",t:"بِنْفْهَم"}, {e:"You (all) understand (Present)",t:"بِتْفْهَمُوا"}, {e:"They understand (Present)",t:"بِيْفْهَمُوا"},
+            {e:"I will understand (Future)",t:"رَح أَفْهَم"}, {e:"You (m) will understand (Future)",t:"رَح تِفْهَم"}, {e:"You (f) will understand (Future)",t:"رَح تِفْهَمِي"}, {e:"He will understand (Future)",t:"رَح يِفْهَم"}, {e:"She will understand (Future)",t:"رَح تِفْهَم"}, {e:"We will understand (Future)",t:"رَح نِفْهَم"}, {e:"You (all) will understand (Future)",t:"رَح تِفْهَمُوا"}, {e:"They will understand (Future)",t:"رَح يِفْهَمُوا"},
             // 17. To Offer (عَرَضَ)
-            {e:"I offered (Past)",a:"عَرَضْتُ"}, {e:"You (m) offered (Past)",a:"عَرَضْتَ"}, {e:"You (f) offered (Past)",a:"عَرَضْتِ"}, {e:"He offered (Past)",a:"عَرَضَ"}, {e:"She offered (Past)",a:"عَرَضَتْ"}, {e:"We offered (Past)",a:"عَرَضْنَا"}, {e:"You (all) offered (Past)",a:"عَرَضْتُوا"}, {e:"They offered (Past)",a:"عَرَضُوا"},
-            {e:"I offer (Present)",a:"بِعْرُضُ"}, {e:"You (m) offer (Present)",a:"بِتْعْرُضُ"}, {e:"You (f) offer (Present)",a:"بِتْعْرُضِي"}, {e:"He offers (Present)",a:"بِيْعْرُضُ"}, {e:"She offers (Present)",a:"بِتْعْرُضُ"}, {e:"We offer (Present)",a:"بِنْعْرُضُ"}, {e:"You (all) offer (Present)",a:"بِتْعْرُضُوا"}, {e:"They offer (Present)",a:"بِيْعْرُضُوا"},
-            {e:"I will offer (Future)",a:"رَحْ أَعْرُضُ"}, {e:"You (m) will offer (Future)",a:"رَحْ تِعْرُضُ"}, {e:"You (f) will offer (Future)",a:"رَحْ تِعْرُضِي"}, {e:"He will offer (Future)",a:"رَحْ يِعْرُضُ"}, {e:"She will offer (Future)",a:"رَحْ تِعْرُضُ"}, {e:"We will offer (Future)",a:"رَحْ نِعْرُضُ"}, {e:"You (all) will offer (Future)",a:"رَحْ تِعْرُضُوا"}, {e:"They will offer (Future)",a:"رَحْ يِعْرُضُوا"},
-
+            {e:"I offered (Past)",t:"عَرَضْتُ"}, {e:"You (m) offered (Past)",t:"عَرَضْتَ"}, {e:"You (f) offered (Past)",t:"عَرَضْتِ"}, {e:"He offered (Past)",t:"عَرَضَ"}, {e:"She offered (Past)",t:"عَرَضَتْ"}, {e:"We offered (Past)",t:"عَرَضْنَا"}, {e:"You (all) offered (Past)",t:"عَرَضْتُوا"}, {e:"They offered (Past)",t:"عَرَضُوا"},
+            {e:"I offer (Present)",t:"بِعْرُضُ"}, {e:"You (m) offer (Present)",t:"بِتْعْرُضُ"}, {e:"You (f) offer (Present)",t:"بِتْعْرُضِي"}, {e:"He offers (Present)",t:"بِيْعْرُضُ"}, {e:"She offers (Present)",t:"بِتْعْرُضُ"}, {e:"We offer (Present)",t:"بِنْعْرُضُ"}, {e:"You (all) offer (Present)",t:"بِتْعْرُضُوا"}, {e:"They offer (Present)",t:"بِيْعْرُضُوا"},
+            {e:"I will offer (Future)",t:"رَحْ أَعْرُضُ"}, {e:"You (m) will offer (Future)",t:"رَحْ تِعْرُضُ"}, {e:"You (f) will offer (Future)",t:"رَحْ تِعْرُضِي"}, {e:"He will offer (Future)",t:"رَحْ يِعْرُضُ"}, {e:"She will offer (Future)",t:"رَحْ تِعْرُضُ"}, {e:"We will offer (Future)",t:"رَحْ نِعْرُضُ"}, {e:"You (all) will offer (Future)",t:"رَحْ تِعْرُضُوا"}, {e:"They will offer (Future)",t:"رَحْ يِعْرُضُوا"},
             // 18. To Prohibit/Prevent (مَنَعَ)
-            {e:"I prohibited (Past)",a:"مَنَعْتُ"}, {e:"You (m) prohibited (Past)",a:"مَنَعْتَ"}, {e:"You (f) prohibited (Past)",a:"مَنَعْتِ"}, {e:"He prohibited (Past)",a:"مَنَعَ"}, {e:"She prohibited (Past)",a:"مَنَعَتْ"}, {e:"We prohibited (Past)",a:"مَنَعْنَا"}, {e:"You (all) prohibited (Past)",a:"مَنَعْتُوا"}, {e:"They prohibited (Past)",a:"مَنَعُوا"},
-            {e:"I prohibit (Present)",a:"بِمْنَعُ"}, {e:"You (m) prohibit (Present)",a:"بِتِمْنَعُ"}, {e:"You (f) prohibit (Present)",a:"بِتِمْنَعِي"}, {e:"He prohibits (Present)",a:"بِيِمْنَعُ"}, {e:"She prohibits (Present)",a:"بِتِمْنَعُ"}, {e:"We prohibit (Present)",a:"بِنِمْنَعُ"}, {e:"You (all) prohibit (Present)",a:"بِتِمْنَعُوا"}, {e:"They prohibit (Present)",a:"بِيِمْنَعُوا"},
-            {e:"I will prohibit (Future)",a:"رَحْ أَمْنَعُ"}, {e:"You (m) will prohibit (Future)",a:"رَحْ تِمْنَعُ"}, {e:"You (f) will prohibit (Future)",a:"رَحْ تِمْنَعِي"}, {e:"He will prohibit (Future)",a:"رَحْ يِمْنَعُ"}, {e:"She will prohibit (Future)",a:"رَحْ تِمْنَعُ"}, {e:"We will prohibit (Future)",a:"رَحْ نِمْنَعُ"}, {e:"You (all) will prohibit (Future)",a:"رَحْ تِمْنَعُوا"}, {e:"They will prohibit (Future)",a:"رَحْ يِمْنَعُوا"},
-
+            {e:"I prohibited (Past)",t:"مَنَعْتُ"}, {e:"You (m) prohibited (Past)",t:"مَنَعْتَ"}, {e:"You (f) prohibited (Past)",t:"مَنَعْتِ"}, {e:"He prohibited (Past)",t:"مَنَعَ"}, {e:"She prohibited (Past)",t:"مَنَعَتْ"}, {e:"We prohibited (Past)",t:"مَنَعْنَا"}, {e:"You (all) prohibited (Past)",t:"مَنَعْتُوا"}, {e:"They prohibited (Past)",t:"مَنَعُوا"},
+            {e:"I prohibit (Present)",t:"بِمْنَعُ"}, {e:"You (m) prohibit (Present)",t:"بِتِمْنَعُ"}, {e:"You (f) prohibit (Present)",t:"بِتِمْنَعِي"}, {e:"He prohibits (Present)",t:"بِيِمْنَعُ"}, {e:"She prohibits (Present)",t:"بِتِمْنَعُ"}, {e:"We prohibit (Present)",t:"بِنِمْنَعُ"}, {e:"You (all) prohibit (Present)",t:"بِتِمْنَعُوا"}, {e:"They prohibit (Present)",t:"بِيِمْنَعُوا"},
+            {e:"I will prohibit (Future)",t:"رَحْ أَمْنَعُ"}, {e:"You (m) will prohibit (Future)",t:"رَحْ تِمْنَعُ"}, {e:"You (f) will prohibit (Future)",t:"رَحْ تِمْنَعِي"}, {e:"He will prohibit (Future)",t:"رَحْ يِمْنَعُ"}, {e:"She will prohibit (Future)",t:"رَحْ تِمْنَعُ"}, {e:"We will prohibit (Future)",t:"رَحْ نِمْنَعُ"}, {e:"You (all) will prohibit (Future)",t:"رَحْ تِمْنَعُوا"}, {e:"They will prohibit (Future)",t:"رَحْ يِمْنَعُوا"},
             // 19. To Attack (هَاجَمَ)
-            {e:"I attacked (Past)",a:"هَاجَمْت"}, {e:"You (m) attacked (Past)",a:"هَاجَمْت"}, {e:"You (f) attacked (Past)",a:"هَاجَمْتِي"}, {e:"He attacked (Past)",a:"هَاجَم"}, {e:"She attacked (Past)",a:"هَاجَمَت"}, {e:"We attacked (Past)",a:"هَاجَمْنَا"}, {e:"You (all) attacked (Past)",a:"هَاجَمْتُوا"}, {e:"They attacked (Past)",a:"هَاجَمُوا"},
-            {e:"I attack (Present)",a:"بَهَاجِم"}, {e:"You (m) attack (Present)",a:"بِتْهَاجِم"}, {e:"You (f) attack (Present)",a:"بِتْهَاجْمِي"}, {e:"He attacks (Present)",a:"بِيْهَاجِم"}, {e:"She attacks (Present)",a:"بِتْهَاجِم"}, {e:"We attack (Present)",a:"بِنْهَاجِم"}, {e:"You (all) attack (Present)",a:"بِتْهَاجْمُوا"}, {e:"They attack (Present)",a:"بِيْهَاجْمُوا"},
-            {e:"I will attack (Future)",a:"رَح أَهَاجِم"}, {e:"You (m) will attack (Future)",a:"رَح تْهَاجِم"}, {e:"You (f) will attack (Future)",a:"رَح تْهَاجْمِي"}, {e:"He will attack (Future)",a:"رَح يْهَاجِم"}, {e:"She will attack (Future)",a:"رَح تْهَاجِم"}, {e:"We will attack (Future)",a:"رَح نْهَاجِم"}, {e:"You (all) will attack (Future)",a:"رَح تْهَاجْمُوا"}, {e:"They will attack (Future)",a:"رَح يْهَاجْمُوا"},
-
+            {e:"I attacked (Past)",t:"هَاجَمْت"}, {e:"You (m) attacked (Past)",t:"هَاجَمْت"}, {e:"You (f) attacked (Past)",t:"هَاجَمْتِي"}, {e:"He attacked (Past)",t:"هَاجَم"}, {e:"She attacked (Past)",t:"هَاجَمَت"}, {e:"We attacked (Past)",t:"هَاجَمْنَا"}, {e:"You (all) attacked (Past)",t:"هَاجَمْتُوا"}, {e:"They attacked (Past)",t:"هَاجَمُوا"},
+            {e:"I attack (Present)",t:"بَهَاجِم"}, {e:"You (m) attack (Present)",t:"بِتْهَاجِم"}, {e:"You (f) attack (Present)",t:"بِتْهَاجْمِي"}, {e:"He attacks (Present)",t:"بِيْهَاجِم"}, {e:"She attacks (Present)",t:"بِتْهَاجِم"}, {e:"We attack (Present)",t:"بِنْهَاجِم"}, {e:"You (all) attack (Present)",t:"بِتْهَاجْمُوا"}, {e:"They attack (Present)",t:"بِيْهَاجْمُوا"},
+            {e:"I will attack (Future)",t:"رَح أَهَاجِم"}, {e:"You (m) will attack (Future)",t:"رَح تْهَاجِم"}, {e:"You (f) will attack (Future)",t:"رَح تْهَاجْمِي"}, {e:"He will attack (Future)",t:"رَح يْهَاجِم"}, {e:"She will attack (Future)",t:"رَح تْهَاجِم"}, {e:"We will attack (Future)",t:"رَح نْهَاجِم"}, {e:"You (all) will attack (Future)",t:"رَح تْهَاجْمُوا"}, {e:"They will attack (Future)",t:"رَح يْهَاجْمُوا"},
             // 20. To Defend (دَافَعَ)
-            {e:"I defended (Past)",a:"دَافَعْت"}, {e:"You (m) defended (Past)",a:"دَافَعْت"}, {e:"You (f) defended (Past)",a:"دَافَعْتِي"}, {e:"He defended (Past)",a:"دَافَع"}, {e:"She defended (Past)",a:"دَافَعَت"}, {e:"We defended (Past)",a:"دَافَعْنَا"}, {e:"You (all) defended (Past)",a:"دَافَعْتُوا"}, {e:"They defended (Past)",a:"دَافَعُوا"},
-            {e:"I defend (Present)",a:"بَدَافِع"}, {e:"You (m) defend (Present)",a:"بِتْدَافِع"}, {e:"You (f) defend (Present)",a:"بِتْدَافْعِي"}, {e:"He defends (Present)",a:"بِيْدَافِع"}, {e:"She defends (Present)",a:"بِتْدَافِع"}, {e:"We defend (Present)",a:"بِنْدَافِع"}, {e:"You (all) defend (Present)",a:"بِتْدَافْعُوا"}, {e:"They defend (Present)",a:"بِيْدَافْعُوا"},
-            {e:"I will defend (Future)",a:"رَح أَدَافِع"}, {e:"You (m) will defend (Future)",a:"رَح تْدَافِع"}, {e:"You (f) will defend (Future)",a:"رَح تْدَافْعِي"}, {e:"He will defend (Future)",a:"رَح يْدَافِع"}, {e:"She will defend (Future)",a:"رَح تْدَافِع"}, {e:"We will defend (Future)",a:"رَح نْدَافِع"}, {e:"You (all) will defend (Future)",a:"رَح تْدَافْعُوا"}, {e:"They will defend (Future)",a:"رَح يْدَافْعُوا"},
-
+            {e:"I defended (Past)",t:"دَافَعْت"}, {e:"You (m) defended (Past)",t:"دَافَعْت"}, {e:"You (f) defended (Past)",t:"دَافَعْتِي"}, {e:"He defended (Past)",t:"دَافَع"}, {e:"She defended (Past)",t:"دَافَعَت"}, {e:"We defended (Past)",t:"دَافَعْنَا"}, {e:"You (all) defended (Past)",t:"دَافَعْتُوا"}, {e:"They defended (Past)",t:"دَافَعُوا"},
+            {e:"I defend (Present)",t:"بَدَافِع"}, {e:"You (m) defend (Present)",t:"بِتْدَافِع"}, {e:"You (f) defend (Present)",t:"بِتْدَافْعِي"}, {e:"He defends (Present)",t:"بِيْدَافِع"}, {e:"She defends (Present)",t:"بِتْدَافِع"}, {e:"We defend (Present)",t:"بِنْدَافِع"}, {e:"You (all) defend (Present)",t:"بِتْدَافْعُوا"}, {e:"They defend (Present)",t:"بِيْدَافْعُوا"},
+            {e:"I will defend (Future)",t:"رَح أَدَافِع"}, {e:"You (m) will defend (Future)",t:"رَح تْدَافِع"}, {e:"You (f) will defend (Future)",t:"رَح تْدَافْعِي"}, {e:"He will defend (Future)",t:"رَح يْدَافِع"}, {e:"She will defend (Future)",t:"رَح تْدَافِع"}, {e:"We will defend (Future)",t:"رَح نْدَافِع"}, {e:"You (all) will defend (Future)",t:"رَح تْدَافْعُوا"}, {e:"They will defend (Future)",t:"رَح يْدَافْعُوا"},
             // 21. To Eat (أَكَلَ)
-            {e:"I ate (Past)",a:"أَكَلْت"}, {e:"You (m) ate (Past)",a:"أَكَلْت"}, {e:"You (f) ate (Past)",a:"أَكَلْتِي"}, {e:"He ate (Past)",a:"أَكَل"}, {e:"She ate (Past)",a:"أَكَلَت"}, {e:"We ate (Past)",a:"أَكَلْنَا"}, {e:"You (all) ate (Past)",a:"أَكَلْتُوا"}, {e:"They ate (Past)",a:"أَكَلُوا"},
-            {e:"I eat (Present)",a:"بَاكُل"}, {e:"You (m) eat (Present)",a:"بِتَاكُل"}, {e:"You (f) eat (Present)",a:"بِتَاكْلِي"}, {e:"He eats (Present)",a:"بِيَاكُل"}, {e:"She eats (Present)",a:"بِتَاكُل"}, {e:"We eat (Present)",a:"بِنَاكُل"}, {e:"You (all) eat (Present)",a:"بِتَاكْلُوا"}, {e:"They eat (Present)",a:"بِيَاكْلُوا"},
-            {e:"I will eat (Future)",a:"رَح آكُل"}, {e:"You (m) will eat (Future)",a:"رَح تَاكُل"}, {e:"You (f) will eat (Future)",a:"رَح تَاكْلِي"}, {e:"He will eat (Future)",a:"رَح يَاكُل"}, {e:"She will eat (Future)",a:"رَح تَاكُل"}, {e:"We will eat (Future)",a:"رَح نَاكُل"}, {e:"You (all) will eat (Future)",a:"رَح تَاكْلُوا"}, {e:"They will eat (Future)",a:"رَح يَاكْلُوا"},
-
+            {e:"I ate (Past)",t:"أَكَلْت"}, {e:"You (m) ate (Past)",t:"أَكَلْت"}, {e:"You (f) ate (Past)",t:"أَكَلْتِي"}, {e:"He ate (Past)",t:"أَكَل"}, {e:"She ate (Past)",t:"أَكَلَت"}, {e:"We ate (Past)",t:"أَكَلْنَا"}, {e:"You (all) ate (Past)",t:"أَكَلْتُوا"}, {e:"They ate (Past)",t:"أَكَلُوا"},
+            {e:"I eat (Present)",t:"بَاكُل"}, {e:"You (m) eat (Present)",t:"بِتَاكُل"}, {e:"You (f) eat (Present)",t:"بِتَاكْلِي"}, {e:"He eats (Present)",t:"بِيَاكُل"}, {e:"She eats (Present)",t:"بِتَاكُل"}, {e:"We eat (Present)",t:"بِنَاكُل"}, {e:"You (all) eat (Present)",t:"بِتَاكْلُوا"}, {e:"They eat (Present)",t:"بِيَاكْلُوا"},
+            {e:"I will eat (Future)",t:"رَح آكُل"}, {e:"You (m) will eat (Future)",t:"رَح تَاكُل"}, {e:"You (f) will eat (Future)",t:"رَح تَاكْلِي"}, {e:"He will eat (Future)",t:"رَح يَاكُل"}, {e:"She will eat (Future)",t:"رَح تَاكُل"}, {e:"We will eat (Future)",t:"رَح نَاكُل"}, {e:"You (all) will eat (Future)",t:"رَح تَاكْلُوا"}, {e:"They will eat (Future)",t:"رَح يَاكْلُوا"},
             // 22. To Drink (شَرِبَ)
-            {e:"I drank (Past)",a:"شَرِبْتُ"}, {e:"You (m) drank (Past)",a:"شَرِبْتَ"}, {e:"You (f) drank (Past)",a:"شَرِبْتِ"}, {e:"He drank (Past)",a:"شَرِبَ"}, {e:"She drank (Past)",a:"شَرِبَتْ"}, {e:"We drank (Past)",a:"شَرِبْنَا"}, {e:"You (all) drank (Past)",a:"شَرِبْتُوا"}, {e:"They drank (Past)",a:"شَرِبُوا"},
-            {e:"I drink (Present)",a:"بِشْرَبُ"}, {e:"You (m) drink (Present)",a:"بِتْشْرَبُ"}, {e:"You (f) drink (Present)",a:"بِتْشْرَبِي"}, {e:"He drinks (Present)",a:"بِيْشْرَبُ"}, {e:"She drinks (Present)",a:"بِتْشْرَبُ"}, {e:"We drink (Present)",a:"بِنْشْرَبُ"}, {e:"You (all) drink (Present)",a:"بِتْشْرَبُوا"}, {e:"They drink (Present)",a:"بِيْشْرَبُوا"},
-            {e:"I will drink (Future)",a:"رَحْ أَشْرَبُ"}, {e:"You (m) will drink (Future)",a:"رَحْ تِشْرَبُ"}, {e:"You (f) will drink (Future)",a:"رَحْ تِشْرَبِي"}, {e:"He will drink (Future)",a:"رَحْ يِشْرَبُ"}, {e:"She will drink (Future)",a:"رَحْ تِشْرَبُ"}, {e:"We will drink (Future)",a:"رَحْ نِشْرَبُ"}, {e:"You (all) will drink (Future)",a:"رَحْ تِشْرَبُوا"}, {e:"They will drink (Future)",a:"رَحْ يِشْرَبُوا"},
-
+            {e:"I drank (Past)",t:"شَرِبْتُ"}, {e:"You (m) drank (Past)",t:"شَرِبْتَ"}, {e:"You (f) drank (Past)",t:"شَرِبْتِ"}, {e:"He drank (Past)",t:"شَرِبَ"}, {e:"She drank (Past)",t:"شَرِبَتْ"}, {e:"We drank (Past)",t:"شَرِبْنَا"}, {e:"You (all) drank (Past)",t:"شَرِبْتُوا"}, {e:"They drank (Past)",t:"شَرِبُوا"},
+            {e:"I drink (Present)",t:"بِشْرَبُ"}, {e:"You (m) drink (Present)",t:"بِتْشْرَبُ"}, {e:"You (f) drink (Present)",t:"بِتْشْرَبِي"}, {e:"He drinks (Present)",t:"بِيْشْرَبُ"}, {e:"She drinks (Present)",t:"بِتْشْرَبُ"}, {e:"We drink (Present)",t:"بِنْشْرَبُ"}, {e:"You (all) drink (Present)",t:"بِتْشْرَبُوا"}, {e:"They drink (Present)",t:"بِيْشْرَبُوا"},
+            {e:"I will drink (Future)",t:"رَحْ أَشْرَبُ"}, {e:"You (m) will drink (Future)",t:"رَحْ تِشْرَبُ"}, {e:"You (f) will drink (Future)",t:"رَحْ تِشْرَبِي"}, {e:"He will drink (Future)",t:"رَحْ يِشْرَبُ"}, {e:"She will drink (Future)",t:"رَحْ تِشْرَبُ"}, {e:"We will drink (Future)",t:"رَحْ نِشْرَبُ"}, {e:"You (all) will drink (Future)",t:"رَحْ تِشْرَبُوا"}, {e:"They will drink (Future)",t:"رَحْ يِشْرَبُوا"},
             // 23. To Study (دَرَسَ)
-            {e:"I studied (Past)",a:"دَرَسْت"}, {e:"You (m) studied (Past)",a:"دَرَسْت"}, {e:"You (f) studied (Past)",a:"دَرَسْتِي"}, {e:"He studied (Past)",a:"دَرَس"}, {e:"She studied (Past)",a:"دَرَسَت"}, {e:"We studied (Past)",a:"دَرَسْنَا"}, {e:"You (all) studied (Past)",a:"دَرَسْتُوا"}, {e:"They studied (Past)",a:"دَرَسُوا"},
-            {e:"I study (Present)",a:"بِدْرُس"}, {e:"You (m) study (Present)",a:"بِتِدْرُس"}, {e:"You (f) study (Present)",a:"بِتِدْرُسِي"}, {e:"He studies (Present)",a:"بِيِدْرُس"}, {e:"She studies (Present)",a:"بِتِدْرُس"}, {e:"We study (Present)",a:"بِنِدْرُس"}, {e:"You (all) study (Present)",a:"بِتِدْرُسُوا"}, {e:"They study (Present)",a:"بِيِدْرُسُوا"},
-            {e:"I will study (Future)",a:"رَح أَدْرُس"}, {e:"You (m) will study (Future)",a:"رَح تِدْرُس"}, {e:"You (f) will study (Future)",a:"رَح تِدْرُسِي"}, {e:"He will study (Future)",a:"رَح يِدْرُس"}, {e:"She will study (Future)",a:"رَح تِدْرُس"}, {e:"We will study (Future)",a:"رَح نِدْرُس"}, {e:"You (all) will study (Future)",a:"رَح تِدْرُسُوا"}, {e:"They will study (Future)",a:"رَح يِدْرُسُوا"},
-
+            {e:"I studied (Past)",t:"دَرَسْت"}, {e:"You (m) studied (Past)",t:"دَرَسْت"}, {e:"You (f) studied (Past)",t:"دَرَسْتِي"}, {e:"He studied (Past)",t:"دَرَس"}, {e:"She studied (Past)",t:"دَرَسَت"}, {e:"We studied (Past)",t:"دَرَسْنَا"}, {e:"You (all) studied (Past)",t:"دَرَسْتُوا"}, {e:"They studied (Past)",t:"دَرَسُوا"},
+            {e:"I study (Present)",t:"بِدْرُس"}, {e:"You (m) study (Present)",t:"بِتِدْرُس"}, {e:"You (f) study (Present)",t:"بِتِدْرُسِي"}, {e:"He studies (Present)",t:"بِيِدْرُس"}, {e:"She studies (Present)",t:"بِتِدْرُس"}, {e:"We study (Present)",t:"بِنِدْرُس"}, {e:"You (all) study (Present)",t:"بِتِدْرُسُوا"}, {e:"They study (Present)",t:"بِيِدْرُسُوا"},
+            {e:"I will study (Future)",t:"رَح أَدْرُس"}, {e:"You (m) will study (Future)",t:"رَح تِدْرُس"}, {e:"You (f) will study (Future)",t:"رَح تِدْرُسِي"}, {e:"He will study (Future)",t:"رَح يِدْرُس"}, {e:"She will study (Future)",t:"رَح تِدْرُس"}, {e:"We will study (Future)",t:"رَح نِدْرُس"}, {e:"You (all) will study (Future)",t:"رَح تِدْرُسُوا"}, {e:"They will study (Future)",t:"رَح يِدْرُسُوا"},
             // 24. To Attend (حِضِر)
-            {e:"I attended (Past)",a:"حْضِرِت"}, {e:"You (m) attended (Past)",a:"حْضِرِت"}, {e:"You (f) attended (Past)",a:"حْضِرْتِي"}, {e:"He attended (Past)",a:"حِضِر"}, {e:"She attended (Past)",a:"حِضْرِت"}, {e:"We attended (Past)",a:"حْضِرْنَا"}, {e:"You (all) attended (Past)",a:"حْضِرْتُوا"}, {e:"They attended (Past)",a:"حِضْرُوا"},
-            {e:"I attend (Present)",a:"بَحْضَر"}, {e:"You (m) attend (Present)",a:"بِتِحْضَر"}, {e:"You (f) attend (Present)",a:"بِتِحْضَرِي"}, {e:"He attends (Present)",a:"بِيِحْضَر"}, {e:"She attends (Present)",a:"بِتِحْضَر"}, {e:"We attend (Present)",a:"بِنِحْضَر"}, {e:"You (all) attend (Present)",a:"بِتِحْضَرُوا"}, {e:"They attend (Present)",a:"بِيِحْضَرُوا"},
-            {e:"I will attend (Future)",a:"رَح أَحْضَر"}, {e:"You (m) will attend (Future)",a:"رَح تِحْضَر"}, {e:"You (f) will attend (Future)",a:"رَح تِحْضَرِي"}, {e:"He will attend (Future)",a:"رَح يِحْضَر"}, {e:"She will attend (Future)",a:"رَح تِحْضَر"}, {e:"We will attend (Future)",a:"رَح نِحْضَر"}, {e:"You (all) will attend (Future)",a:"رَح تِحْضَرُوا"}, {e:"They will attend (Future)",a:"رَح يِحْضَرُوا"},
-
+            {e:"I attended (Past)",t:"حْضِرِت"}, {e:"You (m) attended (Past)",t:"حْضِرِت"}, {e:"You (f) attended (Past)",t:"حْضِرْتِي"}, {e:"He attended (Past)",t:"حِضِر"}, {e:"She attended (Past)",t:"حِضْرِت"}, {e:"We attended (Past)",t:"حْضِرْنَا"}, {e:"You (all) attended (Past)",t:"حْضِرْتُوا"}, {e:"They attended (Past)",t:"حِضْرُوا"},
+            {e:"I attend (Present)",t:"بَحْضَر"}, {e:"You (m) attend (Present)",t:"بِتِحْضَر"}, {e:"You (f) attend (Present)",t:"بِتِحْضَرِي"}, {e:"He attends (Present)",t:"بِيِحْضَر"}, {e:"She attends (Present)",t:"بِتِحْضَر"}, {e:"We attend (Present)",t:"بِنِحْضَر"}, {e:"You (all) attend (Present)",t:"بِتِحْضَرُوا"}, {e:"They attend (Present)",t:"بِيِحْضَرُوا"},
+            {e:"I will attend (Future)",t:"رَح أَحْضَر"}, {e:"You (m) will attend (Future)",t:"رَح تِحْضَر"}, {e:"You (f) will attend (Future)",t:"رَح تِحْضَرِي"}, {e:"He will attend (Future)",t:"رَح يِحْضَر"}, {e:"She will attend (Future)",t:"رَح تِحْضَر"}, {e:"We will attend (Future)",t:"رَح نِحْضَر"}, {e:"You (all) will attend (Future)",t:"رَح تِحْضَرُوا"}, {e:"They will attend (Future)",t:"رَح يِحْضَرُوا"},
             // 25. To Talk (حَكَى)
-            {e:"I talked (Past)",a:"حَكَيْت"}, {e:"You (m) talked (Past)",a:"حَكَيْت"}, {e:"You (f) talked (Past)",a:"حَكَيْتِي"}, {e:"He talked (Past)",a:"حَكَى"}, {e:"She talked (Past)",a:"حَكَت"}, {e:"We talked (Past)",a:"حَكَيْنَا"}, {e:"You (all) talked (Past)",a:"حَكَيْتُوا"}, {e:"They talked (Past)",a:"حَكُوا"},
-            {e:"I talk (Present)",a:"بَحْكِي"}, {e:"You (m) talk (Present)",a:"بِتِحْكِي"}, {e:"You (f) talk (Present)",a:"بِتِحْكِي"}, {e:"He talks (Present)",a:"بِيِحْكِي"}, {e:"She talks (Present)",a:"بِتِحْكِي"}, {e:"We talk (Present)",a:"بِنِحْكِي"}, {e:"You (all) talk (Present)",a:"بِتِحْكُوا"}, {e:"They talk (Present)",a:"بِيِحْكُوا"},
-            {e:"I will talk (Future)",a:"رَح أَحْكِي"}, {e:"You (m) will talk (Future)",a:"رَح تِحْكِي"}, {e:"You (f) will talk (Future)",a:"رَح تِحْكِي"}, {e:"He will talk (Future)",a:"رَح يِحْكِي"}, {e:"She will talk (Future)",a:"رَح تِحْكِي"}, {e:"We will talk (Future)",a:"رَح نِحْكِي"}, {e:"You (all) will talk (Future)",a:"رَح تِحْكُوا"}, {e:"They will talk (Future)",a:"رَح يِحْكُوا"},
-
-            // 26. To Say (قَالَ / 'al)
-            {e:"I said (Past)",a:"قِلِت"}, {e:"You (m) said (Past)",a:"قِلِت"}, {e:"You (f) said (Past)",a:"قِلْتِي"}, {e:"He said (Past)",a:"قَالَ"}, {e:"She said (Past)",a:"قَالَت"}, {e:"We said (Past)",a:"قِلْنَا"}, {e:"You (all) said (Past)",a:"قِلْتُوا"}, {e:"They said (Past)",a:"قَالُوا"},
-            {e:"I say (Present)",a:"بِقُول"}, {e:"You (m) say (Present)",a:"بِتْقُول"}, {e:"You (f) say (Present)",a:"بِتْقُولِي"}, {e:"He says (Present)",a:"بِيْقُول"}, {e:"She says (Present)",a:"بِتْقُول"}, {e:"We say (Present)",a:"بِنْقُول"}, {e:"You (all) say (Present)",a:"بِتْقُولُوا"}, {e:"They say (Present)",a:"بِيْقُولُوا"},
-            {e:"I will say (Future)",a:"رَح أَقُول"}, {e:"You (m) will say (Future)",a:"رَح تْقُول"}, {e:"You (f) will say (Future)",a:"رَح تْقُولِي"}, {e:"He will say (Future)",a:"رَح يْقُول"}, {e:"She will say (Future)",a:"رَح تْقُول"}, {e:"We will say (Future)",a:"رَح نْقُول"}, {e:"You (all) will say (Future)",a:"رَح تْقُولُوا"}, {e:"They will say (Future)",a:"رَح يْقُولُوا"},
-
+            {e:"I talked (Past)",t:"حَكَيْت"}, {e:"You (m) talked (Past)",t:"حَكَيْت"}, {e:"You (f) talked (Past)",t:"حَكَيْتِي"}, {e:"He talked (Past)",t:"حَكَى"}, {e:"She talked (Past)",t:"حَكَت"}, {e:"We talked (Past)",t:"حَكَيْنَا"}, {e:"You (all) talked (Past)",t:"حَكَيْتُوا"}, {e:"They talked (Past)",t:"حَكُوا"},
+            {e:"I talk (Present)",t:"بَحْكِي"}, {e:"You (m) talk (Present)",t:"بِتِحْكِي"}, {e:"You (f) talk (Present)",t:"بِتِحْكِي"}, {e:"He talks (Present)",t:"بِيِحْكِي"}, {e:"She talks (Present)",t:"بِتِحْكِي"}, {e:"We talk (Present)",t:"بِنِحْكِي"}, {e:"You (all) talk (Present)",t:"بِتِحْكُوا"}, {e:"They talk (Present)",t:"بِيِحْكُوا"},
+            {e:"I will talk (Future)",t:"رَح أَحْكِي"}, {e:"You (m) will talk (Future)",t:"رَح تِحْكِي"}, {e:"You (f) will talk (Future)",t:"رَح تِحْكِي"}, {e:"He will talk (Future)",t:"رَح يِحْكِي"}, {e:"She will talk (Future)",t:"رَح تِحْكِي"}, {e:"We will talk (Future)",t:"رَح نِحْكِي"}, {e:"You (all) will talk (Future)",t:"رَح تِحْكُوا"}, {e:"They will talk (Future)",t:"رَح يِحْكُوا"},
+            // 26. To Say (قَالَ)
+            {e:"I said (Past)",t:"قِلِت"}, {e:"You (m) said (Past)",t:"قِلِت"}, {e:"You (f) said (Past)",t:"قِلْتِي"}, {e:"He said (Past)",t:"قَالَ"}, {e:"She said (Past)",t:"قَالَت"}, {e:"We said (Past)",t:"قِلْنَا"}, {e:"You (all) said (Past)",t:"قِلْتُوا"}, {e:"They said (Past)",t:"قَالُوا"},
+            {e:"I say (Present)",t:"بِقُول"}, {e:"You (m) say (Present)",t:"بِتْقُول"}, {e:"You (f) say (Present)",t:"بِتْقُولِي"}, {e:"He says (Present)",t:"بِيْقُول"}, {e:"She says (Present)",t:"بِتْقُول"}, {e:"We say (Present)",t:"بِنْقُول"}, {e:"You (all) say (Present)",t:"بِتْقُولُوا"}, {e:"They say (Present)",t:"بِيْقُولُوا"},
+            {e:"I will say (Future)",t:"رَح أَقُول"}, {e:"You (m) will say (Future)",t:"رَح تْقُول"}, {e:"You (f) will say (Future)",t:"رَح تْقُولِي"}, {e:"He will say (Future)",t:"رَح يْقُول"}, {e:"She will say (Future)",t:"رَح تْقُول"}, {e:"We will say (Future)",t:"رَح نْقُول"}, {e:"You (all) will say (Future)",t:"رَح تْقُولُوا"}, {e:"They will say (Future)",t:"رَح يْقُولُوا"},
             // 27. To Order (طَلَب)
-            {e:"I ordered (Past)",a:"طَلَبْت"}, {e:"You (m) ordered (Past)",a:"طَلَبْت"}, {e:"You (f) ordered (Past)",a:"طَلَبْتِي"}, {e:"He ordered (Past)",a:"طَلَب"}, {e:"She ordered (Past)",a:"طَلَبَت"}, {e:"We ordered (Past)",a:"طَلَبْنَا"}, {e:"You (all) ordered (Past)",a:"طَلَبْتُوا"}, {e:"They ordered (Past)",a:"طَلَبُوا"},
-            {e:"I order (Present)",a:"بِطْلُب"}, {e:"You (m) order (Present)",a:"بِتِطْلُب"}, {e:"You (f) order (Present)",a:"بِتِطْلُبِي"}, {e:"He orders (Present)",a:"بِيِطْلُب"}, {e:"She orders (Present)",a:"بِتِطْلُب"}, {e:"We order (Present)",a:"بِنِطْلُب"}, {e:"You (all) order (Present)",a:"بِتِطْلُبُوا"}, {e:"They order (Present)",a:"بِيِطْلُبُوا"},
-            {e:"I will order (Future)",a:"رَح أَطْلُب"}, {e:"You (m) will order (Future)",a:"رَح تِطْلُب"}, {e:"You (f) will order (Future)",a:"رَح تِطْلُبِي"}, {e:"He will order (Future)",a:"رَح يِطْلُب"}, {e:"She will order (Future)",a:"رَح تِطْلُب"}, {e:"We will order (Future)",a:"رَح نِطْلُب"}, {e:"You (all) will order (Future)",a:"رَح تِطْلُبُوا"}, {e:"They will order (Future)",a:"رَح يِطْلُبُوا"}
+            {e:"I ordered (Past)",t:"طَلَبْت"}, {e:"You (m) ordered (Past)",t:"طَلَبْت"}, {e:"You (f) ordered (Past)",t:"طَلَبْتِي"}, {e:"He ordered (Past)",t:"طَلَب"}, {e:"She ordered (Past)",t:"طَلَبَت"}, {e:"We ordered (Past)",t:"طَلَبْنَا"}, {e:"You (all) ordered (Past)",t:"طَلَبْتُوا"}, {e:"They ordered (Past)",t:"طَلَبُوا"},
+            {e:"I order (Present)",t:"بِطْلُب"}, {e:"You (m) order (Present)",t:"بِتِطْلُب"}, {e:"You (f) order (Present)",t:"بِتِطْلُبِي"}, {e:"He orders (Present)",t:"بِيِطْلُب"}, {e:"She orders (Present)",t:"بِتِطْلُب"}, {e:"We order (Present)",t:"بِنِطْلُب"}, {e:"You (all) order (Present)",t:"بِتِطْلُبُوا"}, {e:"They order (Present)",t:"بِيِطْلُبُوا"},
+            {e:"I will order (Future)",t:"رَح أَطْلُب"}, {e:"You (m) will order (Future)",t:"رَح تِطْلُب"}, {e:"You (f) will order (Future)",t:"رَح تِطْلُبِي"}, {e:"He will order (Future)",t:"رَح يِطْلُب"}, {e:"She will order (Future)",t:"رَح تِطْلُب"}, {e:"We will order (Future)",t:"رَح نِطْلُب"}, {e:"You (all) will order (Future)",t:"رَح تِطْلُبُوا"}, {e:"They will order (Future)",t:"رَح يِطْلُبُوا"}
+        ];
+
+        // DECK 4: SERBIAN Conjugation Driller
+        const conjDataSrb = [
+            // 1. To Explain (Objasniti)
+            {e:"I explained (Past)",t:"Objasnio sam"}, {e:"You (m) explained (Past)",t:"Objasnio si"}, {e:"You (f) explained (Past)",t:"Objasnila si"}, {e:"He explained (Past)",t:"Objasnio je"}, {e:"She explained (Past)",t:"Objasnila je"}, {e:"We explained (Past)",t:"Objasnili smo"}, {e:"You (all) explained (Past)",t:"Objasnili ste"}, {e:"They explained (Past)",t:"Objasnili su"},
+            {e:"I explain (Present)",t:"Objašnjavam"}, {e:"You (m) explain (Present)",t:"Objašnjavaš"}, {e:"You (f) explain (Present)",t:"Objašnjavaš"}, {e:"He explains (Present)",t:"Objašnjava"}, {e:"She explains (Present)",t:"Objašnjava"}, {e:"We explain (Present)",t:"Objašnjavamo"}, {e:"You (all) explain (Present)",t:"Objašnjavate"}, {e:"They explain (Present)",t:"Objašnjavaju"},
+            {e:"I will explain (Future)",t:"Objasniću"}, {e:"You (m) will explain (Future)",t:"Objasnićeš"}, {e:"You (f) will explain (Future)",t:"Objasnićeš"}, {e:"He will explain (Future)",t:"Objasniće"}, {e:"She will explain (Future)",t:"Objasniće"}, {e:"We will explain (Future)",t:"Objasnićemo"}, {e:"You (all) will explain (Future)",t:"Objasnićete"}, {e:"They will explain (Future)",t:"Objasniće"},
+            // 2. To Lose (Izgubiti)
+            {e:"I lost (Past)",t:"Izgubio sam"}, {e:"You (m) lost (Past)",t:"Izgubio si"}, {e:"You (f) lost (Past)",t:"Izgubila si"}, {e:"He lost (Past)",t:"Izgubio je"}, {e:"She lost (Past)",t:"Izgubila je"}, {e:"We lost (Past)",t:"Izgubili smo"}, {e:"You (all) lost (Past)",t:"Izgubili ste"}, {e:"They lost (Past)",t:"Izgubili su"},
+            {e:"I lose (Present)",t:"Gubim"}, {e:"You (m) lose (Present)",t:"Gubiš"}, {e:"You (f) lose (Present)",t:"Gubiš"}, {e:"He loses (Present)",t:"Gubi"}, {e:"She loses (Present)",t:"Gubi"}, {e:"We lose (Present)",t:"Gubimo"}, {e:"You (all) lose (Present)",t:"Gubite"}, {e:"They lose (Present)",t:"Gube"},
+            {e:"I will lose (Future)",t:"Izgubiću"}, {e:"You (m) will lose (Future)",t:"Izgubićeš"}, {e:"You (f) will lose (Future)",t:"Izgubićeš"}, {e:"He will lose (Future)",t:"Izgubiće"}, {e:"She will lose (Future)",t:"Izgubiće"}, {e:"We will lose (Future)",t:"Izgubićemo"}, {e:"You (all) will lose (Future)",t:"Izgubićete"}, {e:"They will lose (Future)",t:"Izgubiće"},
+            // 3. To Choose (Izabrati)
+            {e:"I chose (Past)",t:"Izabrao sam"}, {e:"You (m) chose (Past)",t:"Izabrao si"}, {e:"You (f) chose (Past)",t:"Izabrala si"}, {e:"He chose (Past)",t:"Izabrao je"}, {e:"She chose (Past)",t:"Izabrala je"}, {e:"We chose (Past)",t:"Izabrali smo"}, {e:"You (all) chose (Past)",t:"Izabrali ste"}, {e:"They chose (Past)",t:"Izabrali su"},
+            {e:"I choose (Present)",t:"Biram"}, {e:"You (m) choose (Present)",t:"Biraš"}, {e:"You (f) choose (Present)",t:"Biraš"}, {e:"He chooses (Present)",t:"Bira"}, {e:"She chooses (Present)",t:"Bira"}, {e:"We choose (Present)",t:"Biramo"}, {e:"You (all) choose (Present)",t:"Birate"}, {e:"They choose (Present)",t:"Biraju"},
+            {e:"I will choose (Future)",t:"Izabraću"}, {e:"You (m) will choose (Future)",t:"Izabraćeš"}, {e:"You (f) will choose (Future)",t:"Izabraćeš"}, {e:"He will choose (Future)",t:"Izabraće"}, {e:"She will choose (Future)",t:"Izabraće"}, {e:"We will choose (Future)",t:"Izabraćemo"}, {e:"You (all) will choose (Future)",t:"Izabraćete"}, {e:"They will choose (Future)",t:"Izabraće"},
+            // 4. To Pay (Platiti)
+            {e:"I paid (Past)",t:"Platio sam"}, {e:"You (m) paid (Past)",t:"Platio si"}, {e:"You (f) paid (Past)",t:"Platila si"}, {e:"He paid (Past)",t:"Platio je"}, {e:"She paid (Past)",t:"Platila je"}, {e:"We paid (Past)",t:"Platili smo"}, {e:"You (all) paid (Past)",t:"Platili ste"}, {e:"They paid (Past)",t:"Platili su"},
+            {e:"I pay (Present)",t:"Plaćam"}, {e:"You (m) pay (Present)",t:"Plaćaš"}, {e:"You (f) pay (Present)",t:"Plaćaš"}, {e:"He pays (Present)",t:"Plaća"}, {e:"She pays (Present)",t:"Plaća"}, {e:"We pay (Present)",t:"Plaćamo"}, {e:"You (all) pay (Present)",t:"Plaćate"}, {e:"They pay (Present)",t:"Plaćaju"},
+            {e:"I will pay (Future)",t:"Platiću"}, {e:"You (m) will pay (Future)",t:"Platićeš"}, {e:"You (f) will pay (Future)",t:"Platićeš"}, {e:"He will pay (Future)",t:"Platiće"}, {e:"She will pay (Future)",t:"Platiće"}, {e:"We will pay (Future)",t:"Platićemo"}, {e:"You (all) will pay (Future)",t:"Platićete"}, {e:"They will pay (Future)",t:"Platiće"},
+            // 5. To Expect (Očekivati)
+            {e:"I expected (Past)",t:"Očekivao sam"}, {e:"You (m) expected (Past)",t:"Očekivao si"}, {e:"You (f) expected (Past)",t:"Očekivala si"}, {e:"He expected (Past)",t:"Očekivao je"}, {e:"She expected (Past)",t:"Očekivala je"}, {e:"We expected (Past)",t:"Očekivali smo"}, {e:"You (all) expected (Past)",t:"Očekivali ste"}, {e:"They expected (Past)",t:"Očekivali su"},
+            {e:"I expect (Present)",t:"Očekujem"}, {e:"You (m) expect (Present)",t:"Očekuješ"}, {e:"You (f) expect (Present)",t:"Očekuješ"}, {e:"He expects (Present)",t:"Očekuje"}, {e:"She expects (Present)",t:"Očekuje"}, {e:"We expect (Present)",t:"Očekujemo"}, {e:"You (all) expect (Present)",t:"Očekujete"}, {e:"They expect (Present)",t:"Očekuju"},
+            {e:"I will expect (Future)",t:"Očekivaću"}, {e:"You (m) will expect (Future)",t:"Očekivaćeš"}, {e:"You (f) will expect (Future)",t:"Očekivaćeš"}, {e:"He will expect (Future)",t:"Očekivaće"}, {e:"She will expect (Future)",t:"Očekivaće"}, {e:"We will expect (Future)",t:"Očekivaćemo"}, {e:"You (all) will expect (Future)",t:"Očekivaćete"}, {e:"They will expect (Future)",t:"Očekivaće"},
+            // 6. To Bring (Doneti)
+            {e:"I brought (Past)",t:"Doneo sam"}, {e:"You (m) brought (Past)",t:"Doneo si"}, {e:"You (f) brought (Past)",t:"Donela si"}, {e:"He brought (Past)",t:"Doneo je"}, {e:"She brought (Past)",t:"Donela je"}, {e:"We brought (Past)",t:"Doneli smo"}, {e:"You (all) brought (Past)",t:"Doneli ste"}, {e:"They brought (Past)",t:"Doneli su"},
+            {e:"I bring (Present)",t:"Donosim"}, {e:"You (m) bring (Present)",t:"Donosiš"}, {e:"You (f) bring (Present)",t:"Donosiš"}, {e:"He brings (Present)",t:"Donosi"}, {e:"She brings (Present)",t:"Donosi"}, {e:"We bring (Present)",t:"Donosimo"}, {e:"You (all) bring (Present)",t:"Donosite"}, {e:"They bring (Present)",t:"Donose"},
+            {e:"I will bring (Future)",t:"Doneću"}, {e:"You (m) will bring (Future)",t:"Donećeš"}, {e:"You (f) will bring (Future)",t:"Donećeš"}, {e:"He will bring (Future)",t:"Doneće"}, {e:"She will bring (Future)",t:"Doneće"}, {e:"We will bring (Future)",t:"Donećemo"}, {e:"You (all) will bring (Future)",t:"Donećete"}, {e:"They will bring (Future)",t:"Doneće"},
+            // 7. To Take (Uzeti)
+            {e:"I took (Past)",t:"Uzeo sam"}, {e:"You (m) took (Past)",t:"Uzeo si"}, {e:"You (f) took (Past)",t:"Uzela si"}, {e:"He took (Past)",t:"Uzeo je"}, {e:"She took (Past)",t:"Uzela je"}, {e:"We took (Past)",t:"Uzeli smo"}, {e:"You (all) took (Past)",t:"Uzeli ste"}, {e:"They took (Past)",t:"Uzeli su"},
+            {e:"I take (Present)",t:"Uzimam"}, {e:"You (m) take (Present)",t:"Uzimaš"}, {e:"You (f) take (Present)",t:"Uzimaš"}, {e:"He takes (Present)",t:"Uzima"}, {e:"She takes (Present)",t:"Uzima"}, {e:"We take (Present)",t:"Uzimamo"}, {e:"You (all) take (Present)",t:"Uzimate"}, {e:"They take (Present)",t:"Uzimaju"},
+            {e:"I will take (Future)",t:"Uzeću"}, {e:"You (m) will take (Future)",t:"Uzećeš"}, {e:"You (f) will take (Future)",t:"Uzećeš"}, {e:"He will take (Future)",t:"Uzeće"}, {e:"She will take (Future)",t:"Uzeće"}, {e:"We will take (Future)",t:"Uzećemo"}, {e:"You (all) will take (Future)",t:"Uzećete"}, {e:"They will take (Future)",t:"Uzeće"},
+            // 8. To Visit (Posetiti)
+            {e:"I visited (Past)",t:"Posetio sam"}, {e:"You (m) visited (Past)",t:"Posetio si"}, {e:"You (f) visited (Past)",t:"Posetila si"}, {e:"He visited (Past)",t:"Posetio je"}, {e:"She visited (Past)",t:"Posetila je"}, {e:"We visited (Past)",t:"Posetili smo"}, {e:"You (all) visited (Past)",t:"Posetili ste"}, {e:"They visited (Past)",t:"Posetili su"},
+            {e:"I visit (Present)",t:"Posećujem"}, {e:"You (m) visit (Present)",t:"Posećuješ"}, {e:"You (f) visit (Present)",t:"Posećuješ"}, {e:"He visits (Present)",t:"Posećuje"}, {e:"She visits (Present)",t:"Posećuje"}, {e:"We visit (Present)",t:"Posećujemo"}, {e:"You (all) visit (Present)",t:"Posećujete"}, {e:"They visit (Present)",t:"Posećuju"},
+            {e:"I will visit (Future)",t:"Posetiću"}, {e:"You (m) will visit (Future)",t:"Posetićeš"}, {e:"You (f) will visit (Future)",t:"Posetićeš"}, {e:"He will visit (Future)",t:"Posetiće"}, {e:"She will visit (Future)",t:"Posetiće"}, {e:"We will visit (Future)",t:"Posetićemo"}, {e:"You (all) will visit (Future)",t:"Posetićete"}, {e:"They will visit (Future)",t:"Posetiće"},
+            // 9. To Try (Pokušati)
+            {e:"I tried (Past)",t:"Pokušao sam"}, {e:"You (m) tried (Past)",t:"Pokušao si"}, {e:"You (f) tried (Past)",t:"Pokušala si"}, {e:"He tried (Past)",t:"Pokušao je"}, {e:"She tried (Past)",t:"Pokušala je"}, {e:"We tried (Past)",t:"Pokušali smo"}, {e:"You (all) tried (Past)",t:"Pokušali ste"}, {e:"They tried (Past)",t:"Pokušali su"},
+            {e:"I try (Present)",t:"Pokušavam"}, {e:"You (m) try (Present)",t:"Pokušavaš"}, {e:"You (f) try (Present)",t:"Pokušavaš"}, {e:"He tries (Present)",t:"Pokušava"}, {e:"She tries (Present)",t:"Pokušava"}, {e:"We try (Present)",t:"Pokušavamo"}, {e:"You (all) try (Present)",t:"Pokušavate"}, {e:"They try (Present)",t:"Pokušavaju"},
+            {e:"I will try (Future)",t:"Pokušaću"}, {e:"You (m) will try (Future)",t:"Pokušaćeš"}, {e:"You (f) will try (Future)",t:"Pokušaćeš"}, {e:"He will try (Future)",t:"Pokušaće"}, {e:"She will try (Future)",t:"Pokušaće"}, {e:"We will try (Future)",t:"Pokušaćemo"}, {e:"You (all) will try (Future)",t:"Pokušaćete"}, {e:"They will try (Future)",t:"Pokušaće"},
+            // 10. To Reject (Odbiti)
+            {e:"I rejected (Past)",t:"Odbio sam"}, {e:"You (m) rejected (Past)",t:"Odbio si"}, {e:"You (f) rejected (Past)",t:"Odbila si"}, {e:"He rejected (Past)",t:"Odbio je"}, {e:"She rejected (Past)",t:"Odbila je"}, {e:"We rejected (Past)",t:"Odbili smo"}, {e:"You (all) rejected (Past)",t:"Odbili ste"}, {e:"They rejected (Past)",t:"Odbili su"},
+            {e:"I reject (Present)",t:"Odbijam"}, {e:"You (m) reject (Present)",t:"Odbijaš"}, {e:"You (f) reject (Present)",t:"Odbijaš"}, {e:"He rejects (Present)",t:"Odbija"}, {e:"She rejects (Present)",t:"Odbija"}, {e:"We reject (Present)",t:"Odbijamo"}, {e:"You (all) reject (Present)",t:"Odbijate"}, {e:"They reject (Present)",t:"Odbijaju"},
+            {e:"I will reject (Future)",t:"Odbiću"}, {e:"You (m) will reject (Future)",t:"Odbićeš"}, {e:"You (f) will reject (Future)",t:"Odbićeš"}, {e:"He will reject (Future)",t:"Odbiće"}, {e:"She will reject (Future)",t:"Odbiće"}, {e:"We will reject (Future)",t:"Odbićemo"}, {e:"You (all) will reject (Future)",t:"Obićete"}, {e:"They will reject (Future)",t:"Odbiće"},
+            // 11. To Be (Biti)
+            {e:"I was (Past)",t:"Bio sam"}, {e:"You (m) were (Past)",t:"Bio si"}, {e:"You (f) were (Past)",t:"Bila si"}, {e:"He was (Past)",t:"Bio je"}, {e:"She was (Past)",t:"Bila je"}, {e:"We were (Past)",t:"Bili smo"}, {e:"You (all) were (Past)",t:"Bili ste"}, {e:"They were (Past)",t:"Bili su"},
+            {e:"I am (Present)",t:"Ja sam"}, {e:"You (m) are (Present)",t:"Ti si"}, {e:"You (f) are (Present)",t:"Ti si"}, {e:"He is (Present)",t:"On je"}, {e:"She is (Present)",t:"Ona je"}, {e:"We are (Present)",t:"Mi smo"}, {e:"You (all) are (Present)",t:"Vi ste"}, {e:"They are (Present)",t:"Oni su"},
+            {e:"I will be (Future)",t:"Biću"}, {e:"You (m) will be (Future)",t:"Bićeš"}, {e:"You (f) will be (Future)",t:"Bićeš"}, {e:"He will be (Future)",t:"Biće"}, {e:"She will be (Future)",t:"Biće"}, {e:"We will be (Future)",t:"Bićemo"}, {e:"You (all) will be (Future)",t:"Bićete"}, {e:"They will be (Future)",t:"Biće"},
+            // 12. To Move (Pomeriti)
+            {e:"I moved (Past)",t:"Pomerio sam"}, {e:"You (m) moved (Past)",t:"Pomerio si"}, {e:"You (f) moved (Past)",t:"Pomerila si"}, {e:"He moved (Past)",t:"Pomerio je"}, {e:"She moved (Past)",t:"Pomerila je"}, {e:"We moved (Past)",t:"Pomerili smo"}, {e:"You (all) moved (Past)",t:"Pomerili ste"}, {e:"They moved (Past)",t:"Pomerili su"},
+            {e:"I move (Present)",t:"Pomeram"}, {e:"You (m) move (Present)",t:"Pomeraš"}, {e:"You (f) move (Present)",t:"Pomeraš"}, {e:"He moves (Present)",t:"Pomera"}, {e:"She moves (Present)",t:"Pomera"}, {e:"We move (Present)",t:"Pomeramo"}, {e:"You (all) move (Present)",t:"Pomerate"}, {e:"They move (Present)",t:"Pomeraju"},
+            {e:"I will move (Future)",t:"Pomeriću"}, {e:"You (m) will move (Future)",t:"Pomerićeš"}, {e:"You (f) will move (Future)",t:"Pomerićeš"}, {e:"He will move (Future)",t:"Pomeriće"}, {e:"She will move (Future)",t:"Pomeriće"}, {e:"We will move (Future)",t:"Pomerićemo"}, {e:"You (all) will move (Future)",t:"Pomerićete"}, {e:"They will move (Future)",t:"Pomeriće"},
+            // 13. To Hear (Čuti)
+            {e:"I heard (Past)",t:"Čuo sam"}, {e:"You (m) heard (Past)",t:"Čuo si"}, {e:"You (f) heard (Past)",t:"Čula si"}, {e:"He heard (Past)",t:"Čuo je"}, {e:"She heard (Past)",t:"Čula je"}, {e:"We heard (Past)",t:"Čuli smo"}, {e:"You (all) heard (Past)",t:"Čuli ste"}, {e:"They heard (Past)",t:"Čuli su"},
+            {e:"I hear (Present)",t:"Čujem"}, {e:"You (m) hear (Present)",t:"Čuješ"}, {e:"You (f) hear (Present)",t:"Čuješ"}, {e:"He hears (Present)",t:"Čuje"}, {e:"She hears (Present)",t:"Čuje"}, {e:"We hear (Present)",t:"Čujemo"}, {e:"You (all) hear (Present)",t:"Čujete"}, {e:"They hear (Present)",t:"Čuju"},
+            {e:"I will hear (Future)",t:"Čuću"}, {e:"You (m) will hear (Future)",t:"Čućeš"}, {e:"You (f) will hear (Future)",t:"Čućeš"}, {e:"He will hear (Future)",t:"Čuće"}, {e:"She will hear (Future)",t:"Čuće"}, {e:"We will hear (Future)",t:"Čućemo"}, {e:"You (all) will hear (Future)",t:"Čućete"}, {e:"They will hear (Future)",t:"Čuće"},
+            // 14. To See (Videti)
+            {e:"I saw (Past)",t:"Video sam"}, {e:"You (m) saw (Past)",t:"Video si"}, {e:"You (f) saw (Past)",t:"Videla si"}, {e:"He saw (Past)",t:"Video je"}, {e:"She saw (Past)",t:"Videla je"}, {e:"We saw (Past)",t:"Videli smo"}, {e:"You (all) saw (Past)",t:"Videli ste"}, {e:"They saw (Past)",t:"Videli su"},
+            {e:"I see (Present)",t:"Vidim"}, {e:"You (m) see (Present)",t:"Vidiš"}, {e:"You (f) see (Present)",t:"Vidiš"}, {e:"He sees (Present)",t:"Vidi"}, {e:"She sees (Present)",t:"Vidi"}, {e:"We see (Present)",t:"Vidimo"}, {e:"You (all) see (Present)",t:"Vidite"}, {e:"They see (Present)",t:"Vide"},
+            {e:"I will see (Future)",t:"Videću"}, {e:"You (m) will see (Future)",t:"Videćeš"}, {e:"You (f) will see (Future)",t:"Videćeš"}, {e:"He will see (Future)",t:"Videće"}, {e:"She will see (Future)",t:"Videće"}, {e:"We will see (Future)",t:"Videćemo"}, {e:"You (all) will see (Future)",t:"Videćete"}, {e:"They will see (Future)",t:"Videće"},
+            // 15. To Give (Dati)
+            {e:"I gave (Past)",t:"Dao sam"}, {e:"You (m) gave (Past)",t:"Dao si"}, {e:"You (f) gave (Past)",t:"Dala si"}, {e:"He gave (Past)",t:"Dao je"}, {e:"She gave (Past)",t:"Dala je"}, {e:"We gave (Past)",t:"Dali smo"}, {e:"You (all) gave (Past)",t:"Dali ste"}, {e:"They gave (Past)",t:"Dali su"},
+            {e:"I give (Present)",t:"Dajem"}, {e:"You (m) give (Present)",t:"Daješ"}, {e:"You (f) give (Present)",t:"Daješ"}, {e:"He gives (Present)",t:"Daje"}, {e:"She gives (Present)",t:"Daje"}, {e:"We give (Present)",t:"Dajemo"}, {e:"You (all) give (Present)",t:"Dajete"}, {e:"They give (Present)",t:"Daju"},
+            {e:"I will give (Future)",t:"Daću"}, {e:"You (m) will give (Future)",t:"Daćeš"}, {e:"You (f) will give (Future)",t:"Daćeš"}, {e:"He will give (Future)",t:"Daće"}, {e:"She will give (Future)",t:"Daće"}, {e:"We will give (Future)",t:"Daćemo"}, {e:"You (all) will give (Future)",t:"Daćete"}, {e:"They will give (Future)",t:"Daće"},
+            // 16. To Understand (Razumeti)
+            {e:"I understood (Past)",t:"Razumeo sam"}, {e:"You (m) understood (Past)",t:"Razumeo si"}, {e:"You (f) understood (Past)",t:"Razumela si"}, {e:"He understood (Past)",t:"Razumeo je"}, {e:"She understood (Past)",t:"Razumela je"}, {e:"We understood (Past)",t:"Razumeli smo"}, {e:"You (all) understood (Past)",t:"Razumeli ste"}, {e:"They understood (Past)",t:"Razumeli su"},
+            {e:"I understand (Present)",t:"Razumem"}, {e:"You (m) understand (Present)",t:"Razumeš"}, {e:"You (f) understand (Present)",t:"Razumeš"}, {e:"He understands (Present)",t:"Razume"}, {e:"She understands (Present)",t:"Razume"}, {e:"We understand (Present)",t:"Razumemo"}, {e:"You (all) understand (Present)",t:"Razumete"}, {e:"They understand (Present)",t:"Razumeju"},
+            {e:"I will understand (Future)",t:"Razumeću"}, {e:"You (m) will understand (Future)",t:"Razumećeš"}, {e:"You (f) will understand (Future)",t:"Razumećeš"}, {e:"He will understand (Future)",t:"Razumeće"}, {e:"She will understand (Future)",t:"Razumeće"}, {e:"We will understand (Future)",t:"Razumećemo"}, {e:"You (all) will understand (Future)",t:"Razumećete"}, {e:"They will understand (Future)",t:"Razumeće"},
+            // 17. To Offer (Ponuditi)
+            {e:"I offered (Past)",t:"Ponudio sam"}, {e:"You (m) offered (Past)",t:"Ponudio si"}, {e:"You (f) offered (Past)",t:"Ponudila si"}, {e:"He offered (Past)",t:"Ponudio je"}, {e:"She offered (Past)",t:"Ponudila je"}, {e:"We offered (Past)",t:"Ponudili smo"}, {e:"You (all) offered (Past)",t:"Ponudili ste"}, {e:"They offered (Past)",t:"Ponudili su"},
+            {e:"I offer (Present)",t:"Nudim"}, {e:"You (m) offer (Present)",t:"Nudiš"}, {e:"You (f) offer (Present)",t:"Nudiš"}, {e:"He offers (Present)",t:"Nudi"}, {e:"She offers (Present)",t:"Nudi"}, {e:"We offer (Present)",t:"Nudimo"}, {e:"You (all) offer (Present)",t:"Nudite"}, {e:"They offer (Present)",t:"Nude"},
+            {e:"I will offer (Future)",t:"Ponudiću"}, {e:"You (m) will offer (Future)",t:"Ponudićeš"}, {e:"You (f) will offer (Future)",t:"Ponudićeš"}, {e:"He will offer (Future)",t:"Ponudiće"}, {e:"She will offer (Future)",t:"Ponudiće"}, {e:"We will offer (Future)",t:"Ponudićemo"}, {e:"You (all) will offer (Future)",t:"Ponudićete"}, {e:"They will offer (Future)",t:"Ponudiće"},
+            // 18. To Prohibit/Prevent (Zabraniti)
+            {e:"I prohibited (Past)",t:"Zabranio sam"}, {e:"You (m) prohibited (Past)",t:"Zabranio si"}, {e:"You (f) prohibited (Past)",t:"Zabranila si"}, {e:"He prohibited (Past)",t:"Zabranio je"}, {e:"She prohibited (Past)",t:"Zabranila je"}, {e:"We prohibited (Past)",t:"Zabranili smo"}, {e:"You (all) prohibited (Past)",t:"Zabranili ste"}, {e:"They prohibited (Past)",t:"Zabranili su"},
+            {e:"I prohibit (Present)",t:"Zabranjujem"}, {e:"You (m) prohibit (Present)",t:"Zabranjuješ"}, {e:"You (f) prohibit (Present)",t:"Zabranjuješ"}, {e:"He prohibits (Present)",t:"Zabranjuje"}, {e:"She prohibits (Present)",t:"Zabranjuje"}, {e:"We prohibit (Present)",t:"Zabranjujemo"}, {e:"You (all) prohibit (Present)",t:"Zabranjujete"}, {e:"They prohibit (Present)",t:"Zabranjuju"},
+            {e:"I will prohibit (Future)",t:"Zabraniću"}, {e:"You (m) will prohibit (Future)",t:"Zabranićeš"}, {e:"You (f) will prohibit (Future)",t:"Zabranićeš"}, {e:"He will prohibit (Future)",t:"Zabraniće"}, {e:"She will prohibit (Future)",t:"Zabraniće"}, {e:"We will prohibit (Future)",t:"Zabranićemo"}, {e:"You (all) will prohibit (Future)",t:"Zabranićete"}, {e:"They will prohibit (Future)",t:"Zabraniće"},
+            // 19. To Attack (Napasti)
+            {e:"I attacked (Past)",t:"Napao sam"}, {e:"You (m) attacked (Past)",t:"Napao si"}, {e:"You (f) attacked (Past)",t:"Napala si"}, {e:"He attacked (Past)",t:"Napao je"}, {e:"She attacked (Past)",t:"Napala je"}, {e:"We attacked (Past)",t:"Napali smo"}, {e:"You (all) attacked (Past)",t:"Napali ste"}, {e:"They attacked (Past)",t:"Napali su"},
+            {e:"I attack (Present)",t:"Napadam"}, {e:"You (m) attack (Present)",t:"Napadaš"}, {e:"You (f) attack (Present)",t:"Napadaš"}, {e:"He attacks (Present)",t:"Napada"}, {e:"She attacks (Present)",t:"Napada"}, {e:"We attack (Present)",t:"Napadamo"}, {e:"You (all) attack (Present)",t:"Napadate"}, {e:"They attack (Present)",t:"Napadaju"},
+            {e:"I will attack (Future)",t:"Napašću"}, {e:"You (m) will attack (Future)",t:"Napašćeš"}, {e:"You (f) will attack (Future)",t:"Napašćeš"}, {e:"He will attack (Future)",t:"Napašće"}, {e:"She will attack (Future)",t:"Napašće"}, {e:"We will attack (Future)",t:"Napašćemo"}, {e:"You (all) will attack (Future)",t:"Napašćete"}, {e:"They will attack (Future)",t:"Napašće"},
+            // 20. To Defend (Braniti)
+            {e:"I defended (Past)",t:"Branio sam"}, {e:"You (m) defended (Past)",t:"Branio si"}, {e:"You (f) defended (Past)",t:"Branila si"}, {e:"He defended (Past)",t:"Branio je"}, {e:"She defended (Past)",t:"Branila je"}, {e:"We defended (Past)",t:"Branili smo"}, {e:"You (all) defended (Past)",t:"Branili ste"}, {e:"They defended (Past)",t:"Branili su"},
+            {e:"I defend (Present)",t:"Branim"}, {e:"You (m) defend (Present)",t:"Braniš"}, {e:"You (f) defend (Present)",t:"Braniš"}, {e:"He defends (Present)",t:"Brani"}, {e:"She defends (Present)",t:"Brani"}, {e:"We defend (Present)",t:"Branimo"}, {e:"You (all) defend (Present)",t:"Branite"}, {e:"They defend (Present)",t:"Brane"},
+            {e:"I will defend (Future)",t:"Braniću"}, {e:"You (m) will defend (Future)",t:"Branićeš"}, {e:"You (f) will defend (Future)",t:"Branićeš"}, {e:"He will defend (Future)",t:"Braniće"}, {e:"She will defend (Future)",t:"Braniće"}, {e:"We will defend (Future)",t:"Branićemo"}, {e:"You (all) will defend (Future)",t:"Branićete"}, {e:"They will defend (Future)",t:"Braniće"},
+            // 21. To Eat (Jesti)
+            {e:"I ate (Past)",t:"Jeo sam"}, {e:"You (m) ate (Past)",t:"Jeo si"}, {e:"You (f) ate (Past)",t:"Jela si"}, {e:"He ate (Past)",t:"Jeo je"}, {e:"She ate (Past)",t:"Jela je"}, {e:"We ate (Past)",t:"Jeli smo"}, {e:"You (all) ate (Past)",t:"Jeli ste"}, {e:"They ate (Past)",t:"Jeli su"},
+            {e:"I eat (Present)",t:"Jedem"}, {e:"You (m) eat (Present)",t:"Jedeš"}, {e:"You (f) eat (Present)",t:"Jedeš"}, {e:"He eats (Present)",t:"Jede"}, {e:"She eats (Present)",t:"Jede"}, {e:"We eat (Present)",t:"Jedemo"}, {e:"You (all) eat (Present)",t:"Jedete"}, {e:"They eat (Present)",t:"Jedu"},
+            {e:"I will eat (Future)",t:"Ješću"}, {e:"You (m) will eat (Future)",t:"Ješćeš"}, {e:"You (f) will eat (Future)",t:"Ješćeš"}, {e:"He will eat (Future)",t:"Ješće"}, {e:"She will eat (Future)",t:"Ješće"}, {e:"We will eat (Future)",t:"Ješćemo"}, {e:"You (all) will eat (Future)",t:"Ješćete"}, {e:"They will eat (Future)",t:"Ješće"},
+            // 22. To Drink (Piti)
+            {e:"I drank (Past)",t:"Pio sam"}, {e:"You (m) drank (Past)",t:"Pio si"}, {e:"You (f) drank (Past)",t:"Pila si"}, {e:"He drank (Past)",t:"Pio je"}, {e:"She drank (Past)",t:"Pila je"}, {e:"We drank (Past)",t:"Pili smo"}, {e:"You (all) drank (Past)",t:"Pili ste"}, {e:"They drank (Past)",t:"Pili su"},
+            {e:"I drink (Present)",t:"Pijem"}, {e:"You (m) drink (Present)",t:"Piješ"}, {e:"You (f) drink (Present)",t:"Piješ"}, {e:"He drinks (Present)",t:"Pije"}, {e:"She drinks (Present)",t:"Pije"}, {e:"We drink (Present)",t:"Pijemo"}, {e:"You (all) drink (Present)",t:"Pijete"}, {e:"They drink (Present)",t:"Piju"},
+            {e:"I will drink (Future)",t:"Piću"}, {e:"You (m) will drink (Future)",t:"Pićeš"}, {e:"You (f) will drink (Future)",t:"Pićeš"}, {e:"He will drink (Future)",t:"Piće"}, {e:"She will drink (Future)",t:"Piće"}, {e:"We will drink (Future)",t:"Pićemo"}, {e:"You (all) will drink (Future)",t:"Pićete"}, {e:"They will drink (Future)",t:"Piće"},
+            // 23. To Study (Učiti)
+            {e:"I studied (Past)",t:"Učio sam"}, {e:"You (m) studied (Past)",t:"Učio si"}, {e:"You (f) studied (Past)",t:"Učila si"}, {e:"He studied (Past)",t:"Učio je"}, {e:"She studied (Past)",t:"Učila je"}, {e:"We studied (Past)",t:"Učili smo"}, {e:"You (all) studied (Past)",t:"Učili ste"}, {e:"They studied (Past)",t:"Učili su"},
+            {e:"I study (Present)",t:"Učim"}, {e:"You (m) study (Present)",t:"Učiš"}, {e:"You (f) study (Present)",t:"Učiš"}, {e:"He studies (Present)",t:"Uči"}, {e:"She studies (Present)",t:"Uči"}, {e:"We study (Present)",t:"Učimo"}, {e:"You (all) study (Present)",t:"Učite"}, {e:"They study (Present)",t:"Uče"},
+            {e:"I will study (Future)",t:"Učiću"}, {e:"You (m) will study (Future)",t:"Učićeš"}, {e:"You (f) will study (Future)",t:"Učićeš"}, {e:"He will study (Future)",t:"Učiće"}, {e:"She will study (Future)",t:"Učiće"}, {e:"We will study (Future)",t:"Učićemo"}, {e:"You (all) will study (Future)",t:"Učićete"}, {e:"They will study (Future)",t:"Učiće"},
+            // 24. To Attend (Prisustvovati)
+            {e:"I attended (Past)",t:"Prisustvovao sam"}, {e:"You (m) attended (Past)",t:"Prisustvovao si"}, {e:"You (f) attended (Past)",t:"Prisustvovala si"}, {e:"He attended (Past)",t:"Prisustvovao je"}, {e:"She attended (Past)",t:"Prisustvovala je"}, {e:"We attended (Past)",t:"Prisustvovali smo"}, {e:"You (all) attended (Past)",t:"Prisustvovali ste"}, {e:"They attended (Past)",t:"Prisustvovali su"},
+            {e:"I attend (Present)",t:"Prisustvujem"}, {e:"You (m) attend (Present)",t:"Prisustvuješ"}, {e:"You (f) attend (Present)",t:"Prisustvuješ"}, {e:"He attends (Present)",t:"Prisustvuje"}, {e:"She attends (Present)",t:"Prisustvuje"}, {e:"We attend (Present)",t:"Prisustvujemo"}, {e:"You (all) attend (Present)",t:"Prisustvujete"}, {e:"They attend (Present)",t:"Prisustvuju"},
+            {e:"I will attend (Future)",t:"Prisustvovaću"}, {e:"You (m) will attend (Future)",t:"Prisustvovaćeš"}, {e:"You (f) will attend (Future)",t:"Prisustvovaćeš"}, {e:"He will attend (Future)",t:"Prisustvovaće"}, {e:"She will attend (Future)",t:"Prisustvovaće"}, {e:"We will attend (Future)",t:"Prisustvovaćemo"}, {e:"You (all) will attend (Future)",t:"Prisustvovaćete"}, {e:"They will attend (Future)",t:"Prisustvovaće"},
+            // 25. To Talk (Pričati)
+            {e:"I talked (Past)",t:"Pričao sam"}, {e:"You (m) talked (Past)",t:"Pričao si"}, {e:"You (f) talked (Past)",t:"Pričala si"}, {e:"He talked (Past)",t:"Pričao je"}, {e:"She talked (Past)",t:"Pričala je"}, {e:"We talked (Past)",t:"Pričali smo"}, {e:"You (all) talked (Past)",t:"Pričali ste"}, {e:"They talked (Past)",t:"Pričali su"},
+            {e:"I talk (Present)",t:"Pričam"}, {e:"You (m) talk (Present)",t:"Pričaš"}, {e:"You (f) talk (Present)",t:"Pričaš"}, {e:"He talks (Present)",t:"Priča"}, {e:"She talks (Present)",t:"Priča"}, {e:"We talk (Present)",t:"Pričamo"}, {e:"You (all) talk (Present)",t:"Pričate"}, {e:"They talk (Present)",t:"Pričaju"},
+            {e:"I will talk (Future)",t:"Pričaću"}, {e:"You (m) will talk (Future)",t:"Pričaćeš"}, {e:"You (f) will talk (Future)",t:"Pričaćeš"}, {e:"He will talk (Future)",t:"Pričaće"}, {e:"She will talk (Future)",t:"Pričaće"}, {e:"We will talk (Future)",t:"Pričaćemo"}, {e:"You (all) will talk (Future)",t:"Pričaćete"}, {e:"They will talk (Future)",t:"Pričaće"},
+            // 26. To Say (Reći)
+            {e:"I said (Past)",t:"Rekao sam"}, {e:"You (m) said (Past)",t:"Rekao si"}, {e:"You (f) said (Past)",t:"Rekla si"}, {e:"He said (Past)",t:"Rekao je"}, {e:"She said (Past)",t:"Rekla je"}, {e:"We said (Past)",t:"Rekli smo"}, {e:"You (all) said (Past)",t:"Rekli ste"}, {e:"They said (Past)",t:"Rekli su"},
+            {e:"I say (Present)",t:"Kažem"}, {e:"You (m) say (Present)",t:"Kažeš"}, {e:"You (f) say (Present)",t:"Kažeš"}, {e:"He says (Present)",t:"Kaže"}, {e:"She says (Present)",t:"Kaže"}, {e:"We say (Present)",t:"Kažemo"}, {e:"You (all) say (Present)",t:"Kažete"}, {e:"They say (Present)",t:"Kažu"},
+            {e:"I will say (Future)",t:"Reći ću"}, {e:"You (m) will say (Future)",t:"Reći ćeš"}, {e:"You (f) will say (Future)",t:"Reći ćeš"}, {e:"He will say (Future)",t:"Reći će"}, {e:"She will say (Future)",t:"Reći će"}, {e:"We will say (Future)",t:"Reći ćemo"}, {e:"You (all) will say (Future)",t:"Reći ćete"}, {e:"They will say (Future)",t:"Reći će"},
+            // 27. To Order (Naručiti)
+            {e:"I ordered (Past)",t:"Naručio sam"}, {e:"You (m) ordered (Past)",t:"Naručio si"}, {e:"You (f) ordered (Past)",t:"Naručila si"}, {e:"He ordered (Past)",t:"Naručio je"}, {e:"She ordered (Past)",t:"Naručila je"}, {e:"We ordered (Past)",t:"Naručili smo"}, {e:"You (all) ordered (Past)",t:"Naručili ste"}, {e:"They ordered (Past)",t:"Naručili su"},
+            {e:"I order (Present)",t:"Naručujem"}, {e:"You (m) order (Present)",t:"Naručuješ"}, {e:"You (f) order (Present)",t:"Naručuješ"}, {e:"He orders (Present)",t:"Naručuje"}, {e:"She orders (Present)",t:"Naručuje"}, {e:"We order (Present)",t:"Naručujemo"}, {e:"You (all) order (Present)",t:"Naručujete"}, {e:"They order (Present)",t:"Naručuju"},
+            {e:"I will order (Future)",t:"Naručiću"}, {e:"You (m) will order (Future)",t:"Naručićeš"}, {e:"You (f) will order (Future)",t:"Naručićeš"}, {e:"He will order (Future)",t:"Naručiće"}, {e:"She will order (Future)",t:"Naručiće"}, {e:"We will order (Future)",t:"Naručićemo"}, {e:"You (all) will order (Future)",t:"Naručićete"}, {e:"They will order (Future)",t:"Naručiće"}
         ];
 
         // ------------------ APP LOGIC ------------------ //
@@ -650,8 +840,9 @@
         let currentDeck = [];
         let cur = 0;
         let isAnimating = false;
-        let isArbFirst = false;
+        let isTargetFirst = false;
         let isVocabMode = true;
+        let currentLang = 'arb'; 
 
         const card = document.getElementById('card');
         const animator = document.getElementById('animator');
@@ -664,18 +855,37 @@
         const counter = document.getElementById('counter');
         const container = document.getElementById('cardContainer');
         const switchSlider = document.getElementById('switchSlider');
+        
+        const lblTarget = document.getElementById('lblTarget');
+        const modeSubtitle = document.getElementById('modeSubtitle');
 
         function navTo(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
             document.getElementById(screenId).classList.add('active-screen');
         }
 
+        function navToMode(lang) {
+            currentLang = lang;
+            if (lang === 'arb') {
+                modeSubtitle.innerText = "🇱🇧 Levantine Arabic";
+                lblTarget.innerText = "Arb ➔ Eng";
+            } else if (lang === 'srb') {
+                modeSubtitle.innerText = "🇷🇸 Serbian";
+                lblTarget.innerText = "Srb ➔ Eng";
+            }
+            navTo('screen-mode');
+        }
+
         function startDeck(mode) {
             isVocabMode = (mode === 'vocab');
-            currentDeck = isVocabMode ? [...vocabData] : [...conjData];
+            if (currentLang === 'arb') {
+                currentDeck = isVocabMode ? [...vocabDataArb] : [...conjDataArb];
+            } else if (currentLang === 'srb') {
+                currentDeck = isVocabMode ? [...vocabDataSrb] : [...conjDataSrb]; 
+            }
             
             cur = 0;
-            isArbFirst = false;
+            isTargetFirst = false;
             switchSlider.style.transform = 'translateX(0)';
             
             setCardContent();
@@ -684,8 +894,8 @@
 
         function toggleLang() {
             if(isAnimating) return;
-            isArbFirst = !isArbFirst;
-            switchSlider.style.transform = isArbFirst ? 'translateX(100%)' : 'translateX(0)';
+            isTargetFirst = !isTargetFirst;
+            switchSlider.style.transform = isTargetFirst ? 'translateX(100%)' : 'translateX(0)';
             flipAndLoad();
         }
 
@@ -703,7 +913,6 @@
 
             const extensions = ['.jpg', '.png', '.jpeg', '.gif'];
             let currentExtIndex = 0;
-
             imgElement.style.display = "none";
             
             imgElement.onload = function() {
@@ -718,7 +927,6 @@
                     imgElement.style.display = "none"; 
                 }
             };
-
             imgElement.src = "images/" + baseName + extensions[0];
         }
 
@@ -738,9 +946,11 @@
             const baseName = getBaseName(currentCard.e);
             
             const engSize = isVocabMode ? "clamp(1.8rem, 6vw, 3rem)" : "clamp(1.4rem, 4.5vw, 2.2rem)";
-            const arbSize = isVocabMode ? "clamp(4.2rem, 12vw, 7.5rem)" : "clamp(2.8rem, 9vw, 4.5rem)";
+            let targetClass = currentLang === 'arb' ? 'arb-text' : 'srb-text';
+            let targetSize = currentLang === 'arb' ? 
+                             (isVocabMode ? "clamp(4.2rem, 12vw, 7.5rem)" : "clamp(2.8rem, 9vw, 4.5rem)") : engSize;
             
-            if (!isArbFirst) { 
+            if (!isTargetFirst) { 
                 loadSmartImage(frontImg, baseName, true);
                 loadSmartImage(backImg, baseName, false);
                 
@@ -748,9 +958,9 @@
                 frontText.className = "eng-text";
                 frontText.style.fontSize = engSize;
                 
-                backText.innerText = currentCard.a;
-                backText.className = "arb-text";
-                backText.style.fontSize = arbSize;
+                backText.innerText = currentCard.t;
+                backText.className = targetClass;
+                backText.style.fontSize = targetSize;
 
                 frontSpeaker.style.display = "none";
                 backSpeaker.style.display = "flex";
@@ -758,9 +968,9 @@
                 loadSmartImage(frontImg, baseName, false);
                 loadSmartImage(backImg, baseName, true);
                 
-                frontText.innerText = currentCard.a;
-                frontText.className = "arb-text";
-                frontText.style.fontSize = arbSize;
+                frontText.innerText = currentCard.t;
+                frontText.className = targetClass;
+                frontText.style.fontSize = targetSize;
                 
                 backText.innerText = currentCard.e;
                 backText.className = "eng-text";
@@ -769,7 +979,6 @@
                 frontSpeaker.style.display = "flex";
                 backSpeaker.style.display = "none";
             }
-            
             counter.innerText = `Card ${cur + 1} of ${currentDeck.length}`;
         }
 
@@ -853,13 +1062,20 @@
             }, 300);
         }
 
-        function playArabicAudio(event) {
+        function playAudio(event) {
             event.stopPropagation(); 
             if (currentDeck.length === 0) return;
+            
             if ('speechSynthesis' in window) {
-                let arabicWord = currentDeck[cur].a;
-                let utterance = new SpeechSynthesisUtterance(arabicWord);
-                utterance.lang = 'ar-SA'; 
+                let targetWord = currentDeck[cur].t;
+                let utterance = new SpeechSynthesisUtterance(targetWord);
+                
+                if (currentLang === 'arb') {
+                    utterance.lang = 'ar-SA'; 
+                } else if (currentLang === 'srb') {
+                    utterance.lang = 'sr-RS'; 
+                }
+                
                 utterance.rate = 0.85; 
                 window.speechSynthesis.speak(utterance);
             } else {
