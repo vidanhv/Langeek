@@ -997,19 +997,40 @@
             event.stopPropagation(); 
             if (currentDeck.length === 0) return;
             
-            if ('speechSynthesis' in window) {
-                let targetWord = currentDeck[cur].t;
-                let utterance = new SpeechSynthesisUtterance(targetWord);
+            let currentCard = currentDeck[cur];
+            let baseName = getBaseName(currentCard.e);
+            let audioPath = `audio/${currentLang}/${baseName}.mp3`;
+            
+            let audioObj = new Audio(audioPath);
+            
+            // THE FALLBACK: If the MP3 is missing, play TTS
+            audioObj.onerror = () => {
+                console.log(`No MP3 found for ${baseName}. Falling back to TTS.`);
                 
-                if (currentLang === 'arb') utterance.lang = 'ar-SA'; 
-                else if (currentLang === 'srb') utterance.lang = 'sr-RS'; 
-                else if (currentLang === 'spa') utterance.lang = 'es-MX';
-                else if (currentLang === 'fra') utterance.lang = 'fr-FR';
-                
-                utterance.rate = 0.85; 
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Sorry, your browser does not support text-to-speech audio.");
+                if ('speechSynthesis' in window) {
+                    let targetWord = currentCard.t;
+                    let utterance = new SpeechSynthesisUtterance(targetWord);
+                    
+                    if (currentLang === 'arb') utterance.lang = 'ar-SA'; 
+                    else if (currentLang === 'srb') utterance.lang = 'sr-RS'; 
+                    else if (currentLang === 'spa') utterance.lang = 'es-MX';
+                    else if (currentLang === 'fra') utterance.lang = 'fr-FR';
+                    
+                    utterance.rate = 0.85; 
+                    window.speechSynthesis.speak(utterance);
+                } else {
+                    console.log("TTS not supported in this browser.");
+                }
+            };
+
+            // Attempt to play the MP3
+            let playPromise = audioObj.play();
+            
+            // Catch the promise rejection to keep the browser console clean when a file is missing
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // The onerror function above handles the actual fallback
+                });
             }
         }
 
