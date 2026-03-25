@@ -997,13 +997,21 @@
             event.stopPropagation(); 
             if (currentDeck.length === 0) return;
             
+            // 1. THE SILENT UNLOCK: Fire a silent word instantly on click 
+            // to bypass strict browser autoplay security rules.
+            if ('speechSynthesis' in window) {
+                let unlock = new SpeechSynthesisUtterance('');
+                unlock.volume = 0;
+                window.speechSynthesis.speak(unlock);
+            }
+
             let currentCard = currentDeck[cur];
             let baseName = getBaseName(currentCard.e);
             let audioPath = `audio/${currentLang}/${baseName}.mp3`;
             
-            // 1. Define the TTS fallback as a reusable function
             const triggerTTS = () => {
                 if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel(); // Clear the silent utterance
                     let targetWord = currentCard.t;
                     let utterance = new SpeechSynthesisUtterance(targetWord);
                     
@@ -1019,27 +1027,25 @@
                 }
             };
 
-            // 2. Ping the server to see if the MP3 actually exists
-            fetch(audioPath, { method: 'HEAD' })
-                .then(response => {
-                    if (response.ok) {
-                        // The server confirmed the MP3 is there! Play it.
-                        let audioObj = new Audio(audioPath);
-                        audioObj.play().catch(e => {
-                            console.log("Audio playback was blocked by browser. Using TTS.");
-                            triggerTTS();
-                        });
-                    } else {
-                        // The server returned a 404 Not Found. Use TTS.
-                        console.log(`No MP3 found on server for ${baseName}. Using TTS.`);
-                        triggerTTS();
-                    }
-                })
-                .catch(error => {
-                    // If the network request fails entirely, still fallback to TTS
-                    console.log("Network error checking audio. Using TTS.");
-                    triggerTTS();
-                });
+            let audioObj = new Audio();
+            
+            // 2. If GitHub returns a 404 or the file is missing, trigger TTS
+            audioObj.onerror = () => {
+                triggerTTS();
+            };
+
+            // 3. If the MP3 exists and is ready, play it!
+            audioObj.oncanplay = () => {
+                let playPromise = audioObj.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        triggerTTS(); // Fallback if browser blocks media playback
+                    });
+                }
+            };
+
+            // Start loading the audio from GitHub
+            audioObj.src = audioPath;
         }
 
         document.getElementById('cardContainer').addEventListener('click', () => {
