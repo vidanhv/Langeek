@@ -1001,8 +1001,6 @@
             let baseName = getBaseName(currentCard.e);
             let audioPath = `audio/${currentLang}/${baseName}.mp3`;
             
-            let audioObj = new Audio(audioPath);
-            
             // 1. Define the TTS fallback as a reusable function
             const triggerTTS = () => {
                 if ('speechSynthesis' in window) {
@@ -1021,22 +1019,27 @@
                 }
             };
 
-            // 2. Attempt to play the MP3
-            let playPromise = audioObj.play();
-            
-            // 3. Catch the server 404 errors reliably 
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // MP3 found and playing successfully!
-                }).catch(error => {
-                    // MP3 not found (404) or failed to load. Trigger TTS!
-                    console.log(`MP3 missing or failed for ${baseName}. Falling back to TTS.`);
+            // 2. Ping the server to see if the MP3 actually exists
+            fetch(audioPath, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        // The server confirmed the MP3 is there! Play it.
+                        let audioObj = new Audio(audioPath);
+                        audioObj.play().catch(e => {
+                            console.log("Audio playback was blocked by browser. Using TTS.");
+                            triggerTTS();
+                        });
+                    } else {
+                        // The server returned a 404 Not Found. Use TTS.
+                        console.log(`No MP3 found on server for ${baseName}. Using TTS.`);
+                        triggerTTS();
+                    }
+                })
+                .catch(error => {
+                    // If the network request fails entirely, still fallback to TTS
+                    console.log("Network error checking audio. Using TTS.");
                     triggerTTS();
                 });
-            } else {
-                // Fallback for very old browsers
-                audioObj.onerror = triggerTTS;
-            }
         }
 
         document.getElementById('cardContainer').addEventListener('click', () => {
