@@ -1003,10 +1003,8 @@
             
             let audioObj = new Audio(audioPath);
             
-            // THE FALLBACK: If the MP3 is missing, play TTS
-            audioObj.onerror = () => {
-                console.log(`No MP3 found for ${baseName}. Falling back to TTS.`);
-                
+            // 1. Define the TTS fallback as a reusable function
+            const triggerTTS = () => {
                 if ('speechSynthesis' in window) {
                     let targetWord = currentCard.t;
                     let utterance = new SpeechSynthesisUtterance(targetWord);
@@ -1019,18 +1017,25 @@
                     utterance.rate = 0.85; 
                     window.speechSynthesis.speak(utterance);
                 } else {
-                    console.log("TTS not supported in this browser.");
+                    alert("Sorry, your browser does not support text-to-speech audio.");
                 }
             };
 
-            // Attempt to play the MP3
+            // 2. Attempt to play the MP3
             let playPromise = audioObj.play();
             
-            // Catch the promise rejection to keep the browser console clean when a file is missing
+            // 3. Catch the server 404 errors reliably 
             if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // The onerror function above handles the actual fallback
+                playPromise.then(() => {
+                    // MP3 found and playing successfully!
+                }).catch(error => {
+                    // MP3 not found (404) or failed to load. Trigger TTS!
+                    console.log(`MP3 missing or failed for ${baseName}. Falling back to TTS.`);
+                    triggerTTS();
                 });
+            } else {
+                // Fallback for very old browsers
+                audioObj.onerror = triggerTTS;
             }
         }
 
