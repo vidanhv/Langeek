@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Language Mastery App</title>
     <style>
+        /* ========================================== */
+        /* 1. COLOR PALETTE & ROOT           */
+        /* ========================================== */
         :root { 
             --primary: #0f172a; 
             --accent: #2563eb; 
@@ -25,7 +28,9 @@
             color: white;
         }
         
-        /* Menu System */
+        /* ========================================== */
+        /* 2. GLOBAL UI & MENUS            */
+        /* ========================================== */
         .screen {
             display: none; flex-direction: column; align-items: center;
             width: 100%; height: 100%; padding-top: 5vh;
@@ -65,6 +70,9 @@
         }
         .nav-back:active { color: white; }
 
+        /* ========================================== */
+        /* 3. DECK SCREEN: TOP BAR & CONTROLS    */
+        /* ========================================== */
         .top-bar {
             display: flex; flex-direction: column; align-items: center;
             gap: clamp(10px, 2vh, 20px); margin-bottom: clamp(15px, 3vh, 30px); width: 100%;
@@ -101,22 +109,13 @@
         }
         .top-action-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.25); }
 
+        /* ========================================== */
+        /* 4. THE FLASHCARD STACK & 3D         */
+        /* ========================================== */
         .deck-area {
             display: flex; align-items: center; justify-content: center;
             width: 100%; position: relative; max-width: 600px;
         }
-
-        .arrow-btn {
-            position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; 
-            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); 
-            color: white; border-radius: 50%; width: clamp(46px, 11vw, 64px); height: clamp(46px, 11vw, 64px);
-            display: flex; align-items: center; justify-content: center; cursor: pointer; 
-            backdrop-filter: blur(8px); transition: all 0.2s;
-        }
-        .arrow-left { left: 2vw; }
-        .arrow-right { right: 2vw; }
-        .arrow-btn:active { transform: translateY(-50%) scale(0.85); background: rgba(255,255,255,0.3); }
-        .arrow-btn svg { width: 55%; height: 55%; }
 
         .card-stack {
             width: clamp(280px, 82vw, 460px); max-height: 72vh; aspect-ratio: 3 / 4.2; 
@@ -172,6 +171,21 @@
         .latin-text { direction: ltr; font-weight: 800; font-family: -apple-system, sans-serif; margin: 0; color: #0f172a; }
         .arb-text { direction: rtl; font-weight: bold; font-family: 'Times New Roman', Times, serif; line-height: 1.1; word-wrap: break-word; margin: 0; color: #0f172a; text-shadow: 0px 1px 1px rgba(255,255,255,0.5); }
 
+        /* ========================================== */
+        /* 5. DECK BUTTONS & INTERACTIONS      */
+        /* ========================================== */
+        .arrow-btn {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; 
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); 
+            color: white; border-radius: 50%; width: clamp(46px, 11vw, 64px); height: clamp(46px, 11vw, 64px);
+            display: flex; align-items: center; justify-content: center; cursor: pointer; 
+            backdrop-filter: blur(8px); transition: all 0.2s;
+        }
+        .arrow-left { left: 2vw; }
+        .arrow-right { right: 2vw; }
+        .arrow-btn:active { transform: translateY(-50%) scale(0.85); background: rgba(255,255,255,0.3); }
+        .arrow-btn svg { width: 55%; height: 55%; }
+
         .speaker-icon {
             position: absolute; bottom: clamp(15px, 4%, 25px); right: clamp(15px, 4%, 25px);
             width: clamp(44px, 12%, 60px); height: clamp(44px, 12%, 60px);
@@ -200,7 +214,6 @@
         
         .instruction { margin-top: clamp(10px, 2vh, 20px); color: #94a3b8; font-size: clamp(0.75rem, 1.5vw, 0.85rem); letter-spacing: 0.5px; text-transform: uppercase;}
 
-        /* Overlay for End of Batch */
         .end-overlay {
             display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--paper-front); border-radius: 5%; z-index: 20;
@@ -229,7 +242,7 @@
         <button class="menu-btn" onclick="navTo('screen-conj-menu')">🔄 Conjugation Driller <span>▶</span></button>
     </div>
 
-   <div id="screen-vocab-menu" class="screen">
+    <div id="screen-vocab-menu" class="screen">
         <button class="nav-back" onclick="navTo('screen-mode')">◀ Back</button>
         <div class="menu-title">Vocabulary Builder</div>
         <div class="menu-subtitle">What do you want to do?</div>
@@ -658,9 +671,9 @@
         ];
 
        
-        // ------------------ APP LOGIC ------------------ //
-
-        // 1. THE AUTO-TAGGING DICTIONARY ENGINE
+        // ========================================== //
+        // 1. AUTO-TAGGING ENGINE (PARTS OF SPEECH)   //
+        // ========================================== //
         const verbsList = ["Must", "Resettles"];
         const pronounsList = ["I", "He", "You (m)", "We", "You (all)", "You (f)", "Who?", "Where?", "She", "Why?", "How?", "What?", "Which?"];
         const adjsList = ["Tired (pl)", "Beautiful", "Big", "Married (m)", "Forged", "Armed persons", "Interesting", "Capitalist", "Guilty", "Delicious", "Expensive", "Complicated", "Valid", "Professional", "Gritty (Tough)", "Slow", "Cheap", "Former", "Altruistic", "Famous", "Enforceable", "Normal", "Little", "Happy", "Disgusted", "Sad", "Angry", "Scared", "Surprised", "Prevented", "Prohibited", "Explained", "Presented", "Offered", "Fair", "Lost", "Chosen", "Protected", "Remembered", "Respected", "Covered", "Paid", "Expected", "Taken", "Temporary", "Visited", "Tested", "Proven", "Repaired", "Moderate", "Hot", "Warm", "Cold", "Injured", "Wounded", "Provided", "Prepared", "Submitted", "Rented", "Tortured", "Moved", "Forgiving", "Tolerant", "Forgiven", "Allowed", "Accused", "Spicy", "Sweet", "Single", "Divorced", "Engaged"];
@@ -682,37 +695,17 @@
         }
 
         // ========================================== //
-        //               THEME DICTIONARIES           //
+        // 2. THEME DICTIONARIES & TAGGING            //
         // ========================================== //
-
-        // --- 1. EVERYDAY LIFE & GENERAL ---
         const themeEverydayList = ["House", "Car", "Boy", "Girl", "City", "Trip", "I", "He", "You (m)", "We", "You (all)", "You (f)", "Who?", "Where?", "She", "Must", "Early", "Why?", "Because", "How?", "With", "A lot", "Tired (pl)", "They", "Yesterday", "What?", "What's up?", "Tomorrow", "Holiday", "Also", "Beautiful", "Weather", "Great!", "Year", "Week", "But", "Before", "Ago", "Month", "To speak", "Your children", "To walk", "Well", "Day", "Hello (response)", "Big", "Married (m)", "How are you?", "Far away from", "Hello", "Thank God", "Which?", "No", "By God (vala)", "Rain", "To see", "Computer", "Pig", "Traffic accident", "Letter", "Conversation", "Envelope", "Sometimes", "Usually", "Never", "Rarely", "Often", "Always", "Middle", "Start", "The end", "Expression", "Behind", "In front", "Inside", "Soap", "Scissors", "Answer", "Picture", "Library", "Office", "Shop", "Stress", "Happy", "Disgusted", "Psychological problems", "Sad", "Angry", "Feelings", "Emotions", "Scared", "Surprised", "To bring", "And", "Or", "When", "If", "Therefore", "According to", "During", "So", "For example", "Depends on", "Approximately", "It differs", "Like", "Is considered", "Until", "In my opinion", "Long time ago", "Season", "Summer", "Winter", "Spring", "Autumn", "Snow", "Appointment", "To explain", "Explanation", "Permanent residence", "Target", "Goal", "Fair", "Great", "Response", "Currently", "Project", "Street", "Traffic light", "Road", "Way", "To lose", "Loss", "Looser", "Lost", "To choose", "Choice", "Chooser", "Chosen", "To remember", "Remembering", "Remembered", "Tree", "To respect", "Respect", "Esteem", "One who respects", "Respected", "To pay", "Payment", "Paid", "Expectation", "Expected", "Bringing", "Pocket", "To put", "Putting", "To take", "Acquisition", "Taker", "Taken", "Temporary", "To visit", "Visit", "Visitor", "Visited", "To try", "Experience", "Tester", "Tested", "Proven", "Ghost", "To repair", "Repair", "Repairman", "Repaired", "Success", "In", "At", "From", "Since", "On", "Upon", "To", "Towards", "For", "As", "Similar to", "Beside", "Next to", "Under", "Below", "Above", "Around", "Circle", "Turn", "Moderate", "Level", "Degree", "Hot", "Warm", "Cold", "Foreigner", "Friend", "Solution", "Part", "Valid", "Directly", "Wallet", "Nightlife", "Social life", "Friendship", "Priorities", "Buildings", "Energy", "Slow", "Cheap", "Square", "Interests", "To prepare", "Preparation", "Preparer", "Prepared", "Device", "Position", "Free time", "Famous", "1", "One", "2", "Two", "3", "Three", "4", "Four", "5", "Five", "6", "Six", "7", "Seven", "8", "Eight", "9", "Nine", "To follow", "Following", "Follower", "Followed", "To move", "Moved", "Stairs", "You are right", "No doubt", "Done by", "(done) by (someone)", "Garbage", "Quality", "Fruit", "Grains", "Product", "Sister", "Brother", "Father", "Mother", "Identity", "Family", "Normal", "Cap", "Gender", "Little", "To forgive", "Forgiveness", "Forgiving", "Tolerant", "Forgiven", "Apartment block", "To allow", "Permission", "Permitting", "Allowed", "Invitation", "To drink", "Drinking", "Beverages", "Drinker", "Beverage", "Gift"];
-        
-        // --- 2. TRAVEL & TRANSPORT ---
         const themeTravelList = ["Car", "City", "Trip", "Airport", "To arrive", "To travel", "Passport", "Boat", "Evacuation", "Airplane", "Museum", "Mountain", "Beach", "Coast", "Sea", "Permanent residence", "Street", "Traffic light", "Road", "Way", "Tour", "Station", "Stop", "To visit", "Visit", "Visitor", "Visited", "Shrine", "Foreigner", "Middle East", "Ocean", "Confluence", "Settlement", "Raft", "Square", "Lake", "River", "Region", "Continent", "Transportation", "Carrier", "Bus stop", "Apartment block"];
-        
-        // --- 3. RESTAURANT & FOOD ---
         const themeRestaurantList = ["Wine", "Pig", "Soup", "Delicious", "Olives", "Yoghurt", "Eggs", "Milk", "Chicken", "Oil", "Cheese", "Bread", "Fish", "Fruit", "Grains", "To cook", "To eat", "To drink", "Drinking", "Beverages", "Drinker", "Beverage", "Water", "Coffee", "Tea", "Meat", "Beef", "Menu", "The Bill", "The Check", "Tip (Gratuity)", "Waiter", "Waitress", "Reservation", "Fork", "Knife", "Spoon", "Plate", "Glass", "Cup", "Napkin", "Breakfast", "Lunch", "Dinner", "Dessert", "Salad", "To order", "To pay", "Spicy", "Sweet"];
-        
-        // --- 4. FAMILY & RELATIONSHIPS ---
         const themeFamilyList = ["Boy", "Girl", "Your children", "Married (m)", "House", "Sister", "Brother", "Father", "Mother", "Family", "Child adoption", "Direct relative", "Adoptive parents", "Adopted child", "Friendship", "Husband", "Wife", "Son", "Daughter", "Parents", "Grandfather", "Grandmother", "Uncle", "Aunt", "Cousin", "Nephew", "Niece", "Grandchild", "Grandchildren", "Baby", "Single", "Divorced", "Engaged", "Wedding", "Marriage", "Widow"];
-        
-        // --- 5. HOBBIES & LEISURE ---
         const themeHobbiesList = ["Trip", "To have fun", "Diving", "Hobby", "Tour", "Free time", "Skiing", "Picture", "Library", "Museum", "Theatre", "Live music", "Nightlife", "Night club", "Raft", "Soccer", "Football", "Basketball", "Swimming", "Running", "Gym", "Working out", "Photography", "Painting", "Playing an instrument", "Singing", "Dancing", "Reading", "Movies", "Cinema", "Video games", "Board games", "Hiking", "Camping", "Gardening"];
-        
-        // --- 6. POLITICS ---
         const themePoliticsList = ["American Embassy", "City", "Consul", "United Nations", "Elections", "Candidate", "House of Representatives", "Member", "Executive Branch", "Future", "Negotiations", "Legislative Branch", "Capitalist", "Independence", "Political Party", "Assembly", "Demonstrations", "Increase", "Decrease", "Camp", "Deal", "Branch", "To declare", "Dialogue", "Influence", "Repatriation", "Terminology", "Revolution", "Reform", "Resources", "Fair", "Response", "Violence", "Crisis", "Cooperation", "Middle East", "Alliance", "Allies", "Enemy", "Conflict", "Challenges", "Intervention", "Disarmament", "Region", "Admission of refugees", "Hosting of refugees", "Resettles", "Principles", "Altruistic", "Sanctions", "Law", "Constitution", "Immigration", "Immigrant", "Reciprocity"];
-        
-        // --- 7. ECONOMICS & BUSINESS ---
         const themeEconomicsList = ["Company", "Income", "Fraud", "Fees", "Contract", "Agreement", "Account", "Value", "Capitalist", "Increase", "Decrease", "Price", "Benefit", "Warehouse", "Shop", "Investment", "Export", "Import", "Development", "Expenses", "Resources", "Funding", "Funder", "Covered", "To pay", "Payment", "Paid", "Crisis", "Insurance", "Acquisition", "Taker", "Taken", "Wallet", "Cheap", "To provide", "Provision", "Provider", "Provided", "Profit", "Exploitation", "GDP", "Stability", "Currency", "Product", "Industry"];
-        
-        // --- 8. EDUCATION ---
         const themeEducationList = ["Translator", "Arabic", "Computer", "Scholarship", "Exam", "Library", "School", "University", "Institute", "Results", "Conference", "Program", "Brain", "Specialization", "Exchange", "Engineer", "Electricity", "Lawyer", "Journalist", "Faculty", "To explain", "Explanation", "Commentator", "Explained", "Diploma", "To offer", "To present", "Offer", "Presentation", "Show", "Presenter", "Opponent", "Presented", "Offered", "Showroom", "Class", "To study", "Teacher", "Professor", "Student", "Classmate", "Classroom", "Book", "Notebook", "Board", "Whiteboard", "Backpack", "Homework", "Assignment", "Lesson", "Grade", "Mark", "Subject", "Course", "To learn", "To read", "To write", "To teach", "To graduate"];
-        
-        // --- 9. DIPLOMACY ---
         const themeDiplomacyList = ["Officer", "American Embassy", "Translator", "Consul", "FSI", "Affiliated to", "Security", "Official", "United Nations", "Agreement", "Conversation", "Citizenship", "Elections", "Demonstrations", "To expect", "Red Cross", "To combat", "Deal", "To communicate", "To request", "To demand", "To declare", "Dialogue", "Hostage", "Influence", "Repatriation", "Misunderstanding", "Spy", "Terminology", "Victims of disaster", "Evacuation", "Emergency", "Disaster", "Revolution", "Conference", "Agency", "Specialization", "Reform", "Exchange", "Appointment", "Permanent residence", "Target", "Goal", "Shelter", "Response", "Violence", "Crisis", "Cooperation", "Temporary", "Foreigner", "Middle East", "Alliance", "Allies", "Enemy", "Conflict", "Challenges", "Intervention", "Disarmament", "Affairs", "Admission of refugees", "Hosting of refugees", "Resettles", "Principles", "Altruistic", "Sanctions", "Immigration", "Immigrant", "Reciprocity"];
-        
-        // --- 10. LAW & SECURITY ---
         const themeLawList = ["Officer", "Security", "Police", "Traffic accident", "Pirate", "Hacker", "Soldier", "Weapon", "Thief", "Documents", "Forged", "Passport", "Fraud", "Fees", "Confirmation", "Contract", "Agreement", "Proof", "Investigation", "Citizenship", "Armed persons", "Criminal", "Crime", "Judge", "Judicial Branch", "Difference", "Prison", "Detention", "To combat", "To request", "To demand", "To declare", "Guilty", "Fingerprints", "Spy", "Detainee", "Suspect", "Injustice", "Lawyer", "To prevent", "Prevention", "Prohibition", "Obstacle", "Prevented", "Prohibited", "Witness", "Fair", "Violence", "Addiction", "Advisor", "Complicated", "To protect", "Protection", "Protector", "Protected", "Sanctuary", "Reserve", "Guard", "Valid", "Warning", "Mortuary", "Conditions", "Charges", "Trial", "Judgment", "Conviction", "Defendant", "Accused", "Convict", "Lawsuit", "Acquittal", "To reject", "List", "To impose", "Discrimination", "Fair treatment", "Law", "Constitution", "Enforceable", "Eligibility", "Trafficking of children", "Kidnapping"];
 
         function assignThemes(card) {
@@ -744,7 +737,9 @@
         vocabDataFra.forEach(c => { c.pos = assignPOS(c); c.themes = assignThemes(c); });
         vocabDataRus.forEach(c => { c.pos = assignPOS(c); c.themes = assignThemes(c); });
 
-        // 2. STUDY MECHANICS
+        // ========================================== //
+        // 3. GLOBAL VARIABLES & DOM ELEMENTS         //
+        // ========================================== //
         let currentDeck = [];
         let masterDeck = []; 
         let cur = 0;
@@ -769,6 +764,9 @@
         const lblTarget = document.getElementById('lblTarget');
         const modeSubtitle = document.getElementById('modeSubtitle');
 
+        // ========================================== //
+        // 4. NAVIGATION & APP ROUTING                //
+        // ========================================== //
         function navTo(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
             document.getElementById(screenId).classList.add('active-screen');
@@ -795,6 +793,44 @@
             navTo('screen-mode');
         }
 
+        function navToVerbSelect() {
+            const container = document.getElementById('verbListContainer');
+            container.innerHTML = '';
+            
+            const verbList = [
+                "Explain", "Lose", "Choose", "Pay", "Expect", "Bring", "Take", "Visit", "Try", "Reject", 
+                "Be", "Move", "Hear", "See", "Give", "Understand", "Offer", "Prohibit", "Attack", "Defend", 
+                "Eat", "Drink", "Study", "Attend", "Talk", "Say", "Order"
+            ];
+
+            verbList.forEach((verb, index) => {
+                let btn = document.createElement('button');
+                btn.className = 'menu-btn';
+                btn.style.width = '90%';
+                btn.style.padding = '15px';
+                btn.style.marginBottom = '10px';
+                btn.innerHTML = `To ${verb} <span>▶</span>`;
+                btn.onclick = () => {
+                    selectedVerbIndex = index;
+                    document.getElementById('verbModeTitle').innerText = `To ${verb}`;
+                    navTo('screen-conj-verb-mode');
+                };
+                container.appendChild(btn);
+            });
+
+            navTo('screen-conj-verbs');
+        }
+
+        document.querySelector('button[onclick="navTo(\'screen-conj-verbs\')"]').onclick = navToVerbSelect;
+
+        function backFromDeck() {
+            if (isVocabMode) navTo('screen-vocab-menu');
+            else navTo('screen-conj-menu');
+        }
+
+        // ========================================== //
+        // 5. CORE STUDY LOGIC (DECK BUILDING)        //
+        // ========================================== //
         function startStudy(mode, subMode = null, extraData = null) {
             isVocabMode = (mode === 'vocab');
             cur = 0;
@@ -819,16 +855,12 @@
                     loadMoreCards(30);
                 }
                 else if (subMode === 'theme') {
-                    // Uses includes() because c.themes is now an Array
                     let filtered = baseData.filter(c => c.themes && c.themes.includes(extraData));
                     masterDeck = filtered.sort(() => 0.5 - Math.random());
                     loadMoreCards(30);
                 }
                 else if (subMode === 'all') {
-                    // Grabs the entire dictionary and shuffles it
                     masterDeck = [...baseData].sort(() => 0.5 - Math.random());
-                    
-                    // We pass masterDeck.length instead of 30 so it loads every single card!
                     loadMoreCards(masterDeck.length); 
                 }
             }
@@ -889,41 +921,9 @@
             setCardContent();
         }
 
-        function navToVerbSelect() {
-            const container = document.getElementById('verbListContainer');
-            container.innerHTML = '';
-            
-            const verbList = [
-                "Explain", "Lose", "Choose", "Pay", "Expect", "Bring", "Take", "Visit", "Try", "Reject", 
-                "Be", "Move", "Hear", "See", "Give", "Understand", "Offer", "Prohibit", "Attack", "Defend", 
-                "Eat", "Drink", "Study", "Attend", "Talk", "Say", "Order"
-            ];
-
-            verbList.forEach((verb, index) => {
-                let btn = document.createElement('button');
-                btn.className = 'menu-btn';
-                btn.style.width = '90%';
-                btn.style.padding = '15px';
-                btn.style.marginBottom = '10px';
-                btn.innerHTML = `To ${verb} <span>▶</span>`;
-                btn.onclick = () => {
-                    selectedVerbIndex = index;
-                    document.getElementById('verbModeTitle').innerText = `To ${verb}`;
-                    navTo('screen-conj-verb-mode');
-                };
-                container.appendChild(btn);
-            });
-
-            navTo('screen-conj-verbs');
-        }
-
-        document.querySelector('button[onclick="navTo(\'screen-conj-verbs\')"]').onclick = navToVerbSelect;
-
-        function backFromDeck() {
-            if (isVocabMode) navTo('screen-vocab-menu');
-            else navTo('screen-conj-menu');
-        }
-
+        // ========================================== //
+        // 6. CARD RENDERING & UI UPDATES             //
+        // ========================================== //
         function toggleLang() {
             if(isAnimating) return;
             isTargetFirst = !isTargetFirst;
@@ -1037,6 +1037,9 @@
             setTimeout(setCardContent, 150);
         }
 
+        // ========================================== //
+        // 7. DECK MECHANICS (SWIPE, SHUFFLE, REMOVE) //
+        // ========================================== //
         function move(dir) {
             if (currentDeck.length === 0 || isAnimating) return;
             isAnimating = true;
@@ -1112,12 +1115,13 @@
             }, 300);
         }
 
+        // ========================================== //
+        // 8. AUDIO ENGINE (HYBRID TTS & MP3)         //
+        // ========================================== //
         function playAudio(event) {
             event.stopPropagation(); 
             if (currentDeck.length === 0) return;
             
-            // 1. THE SILENT UNLOCK: Fire a silent word instantly on click 
-            // to bypass strict browser autoplay security rules.
             if ('speechSynthesis' in window) {
                 let unlock = new SpeechSynthesisUtterance('');
                 unlock.volume = 0;
@@ -1130,7 +1134,7 @@
             
             const triggerTTS = () => {
                 if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel(); // Clear the silent utterance
+                    window.speechSynthesis.cancel(); 
                     let targetWord = currentCard.t;
                     let utterance = new SpeechSynthesisUtterance(targetWord);
                     
@@ -1149,25 +1153,25 @@
 
             let audioObj = new Audio();
             
-            // 2. If GitHub returns a 404 or the file is missing, trigger TTS
             audioObj.onerror = () => {
                 triggerTTS();
             };
 
-            // 3. If the MP3 exists and is ready, play it!
             audioObj.oncanplay = () => {
                 let playPromise = audioObj.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(() => {
-                        triggerTTS(); // Fallback if browser blocks media playback
+                        triggerTTS(); 
                     });
                 }
             };
 
-            // Start loading the audio from GitHub
             audioObj.src = audioPath;
         }
 
+        // ========================================== //
+        // 9. EVENT LISTENERS (TOUCH & CLICK)         //
+        // ========================================== //
         document.getElementById('cardContainer').addEventListener('click', () => {
             if(!isAnimating) card.classList.toggle('is-flipped');
         });
